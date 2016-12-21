@@ -1,0 +1,10 @@
+    <ul id="activity_list_ul">
+
+        <li v-for="item in info">
+            <a href="event_info.html"><img :src="item.url" border="0"></a>
+            <h3><a href="event_info.html">{{item.title}}</a></h3>
+            <div class="index_list_author f14">发布人：{{item.nickname}}</div>
+            <div><span class="list_views">{{item.view}}</span><span class="list_like">{{item.collect}}</span><span class="list_comment">{{item.collect}}</span><div class="cl"></div></div>
+        </li>
+
+    </ul>
