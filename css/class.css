@@ -1,0 +1,29 @@
+﻿ @charset "utf-8";   
+ header , .page_header{ height:45px; line-height:45px;  text-align:center;position:relative;}
+  .page_header { background:#f9f9f9; border-bottom:#cbcbcb solid 1px;}
+  .page_name { color:#7a7a7a; font-size:16px; width:200px; margin:0 auto;}
+.nav_back {background:url(../images/sicon.png) no-repeat; background-size:160px 30px; cursor:pointer;height:25px; width:30px; position: absolute; left:10px;top:10px;background-position:0 -5px;}
+.class_icon { background:#fff; height:210px;}
+.class_list_icon { padding:10px 0 20px 0;background:#fff;}
+.index_icon {background:url(../images/class_icon.png) no-repeat; background-size:56px 1050px; width:56px; height:56px; margin:0 auto;}
+.class_icon ul li ,.class_list_icon ul li{ display:block; text-align:center; width:20%; float:left;}
+.class_icon ul li a ,.class_list_icon ul li a{ padding:20px 0 0; display:block; text-align:center;}
+.class_icon ul li .class_name  { height:25px; line-height:25px; font-size:15px;}
+.class_icon00 { background-position:0 0;}
+.class_icon01 { background-position:0 -58px;}
+.class_icon02 { background-position:0 -117px;}
+.class_icon03 { background-position:0 -175px;}
+.class_icon04 { background-position:0 -233px;}
+.class_icon05 { background-position:0 -292px;}
+.class_icon06 { background-position:0 -350px;}
+.class_icon07 { background-position:0 -409px;}
+.class_icon08 { background-position:0 -467px;}
+.class_icon09 { background-position:0 -525px;}
+.class_icon10 { background-position:0 -583px;}
+.class_icon11 { background-position:0 -641px;}
+.class_icon12 { background-position:0 -699px;}
+.class_icon13 { background-position:0 -758px;}
+.class_icon14 { background-position:0 -816px;}
+.class_icon15 { background-position:0 -874px;}
+.class_icon16 { background-position:0 -933px;}
+.class_icon17 { background-position:0 -991px;}

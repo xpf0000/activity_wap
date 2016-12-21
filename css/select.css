@@ -1,0 +1,66 @@
+/*wap reset reset.css*/
+
+.brands-a-d em{ float:right;}
+/* 查看更多 more.css */
+.filter-menu .sort-img{  display:block; vertical-align:top;
+background: url(../images/fenlei_b.png) left 14px no-repeat;  width:18px; height:30px;display:inline-block;  background-size: 18px 12px;  
+  }
+.ico-more:before,.ico-more:after{display:inline-block;position:absolute;top:0}
+.m-more{background:#f7f7f7;margin:10px 0 0;text-align:center;cursor:pointer}.m-more a{display:block;height:36px;line-height:36px;color:#777;font-size:14px}
+.m-more a .ico-more{margin:12px 5px 0}.m-more a .ico-more:before,.m-more a .ico-more:after{border-width:6px}.m-more a .ico-more:before{border-left-color:#777;left:0}.m-more a .ico-more:after{border-left-color:#f7f7f7;left:-2px}
+.mark-sub .ico-more{margin:2px 10px 0}.mark-sub .ico-more:before,.mark-sub .ico-more:after{border-width:7px}.mark-sub .ico-more:before{border-left-color:#666;left:0}.mark-sub .ico-more:after{border-left-color:#fff;left:-2px}
+
+
+	
+/* 热搜*/.m-hot{margin-bottom:-10px}.m-hot .bd a{width:48%;height:40px;line-height:40px;margin-right:4%;margin-bottom:13px;display:block;float:left;text-align:center;font-size:17px}.m-hot .bd a span{border:1px solid #e4e1e1;display:block}.m-hot .bd a:nth-child(2n){margin-right:0}/* 仅适用于下滑层参考产品库分类页面 */
+.filter-menu .ico-more {}
+.filter-menu .ico-more::before, .filter-menu .ico-more::after {border-width:8px;}
+.filter-menu .ico-more::before {border-top-color:#777;border-style:solid;top:0;}
+.filter-menu .ico-more::after {border-style:solid;top:-2px; }
+.filter-menu {height:43px;position:relative; z-index:10;overflow:hidden;background-color:#f7f7f7;display:-webkit-box;display:-moz-box;display:-webkit-flex;display:-ms-flexbox;display:flex; border-bottom:1px solid #cbcbcb;}
+.filter-menu a {display:block;height:42px;line-height:42px;text-align:center;font-size:15px;color:#666;text-align:center;position:relative;-webkit-box-flex:1;-moz-box-flex:1;-webkit-flex:1;-ms-flex:1;flex:1;background: url("../images/on_1.png") no-repeat 85% center;}
+.filter-menu a::after {border-right:1px solid #e2e2e2;content:"";width:0;height:18px;overflow:hidden;position:absolute;z-index:1;right:0;top:10px;}
+.filter-menu a:last-child:after {border-right:0;}
+
+.box-filter {width:100%;padding:45px 0 56px;position:fixed;top:0;left:0;z-index:999;font-size:15px;text-align:center;background-color:#fff;-webkit-box-sizing:border-box;box-sizing:border-box;-webkit-transition:-webkit-transform 0.25s ease-out;transition:transform 0.25s ease-out;-webkit-transform:translateY(-100%);-ms-transform:translateY(-100%);transform:translateY(-100%);}
+.box-filter:nth-child(odd) {padding-bottom:0;}
+.box-filter-expanded {-webkit-transform:translateY(0);-ms-transform:translateY(0);transform:translateY(0);}
+.box-filter-hd .ico-close{width:45px;height:45px;background:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAiBAMAAADIaRbxAAAAHlBMVEUAAABVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVXGG8M/AAAACXRSTlMA7bEzBlQfyYRD5TggAAAAhklEQVQoz1XPoRHCUBQF0TtAhgIYBB6Dgw6YXwkGQR9QQEAw6TbmbfZn9TGb4Z2+3Sf77z2x9s/2dO7J5ZDcetTGa0ASkKSQBCQBSUASkEQEEUFEEFER0VhENP2yrk3LHUdH7pzmzum6k3AnCUhSSAKSgCQgCQgikoggog0ElBcElOGRVc8ZiuApT5TJ+pAAAAAASUVORK5CYII=") no-repeat center center;position:absolute;right:2px;top:0;background-size:17px;}
+
+.box-filter-hd, .box-filter-ft {width:100%;line-height:30px;position:absolute;left:0;z-index:99;}
+.box-filter-hd {height:45px;line-height:45px;top:0;left:0;background-color:#eee;color:#999;padding-left:12px;box-sizing:border-box;text-align:left;}
+.box-filter-ft {height:40px;padding:8px 0;bottom:100px;background-color:#fff;}
+.box-filter-ft a {height:40px;line-height:40px;padding:0 10px;border-radius:5px;color:#fff;display:inline-block;overflow:hidden;}
+.box-filter-ft .reset {margin-right:15px;background-color:#ccc;cursor:pointer;}
+.i-reset {width:15px;height:15px;margin:0 5px -2px 0;display:inline-block;background-image:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeAQMAAAAB/jzhAAAABGdBTUEAALGPC/xhBQAAAAZQTFRFAAAA////pdmf3QAAAAF0Uk5TAEDm2GYAAABtSURBVAjXVc2xEUBAEIXh31xwGanA0IIKUAojkBgjvOyUoZwrQ6gEoYxdF3nBF+y83YUvVRCeG8zZgN2ynBSzU5Ac5HBQg4v02Fu5BMlHF89o9U8bZMkrDlZm7S8QmDAbY7AwXKVMvTwnO+OZF+6mGGP+yLL2AAAAAElFTkSuQmCC");background-size:contain;}
+.box-filter-ft .query {background-color:#2a8de9;max-width:175px;min-width:54px;text-overflow:ellipsis;white-space:nowrap;word-wrap:normal;-o-text-overflow:ellipsis;}
+
+.box-filter-hd em {color:#999;font-size:17px;}
+.box-filter-bd {position:relative;width:100%;height:92%;overflow:hidden;background:#fff; overflow:hidden;}
+
+.brands-index, .specs-type {position:relative;float:left;width:45%;height:100%;-webkit-box-sizing:border-box;box-sizing:border-box;background:#fff;z-index:10;}
+.brands-name, .specs-value {float:left;width:55%;height:100%;overflow:hidden;-webkit-box-sizing:border-box;box-sizing:border-box;}
+.brands-name em, .specs-value em {float:left;padding:9px 30px 9px 0;line-height:22px;}
+.brands-name{ background:#fafafa;}
+.brands-name span{ padding:9px 30px 9px 0;line-height:22px;}
+.labels span {height:40px;line-height:40px;padding-left:15px;display:block;border-right:1px solid #f4f4f4;text-align:left;border-top:1px solid #fbfbfb;border-bottom:1px solid #fbfbfb;color:#999}
+.labels span:first-child {border-top:1px solid #fff;}
+
+.labels, .values {position:relative;width:100%;display:block;left:0;top:0;z-index:9;overflow:hidden;-webkit-box-sizing:border-box;box-sizing:border-box;}
+.values li{max-height:62px;padding:0 10px ;display:block; text-align:left;overflow:hidden;}
+.values li {position:relative;}
+.values a {padding:9px 0 9px 22px;}
+.values li:last-child, .values a:last-child {border-bottom:none;}
+.values a.current {color:#2a8de9;}
+.labels .current {border-top:1px solid #f4f4f4;border-bottom:1px solid #f4f4f4;border-right:none;background-color:#fafafa;color:#fa352f;}
+.values ul {display:none;}
+.values .current {display:block;}
+.values a { -webkit-box-flex: 1;color:#969696;  line-height: 22px;  white-space: nowrap; padding: 5px 3px 0 3px;  font-size:14px; display: inline-block;}
+.values .tit-p a { font-size:15px; color:#fa352f; margin-top:5px;}	
+
+#ttime a { display:block; width:33%; height:50px; float:left; text-align:center; font-size:14px; line-height:50px; border-bottom:1px solid #cbcbcb;border-right:1px solid #cbcbcb;}
+
+/* 排序*/
+.sort-values a { max-height: 62px; padding: 9px 0 9px 22px; display: block; border-bottom: 1px solid #f7f7f7; border-top: 1px solid #fff;text-align: left;
+ overflow: hidden;}
+.sort-values a.current{ color:#fa352f;}
