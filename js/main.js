@@ -5,29 +5,58 @@ require.config({
     paths:{   //这里配置的地址，都是相对于上方的baseUrl的
         vue: 'vue',
         domReady:'domReady',
-        jquery : 'jquery-1.8.0.min',
         net: 'XRequest',
-        mobileSlider: 'MobileSlider',
         auislide: 'aui-slide',
+        auiscroll: 'aui-scroll',
         serviceApi: '../js/serviceApi',
         activitylist: '../template/activity_list',
+        menu_list:'menu_list',
+        zepto:'zepto',
+        sm:'sm',
+        smextend:'sm-extend',
+        api:'api',
     },
     shim:{
         vue: { deps: ['domReady!'],exports: "vue" },
-        net:{ deps: ['jquery']},
-        mobileSlider:{ deps: ['jquery']},
+        net:{ deps: ['zepto']},
         serviceApi:{ deps: ['net']},
-        activitylist:{ deps: ['jquery']},
+        activitylist:{ deps: ['zepto']},
+        sm:{ deps: ['zepto','domReady!']},
+        smextend:{ deps: ['zepto','domReady!']},
+        menu_list: { deps: ['domReady!','zepto'] },
+        auiscroll:{deps: ['api']}
     }
 });
 
 
-require(['jquery','net'], function() {	    
+require(['zepto'], function() {
 
-	console.log("main js loaded!!!!!!");
+    $.config = {
+        // 路由功能开关过滤器，返回 false 表示当前点击链接不使用路由
+        routerFilter: function($link) {
 
-})
+            console.log($link);
 
+            // 某个区域的 a 链接不想使用路由功能
+            if ($link.is('.disable-router a')) {
+
+                console.log("$$$ link: "+$link);
+                return false;
+            }
+
+            return true;
+        }
+    };
+});
+
+function getUrlParam(name)
+{
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+    var r = window.location.search.substr(1).match(reg);
+    if (r != null)
+        return decodeURIComponent(r[2]);
+    return null;
+}
 
 //只能输入数字
 function onlyNumber(event){

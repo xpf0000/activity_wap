@@ -1,13 +1,13 @@
 /**
+ * Created by Administrator on 2016/12/22 0022.
+ */
+/**
  * Created by Administrator on 2016/12/21 0021.
  */
 
-
-
-
 requirejs(['main'], function (main) {
 
-    require(['vue','serviceApi','activitylist','sm','smextend'], function(Vue) {
+    require(['vue','menu_list','serviceApi','activitylist','sm','smextend'], function(Vue) {
 
         $(function () {
             'use strict';
@@ -16,8 +16,6 @@ requirejs(['main'], function (main) {
             $(document).on("pageInit", "#page-infinite-scroll-bottom", function(e, id, page) {
 
                 $(page).on('infinite', function() {
-
-                    console.log("asdfkasjdfjasdkljfkladsjf");
 
                     ActivityListPageModel.getlist(getList);
 
@@ -29,8 +27,44 @@ requirejs(['main'], function (main) {
          * Created by Administrator on 2016/12/23 0023.
          */
 
+        console.log("list js loaded!!!!!!");
+
+        var id = getUrlParam('id');
+        var title = getUrlParam('title');
+
+        var filter = new Vue({
+            el: '#m-filter',
+            data: {
+                id : '',
+                title : '',
+                info : [],
 
 
+            },
+
+            methods: {
+
+                chooseid : function(id,title)
+                {
+                    menu_listclose();
+                    console.log(id+" | "+title);
+                    ActivityListModel.info = [];
+                    this.id = id;
+                    this.title = title;
+                    ActivityListPageModel.category_id = id;
+                    ActivityListPageModel.reset();
+                    ActivityListPageModel.getlist(getList);
+
+                },
+
+            },
+
+        });
+
+        filter.id = id;
+        filter.title = title;
+
+        ActivityListPageModel.category_id = filter.id;
 
         var vm = new Vue({
             el: '#page_load',
@@ -41,56 +75,9 @@ requirejs(['main'], function (main) {
 
         });
 
-        var category = new Vue({
+        menu_listInit();
 
-            el: '#nav',
-
-            data: {
-                info : []
-            },
-
-            });
-
-        var banner = new Vue({
-            el: '#aui-slide3',
-            data: {
-                info: []
-            },
-
-            updated:function()
-            {
-
-                var config = {
-                    roundLengths:true,
-                    autoplay:2000,
-                    loop:true,
-                    setWrapperSize :true,
-                }
-
-                $(".swiper-container").swiper(config);
-
-            }
-
-        });
-
-        getGuanggao();
         getCategory();
-
-        function getGuanggao()
-        {
-            Service.commonGetGuanggao("7",function(data)
-            {
-                var info = data.data.info;
-
-                if(info)
-                {
-                    console.log(info);
-                    banner.info = info;
-                }
-            });
-
-        };
-
 
         function getCategory()
         {
@@ -109,7 +96,7 @@ requirejs(['main'], function (main) {
 
                     info.push(item);
 
-                    category.info = info;
+                    filter.info = info;
                 }
             });
 
@@ -136,9 +123,12 @@ requirejs(['main'], function (main) {
 
 
 
+
+
     });
 
 });
+
 
 
 

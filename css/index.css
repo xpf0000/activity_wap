@@ -2,6 +2,6 @@
  header , .page_header{ height:45px; line-height:45px;  text-align:center;position:relative;}
  header { background:#3fcc84;}
  header span {height:45px; width:60px; position:absolute; right:0; top:0;}
-.index_page_name { color:#fff; font-size:16px; width:200px; margin:0 auto;}
+.index_page_name { color:#fff; font-size:16px; width:200px; margin:0 auto;z-index: 9999;}
   .search_box { margin:12px;}
   .index_search { width:90%; height:35px; line-height:35px; background:#fff; border:0;border-radius:20px; margin:0 auto;background:url(../images/bottom_icon.png) #fff no-repeat; background-size:35px 175px;background-position:0 -140px; padding-left:38px; font-size:15px;}
