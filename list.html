@@ -11,19 +11,31 @@
 <link type="text/css" rel="stylesheet" href="css/select.css">
 <link type="text/css" rel="stylesheet" href="css/class.css">
 <link type="text/css" rel="stylesheet" href="css/list.css">
-    <link rel="stylesheet" href="css/sm.css">
-    <link rel="stylesheet" href="css/sm-extend.css">
+
+    <link rel="stylesheet" href="css/framework7.ios.min.css">
+    <link rel="stylesheet" href="css/framework7.ios.colors.min.css">
+    <link rel="stylesheet" href="css/my-app.css">
+
     <script data-main="js/list" src="lib/require-min.js" ></script>
 </head>
 
 <body>
 
-<div class="page-group">
-    <div id="page-infinite-scroll-bottom" class="page">
-        <div class="content infinite-scroll" data-distance="0">
+<!-- Views -->
+<div class="views">
+    <!-- Your main view, should have "view-main" class -->
+    <div class="view">
+
+        <!-- Pages container, because we use fixed-through navbar and toolbar, it has additional appropriate classes-->
+        <div class="pages navbar-through toolbar-through">
+            <!-- Page, "data-page" contains page name -->
+            <div data-page="list" class="page">
+                <!-- Scrollable page content -->
+                <div class="page-content">
+
 
 <header class="page_header">
-<a href="javascript:history.go(-1)" class="nav_back"></a>
+<a href="#" class="back nav_back"></a>
     <h1 class="page_name">活动列表</h1> 
 </header>
  
@@ -90,6 +102,8 @@
 </footer>
 
         </div>
+    </div>
+    </div>
     </div>
     </div>
 

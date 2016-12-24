@@ -12,9 +12,13 @@
 <link rel="stylesheet" type="text/css" href="css/Slider.css"/>
 <link rel="stylesheet" type="text/css" href="css/class.css"/>
 <link rel="stylesheet" type="text/css" href="css/list.css"/>
-	<link rel="stylesheet" href="css/sm.css">
-	<link rel="stylesheet" href="css/sm-extend.css">
 
+	<link type="text/css" rel="stylesheet" href="css/select.css">
+
+
+	<link rel="stylesheet" href="css/framework7.ios.min.css">
+	<link rel="stylesheet" href="css/framework7.ios.colors.min.css">
+	<link rel="stylesheet" href="css/my-app.css">
 
 	<script data-main="js/index" src="lib/require-min.js" ></script>
 
@@ -34,9 +38,19 @@
 
 <body>
 
-<div class="page-group">
-	<div id="page-infinite-scroll-bottom" class="page">
-		<div class="content infinite-scroll" data-distance="0">
+<!-- Views -->
+<div class="views">
+	<!-- Your main view, should have "view-main" class -->
+	<div class="view view-main">
+
+<!-- Pages container, because we use fixed-through navbar and toolbar, it has additional appropriate classes-->
+<div class="pages navbar-through toolbar-through">
+	<!-- Page, "data-page" contains page name -->
+	<div data-page="index" class="page">
+		<!-- Scrollable page content -->
+		<div class="page-content">
+
+
 
 			<header>
 				<h1 class="index_page_name" style="z-index: 1">河洛泡泡</h1>
@@ -54,17 +68,22 @@
 
 
 
-<nav class="class_icon mt10 mb10 " id="nav">
-<ul v-for="item in info">
 
-<li>
-	<a :href="'list.html?id='+item.id+'&title='+item.title">
-	<span class="index_icon class_icon01 db"></span>
-	<span class="class_name db" v-html="item.title"></span>
-	</a>
-</li>
-</ul>
-</nav>
+
+					<nav class="class_icon mt10 mb10 " id="nav">
+						<ul v-for="item in info">
+
+							<li>
+								<a :href="'list.html?id='+item.id+'&title='+item.title">
+									<span class="index_icon class_icon01 db"></span>
+									<span class="class_name db" v-html="item.title"></span>
+								</a>
+							</li>
+						</ul>
+					</nav>
+
+
+
 
 
 <div class="search_box">
@@ -99,6 +118,8 @@
 		</div>
 	</div>
 
+			</div>
+		</div>
 	</div>
 
 </body>

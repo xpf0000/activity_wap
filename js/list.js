@@ -7,30 +7,33 @@
 
 requirejs(['main'], function (main) {
 
-    require(['vue','menu_list','serviceApi','activitylist','sm','smextend'], function(Vue) {
+    require(['vue','serviceApi'], function(Vue) {
 
-        $(function () {
-            'use strict';
-
-            //无限滚动
-            $(document).on("pageInit", "#page-infinite-scroll-bottom", function(e, id, page) {
-
-                $(page).on('infinite', function() {
-
-                    ActivityListPageModel.getlist(getList);
-
-                });
-            });
-
-            $.init();
-        });/**
-         * Created by Administrator on 2016/12/23 0023.
-         */
+        //$(function () {
+        //    'use strict';
+        //
+        //    //无限滚动
+        //    $(document).on("pageInit", "#page-infinite-scroll-bottom", function(e, id, page) {
+        //
+        //        $(page).on('infinite', function() {
+        //
+        //            ActivityListPageModel.getlist(getList);
+        //
+        //        });
+        //    });
+        //
+        //    $.init();
+        //});/**
+        // * Created by Administrator on 2016/12/23 0023.
+        // */
 
         console.log("list js loaded!!!!!!");
 
         var id = getUrlParam('id');
         var title = getUrlParam('title');
+
+        console.log("id: "+id);
+        console.log("title: "+title);
 
         var filter = new Vue({
             el: '#m-filter',
@@ -51,9 +54,9 @@ requirejs(['main'], function (main) {
                     ActivityListModel.info = [];
                     this.id = id;
                     this.title = title;
-                    ActivityListPageModel.category_id = id;
-                    ActivityListPageModel.reset();
-                    ActivityListPageModel.getlist(getList);
+                    //ActivityListPageModel.category_id = id;
+                    //ActivityListPageModel.reset();
+                    //ActivityListPageModel.getlist(getList);
 
                 },
 
@@ -64,7 +67,7 @@ requirejs(['main'], function (main) {
         filter.id = id;
         filter.title = title;
 
-        ActivityListPageModel.category_id = filter.id;
+        //ActivityListPageModel.category_id = filter.id;
 
         var vm = new Vue({
             el: '#page_load',
@@ -75,7 +78,7 @@ requirejs(['main'], function (main) {
 
         });
 
-        menu_listInit();
+        //menu_listInit();
 
         getCategory();
 
@@ -107,7 +110,7 @@ requirejs(['main'], function (main) {
 
         function getList(arr,end)
         {
-            ActivityListModel.info = ActivityListModel.info.concat(arr);
+            //ActivityListModel.info = ActivityListModel.info.concat(arr);
 
             if(end)
             {
@@ -118,7 +121,7 @@ requirejs(['main'], function (main) {
         }
 
 
-        ActivityListPageModel.getlist(getList);
+        //ActivityListPageModel.getlist(getList);
 
 
 

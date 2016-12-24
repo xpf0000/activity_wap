@@ -3,34 +3,15 @@
  */
 
 
-
-
 requirejs(['main'], function (main) {
 
-    require(['vue','serviceApi','activitylist','sm','smextend'], function(Vue) {
+    require(['vue','serviceApi','framework7'], function(Vue) {
 
-        $(function () {
-            'use strict';
-
-            //无限滚动
-            $(document).on("pageInit", "#page-infinite-scroll-bottom", function(e, id, page) {
-
-                $(page).on('infinite', function() {
-
-                    console.log("asdfkasjdfjasdkljfkladsjf");
-
-                    ActivityListPageModel.getlist(getList);
-
-                });
-            });
-
-            $.init();
-        });/**
-         * Created by Administrator on 2016/12/23 0023.
-         */
-
-
-
+        var myApp = new Framework7();
+        var mainView = myApp.addView('.view-main', {
+            // Because we want to use dynamic navbar, we need to enable it for this view:
+            dynamicNavbar: true
+        });
 
         var vm = new Vue({
             el: '#page_load',
@@ -60,14 +41,14 @@ requirejs(['main'], function (main) {
             updated:function()
             {
 
-                var config = {
-                    roundLengths:true,
-                    autoplay:2000,
-                    loop:true,
-                    setWrapperSize :true,
-                }
-
-                $(".swiper-container").swiper(config);
+                //var config = {
+                //    roundLengths:true,
+                //    autoplay:2000,
+                //    loop:true,
+                //    setWrapperSize :true,
+                //}
+                //
+                //$(".swiper-container").swiper(config);
 
             }
 
@@ -120,6 +101,9 @@ requirejs(['main'], function (main) {
 
         function getList(arr,end)
         {
+
+            console.log("length: "+ActivityListModel.info.length);
+
             ActivityListModel.info = ActivityListModel.info.concat(arr);
 
             if(end)
@@ -130,15 +114,15 @@ requirejs(['main'], function (main) {
 
         }
 
-
-        ActivityListPageModel.getlist(getList);
-
-
-
+        //ActivityListPageModel.getlist(getList);
 
     });
 
 });
+
+
+
+
 
 
 
