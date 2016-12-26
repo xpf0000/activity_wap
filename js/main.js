@@ -7,8 +7,9 @@ require.config({
         domReady:'domReady',
         net: 'XRequest',
         serviceApi: '../js/serviceApi',
-        framework7:'framework7',
-        list:'../js/list',
+        framework7:'framework7.min',
+        zepto:'zepto',
+        auislide:'aui-slide'
     },
     shim:{
         vue: { deps: ['domReady!'],exports: "vue" },

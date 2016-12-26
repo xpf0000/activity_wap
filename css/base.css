@@ -18,7 +18,7 @@ body a:visited {text-decoration:none; color:#545454;}
 .pr20{ padding-right:30px;}
 
 
-body{background-color:#f4f5f6;}
+html,body{background-color:#f4f5f6; height:100%;margin:0px; padding:0px;}
 .bor-e0e{ border:1px solid #e0e0e0;}
 .bg-ff{ background:#fff;}
 .f33{font-size:33px;}
@@ -60,8 +60,8 @@ body{background-color:#f4f5f6;}
 .lh12{ line-height:12px;}
 
 /*底部菜单*/
-.b_menu {z-index:999; position:fixed; bottom:0; left:0; width:100%; _position:absolute;
- _top: expression_r(documentElement.scrollTop + documentElement.clientHeight-this.offsetHeight); overflow: hidden; height:70px;background:url(../images/bottom.png)  no-repeat center; background-size:556px 70px;}
+.b_menu {z-index:999; position:fixed; bottom:0; width:100%; _position:absolute;
+ _top: expression_r(documentElement.scrollTop + documentElement.clientHeight-this.offsetHeight); overflow: hidden; height:70px;background:url(../images/bottom.png)  no-repeat center; background-size:640px 70px;max-width:640px; margin:0 auto;}
  .bb_bg { height:70px; width:100%;}
  .b_menu a { display:block; height:70px; float:left;width:33.333%; padding-top:15px;}
  .b_icon01 ,.b_icon02 ,.b_icon03 ,.b_icon01_current ,.b_icon03_current { width:30px; margin:0 auto; text-align:center; height:30px;background:url(../images/bottom_icon.png) no-repeat; background-size:30px 150px;}
@@ -74,5 +74,21 @@ body{background-color:#f4f5f6;}
   .current_menu { color:#3fcc84;}
   
  /*信息加载*/ 
-  .page_load { text-align:center;width:130px; margin:0 auto;}
+.page_load { text-align:center;width:150px; margin:0 auto;}
 .page_load span { display:block; height:50px; line-height:50px; vertical-align:middle;}
+
+.page_w {width:100%; height:100%; margin:0 auto;max-width:640px; position:relative;}
+ /*内页顶部导航*/ 
+ header ,.page_header{ height:45px; line-height:45px;  text-align:center;position:relative;width:100%; margin:0 auto;max-width:640px;}
+.page_header { background:#f9f9f9; border-bottom:#d7d7d7 solid 1px;}
+.page_name { color:#7a7a7a; font-size:16px; width:200px; margin:0 auto;}
+.nav_back {background:url(../images/sicon.png) no-repeat; background-size:160px 30px; cursor:pointer;height:25px; width:30px; position: absolute; left:10px;top:10px;background-position:0 -5px;}
+
+* {
+	-webkit-box-sizing: border-box;
+	      box-sizing: border-box;
+	-webkit-user-select: none;
+	-webkit-tap-highlight-color: transparent;
+	-webkit-tap-highlight-color: transparent;
+	outline: none;
+}

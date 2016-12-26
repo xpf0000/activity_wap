@@ -8,18 +8,80 @@
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <title>发布信息-河洛泡泡</title>
 <link rel="stylesheet" type="text/css" href="css/base.css"/>
-<link rel="stylesheet" type="text/css" href="css/publish.css"/>
+<link rel="stylesheet" type="text/css" href="css/index.css"/>
+<link rel="stylesheet" href="css/framework7.ios.min.css">
+<link rel="stylesheet" href="css/framework7.ios.colors.min.css">
+<link rel="stylesheet" href="css/my-app.css">
+<script type="text/javascript" src="js/zepto.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+  $("#p_sign_up").click(function(){
+  $("#p_form_li").toggle();
+  });
+  $("#em01").click(function(){
+  $("#em01").toggleClass("c_em");
+});
+ $("#em02").click(function(){
+  $("#em02").toggleClass("c_em");
+});
+ $("#em03").click(function(){
+  $("#em03").toggleClass("c_em");
+});
+ $("#em04").click(function(){
+  $("#em04").toggleClass("c_em");
+});
+ $("#em05").click(function(){
+  $("#em05").toggleClass("c_em");
+});
+ $("#em06").click(function(){
+  $("#em06").toggleClass("c_em");
+});
+ $("#em07").click(function(){
+  $("#em07").toggleClass("c_em");
+});
+ $("#em08").click(function(){
+  $("#em08").toggleClass("c_em");
+});
+ $("#em09").click(function(){
+  $("#em09").toggleClass("c_em");
+});
+ $("#em10").click(function(){
+  $("#em10").toggleClass("c_em");
+});
+ $("#em11").click(function(){
+  $("#em11").toggleClass("c_em");
+});
+ $("#em12").click(function(){
+  $("#em12").toggleClass("c_em");
+});
+  $("#p_add01").click(function(){
+  $("#p_upload_class01").show();
+  $("#p_add01").hide();
+  });
+});
+
+</script>
 </head>
 
 <body>
+<div class="views">
+	<div class="view view-main">
+		<div class="pages navbar-through toolbar-through">
+			<div data-page="index" class="page">
+				<div class="page-content">
 <header class="page_header">
-<a href="" class="nav_back"></a>
+<a href="index.html" class="nav_back"></a>
     <h1 class="page_name">编辑</h1>  
 </header>
+<div class="page_w">
 <div class="p_page_banner" style="background-image: url(http://static2.ivwen.com/user/7224114/c75747eb2c500001204e135077f080c0.jpg);">
 <textarea class="p_title">点击设置标题</textarea>
+<button class="p_up_img"></button>
 </div>
-<div class="p_add"></div>
+<div class="p_add" id="p_add01"></div>
+<div id="p_upload_class01" style=" height:32px; line-height:32px;display:none; padding-top:6px;">
+<div class="p_upload_class" ><a href="#" class="p_up_words db open-popup" data-popup=".popup_a">文字信息</a><a href="#" class="p_up_photo db">图片信息</a><div class="cl"></div></div>
+</div>
 <div class="p_box"><div class="p_img fl" style="background-image: url(http://static2.ivwen.com/user/7224114/c75747eb2c500001204e135077f080c0.jpg);"></div><div class="p_memo fl mt15">点击这里输入照片说明</div><div class="cl"></div>
 <div class="p_reduce"></div><div class="p_down"></div>
 </div>
@@ -28,6 +90,37 @@
 <div class="p_reduce"></div><div class="p_up"></div>
 </div>
 <div class="p_add"></div>
-<div class="p_sign_up tc">添加报名</div>
+<div class="p_sign_up tc" id="p_sign_up">添加报名</div>
+<div class="p_form_li bg-ff mt10" id="p_form_li" style="display:none">
+<ul>
+<li>开始时间<input type="text" id="begin_time" name="begin_time" class="sign_input" placeholder="请设置开始时间" ></li>
+<li>结束时间<input type="text" id="begin_time" name="begin_time" class="sign_input" placeholder="请设置开始时间" ></li>
+<li>活动地点<input type="text" id="begin_time" name="begin_time" class="sign_input" placeholder="请选择活动地点" ></li>
+<li>活动类型<input type="text" id="begin_time" name="begin_time" class="sign_input" placeholder="请选择活动类型" ></li>
+<li>活动费用<input type="text" id="begin_time" name="begin_time" class="sign_input" placeholder="请设置活动费用" ></li>
+<li>人数限制<input type="text" id="begin_time" name="begin_time" class="sign_input" placeholder="请设置最多报名人数" ></li>
+<li style="height:106px; line-height:30px;">活动标签<span><em id="em01">骑行</em><em id="em02">徒步</em><em id="em03">滑雪</em><em id="em04">骑行</em><em id="em05">徒步</em><em id="em06">滑雪</em><em id="em07">骑行</em><em id="em08">徒步</em><em id="em09">滑雪</em><em id="em10">骑行</em><em id="em11">徒步</em><em id="em12">滑雪</em><div class="cl"></div></span></li>
+</ul>
+</div>
+<div class="p_div"><input class="p_button tc" value="提交发布" type="submit" /></div>
+<div class="am-sign-up popup popup_a">
+<div class="box-filter-hd">请输入内容<a href="#" class="ico-close db close-popup"></a></div>
+<div style="margin:15px;">
+<textarea class="p_content">【喜德盛骑游先锋俱乐部】 【活动时间】：2016年5月21日 （周六） 【集合时间】：8:30—8:40出发 【集合地点】：王城大道汽车城（穆斯林刀削面） 第二集合点：9:00分在国花园集合 需要调试车子的骑友请提前到道北店调试爱车。 【目的地】：山地车主题公园 【发起人】：飞舞18638830859 【 领 骑 】：云端 师弟 【 收 队 】：一瓶 老年轻 【 路 况 】：水泥路面 加 森林道路 【骑行难度】：中（建议有一定骑行经验者即可参加） 【活动要求】：必须佩戴头盔等护具 【活动目的】：健康锻炼，增进友谊，享受生活，分享快乐。 【往返里程】：约 58 公里 小浪底山地车越野赛道是中原地区首个森林氧吧山地车 主题公园；占地600余亩环境 优美、有山、有树、有草坡， 是天然的氧吧。景区山体地形自然起伏，落差较大，场地多 样化，适合多种越</textarea>
+</div>
+<div style="width:100%; margin:0 auto; max-width:640px;position:fixed; bottom:0;">
+<div class="p_div"><input class="p_button_b tc" value="提交发布" type="submit" /></div>
+</div>
+</div>
+</div>
+
+
+</div>
+				</div>
+			</div>
+		</div>
+	</div>
+<script type="text/javascript" src="js/framework7.min.js"></script>
+<script type="text/javascript" src="js/my-app.js"></script>
 </body>
 </html>
