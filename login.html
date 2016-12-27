@@ -6,7 +6,7 @@
 <meta content="telephone=no" name="format-detection" />
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
 <meta name="apple-mobile-web-app-capable" content="yes" />
-<title>会员首页-河洛泡泡</title>
+<title>会员登录-河洛泡泡</title>
 <link rel="stylesheet" type="text/css" href="css/base.css"/>
 <link type="text/css" rel="stylesheet" href="css/index.css">
 <link rel="stylesheet" href="css/framework7.ios.min.css">
@@ -19,34 +19,29 @@
 <div class="views">
 	<div class="view view-main">
 		<div class="pages navbar-through toolbar-through">
-			<div data-page="user_index" class="page">
-				<div class="page-content" id="user_index">
-<header class="user_header">
-<div class="h45">
-<a href="index.html" class="user_nav_back fl h45 db back"></a>
-</div>
-<div class="user_info">
-<span class="user_face db tc"><img :src="uinfo.headimage"></span>
-<span class="page_user_name db tc" v-html="uinfo.nickname"></span>
-<span class="page_user_about db tc">普通会员</span>
-</div>
+			<div data-page="login" class="page">
+				<div class="page-content" id="login">
+<header class="page_header">
+<a href="#" class="nav_back back"></a>
+    <h1 class="page_name">会员登录</h1>  
 </header>
-<div class="page_w">
-<div class="page_info_list mt10">
-<a class="info01" href=""><span>我发布的</span><em></em></a>
-<a class="info02" href=""><span>我收藏的</span><em></em></a>
-<a class="info03" href=""><span>我参与的</span><em></em></a>
-<a class="info04" href="#" @touchend="toUserEdit()"><span>个人资料</span><em></em></a>
+<div class="page_w bg-ff" style="height: 100%;">
+	<div class="login_icon">
+<ul>
+<li><a href="#" @touchend="doLogin(1)"><span class="wx_login_icon db"></span><span class="login_font db">QQ登录</span></a></li>
+<li><a href="#" @touchend="doLogin(2)"><span class="qq_login_icon db"></span><span class="login_font db">微信登录</span></a></li>
+</ul>
+<div class="clear"></div>
 </div>
-<div class="logout mt10">
-<a href="#" @touchend="logout()" class="db tc" v-html="uinfo.msg"></a>
+	
 </div>
-</div>
-</div>
+
+
 				</div>
 			</div>
 		</div>
 	</div>
+</div>
 
 </body>
 </html>

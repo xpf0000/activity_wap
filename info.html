@@ -12,71 +12,51 @@
 <link rel="stylesheet" href="css/framework7.ios.min.css">
 <link rel="stylesheet" href="css/framework7.ios.colors.min.css">
 <link rel="stylesheet" href="css/my-app.css">
-<script type="text/javascript" src="js/zepto.js"></script>
+
+  <script data-main="js/index" src="lib/require-min.js" ></script>
 </head>
 
 <body>
 <div class="views">
 	<div class="view view-main">
-		<div class="pages navbar-through toolbar-through">
-			<div data-page="index" class="page">
-				<div class="page-content">
+		<div class="pages">
+			<div data-page="info" class="page">
+				<div class="page-content" id="info">
 <header class="page_header">
-<a href="list.html" class="nav_back"></a>
+<a href="#" class="nav_back back"></a>
     <h1 class="page_name">活动详情</h1>  
 </header>
 <div class="page_w">
-<div class="page_tit">相约小浪底体验中原地区首个森林氧吧山地车主题公园</div>
+<div class="page_tit" v-html="info.title"></div>
 <div class="author_info">
-<a href=""><img src="images/face03.jpg"><span class="user_name">一路向东</span></a><span class="author_other f16">2016-12-22</span>
+<a href=""><img :src="info.headimage"><span class="user_name" v-html="info.nickname"></span></a><span class="author_other f16" v-html="info.time"></span>
 </div>
 <div class="event_info_s">
-<div class="event_info_c">【喜德盛骑游先锋俱乐部】
-【活动时间】：2016年5月21日 （周六）
-【集合时间】：8:30—8:40出发
-【集合地点】：王城大道汽车城（穆斯林刀削面）
-  第二集合点：9:00分在国花园集合
-  需要调试车子的骑友请提前到道北店调试爱车。
-【目的地】：山地车主题公园
-【发起人】：飞舞18638830859
-【 领 骑 】：云端 师弟
-【 收 队 】：一瓶 老年轻
-【 路 况 】：水泥路面 加 森林道路
-【骑行难度】：中（建议有一定骑行经验者即可参加）
-【活动要求】：必须佩戴头盔等护具
-【活动目的】：健康锻炼，增进友谊，享受生活，分享快乐。
-【往返里程】：约 58 公里
-<img src="images/temp/1001.jpg" alt=""/>
-小浪底山地车越野赛道是中原地区首个森林氧吧山地车
-主题公园；占地600余亩环境  优美、有山、有树、有草坡，
-是天然的氧吧。景区山体地形自然起伏，落差较大，场地多
-  样化，适合多种越<br>
-<img src="images/temp/1002.jpg" alt=""/>
-小浪底山地车越野赛道是中原地区首个森林氧吧山地车
-主题公园；占地600余亩环境  优美、有山、有树、有草坡，
-是天然的氧吧。景区山体地形自然起伏，落差较大，场地多
-  样化，适合多种越<br>
-  <img src="images/temp/1003.jpg" alt=""/>
-小浪底山地车越野赛道是中原地区首个森林氧吧山地车
-主题公园；占地600余亩环境  优美、有山、有树、有草坡，
-是天然的氧吧。景区山体地形自然起伏，落差较大，场地多
-  样化，适合多种越<br>
-  <img src="images/temp/1004.jpg" alt=""/>
-小浪底山地车越野赛道是中原地区首个森林氧吧山地车
-主题公园；占地600余亩环境  优美、有山、有树、有草坡，
-是天然的氧吧。景区山体地形自然起伏，落差较大，场地多
-  样化，适合多种越<br>
+<div class="event_info_c" v-html="info.content">
+
 </div>
-  <span class="author_other f16" style="padding-left:15px;">阅读:123&nbsp;&nbsp;&nbsp;&nbsp;报名:123</span>
+  <span class="author_other f16" style="padding-left:15px;">阅读:<span v-html="info.view"></span>&nbsp;&nbsp;&nbsp;&nbsp;报名:<span v-html="info.view"></span></span>
 </div>
 <div class="bb_bg"></div>
     
  
 
 <div class="page_bottom_btn">
-<a href="#" class="page_Collection fl db"><span class="Collection_icon2 db"></span><span class="Collection_f db tc">收藏</span></a>
-<a href="#" class="page_share fl db open-picker db" data-picker=".picker_a"><span class="share_icon db"></span><span class="share_f db tc">分享</span></a>
-<a href="#" class="page_btn2 fr tc white db open-picker" data-picker=".picker_b">取消报名</a>
+
+<a href="#" class="page_Collection fl db" @touchend="doCollect">
+  <span class="Collection_icon2 db"></span>
+  <span class="Collection_f db tc">收藏</span>
+</a>
+
+<a href="#" class="page_share fl db open-picker db" data-picker=".picker_a">
+  <span class="share_icon db"></span>
+  <span class="share_f db tc">分享</span>
+</a>
+
+<a href="#" class="page_btn2 fr tc white db open-picker" data-picker=".picker_b">
+  报名
+</a>
+
 </div>
 <!--
 
@@ -126,8 +106,8 @@
 </div>
 </div>
 </div>
-<script type="text/javascript" src="js/framework7.min.js"></script>
-<script type="text/javascript" src="js/my-app.js"></script>
+
+
 
 </body>
 </html>

@@ -29,6 +29,30 @@ var Service =
         XHttpGet( url, callBack);
     },
 
+    //活动详情
+    articleGetArticle: function(id,callBack)
+    {
+        var url = BaseUrl+"Article.getArticle&id="+id;
+
+        XHttpGet( url, callBack);
+    },
+
+    //活动详情
+    articleAddCollect: function(id,uid,username,callBack)
+    {
+        var url = BaseUrl+"Article.addCollect&id="+id+"&uid="+uid+"&username="+username;
+
+        XHttpGet( url, callBack);
+    },
+
+    //登录
+    userLogin: function(mobile,password,callBack)
+    {
+        var url = BaseUrl+"User.login&mobile="+mobile+"&password="+password;
+
+        XHttpGet( url, callBack);
+    },
+
 
 }
 
