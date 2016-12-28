@@ -12,27 +12,70 @@
 <link rel="stylesheet" href="css/framework7.ios.min.css">
 <link rel="stylesheet" href="css/framework7.ios.colors.min.css">
 <link rel="stylesheet" href="css/my-app.css">
+	<link rel="stylesheet" href="css/toast.css" />
 	<script data-main="js/index" src="lib/require-min.js" ></script>
 </head>
 
 <body>
-<div class="views">
+<div class="views" style="background: #fff;">
 	<div class="view view-main">
 		<div class="pages navbar-through toolbar-through">
 			<div data-page="login" class="page">
-				<div class="page-content" id="login">
+				<div class="page-content" id="login" style="background: #fff;">
 <header class="page_header">
-<a href="#" class="nav_back back"></a>
+<a href="index.html" class="nav_back back"></a>
     <h1 class="page_name">会员登录</h1>  
 </header>
-<div class="page_w bg-ff" style="height: 100%;">
-	<div class="login_icon">
+
+
+
+
+
+
+<div class="page_w bg-ff " style="height: 100%; background: #fff;">
+
+
+	<div class="list-block" style="margin-top: 40px;">
+		<ul>
+			<li>
+				<div class="item-content">
+					<div class="item-inner">
+						<div class="item-input">
+							<input style="-webkit-user-select:auto;" type="tel" placeholder="账号" v-model="account">
+						</div>
+					</div>
+				</div>
+			</li>
+
+			<li>
+				<div class="item-content">
+					<div class="item-inner">
+						<div class="item-input">
+							<input style="-webkit-user-select:auto;" type="password" placeholder="密码" v-model="pass">
+						</div>
+					</div>
+				</div>
+			</li>
+
+		</ul>
+
+	</div>
+
+
+	<a href="#" @touchend="doLogin(0)" class="button button-big" style="margin-top: 50px;margin-left: 12px;margin-right: 12px;">登录 </a>
+
+
+
+	<div class="login_icon" style="margin-top: -80px;">
 <ul>
 <li><a href="#" @touchend="doLogin(1)"><span class="wx_login_icon db"></span><span class="login_font db">QQ登录</span></a></li>
 <li><a href="#" @touchend="doLogin(2)"><span class="qq_login_icon db"></span><span class="login_font db">微信登录</span></a></li>
 </ul>
 <div class="clear"></div>
 </div>
+
+
+
 	
 </div>
 

@@ -53,6 +53,36 @@ var Service =
         XHttpGet( url, callBack);
     },
 
+    //用户信息修改
+    userUserEdit: function(user,callBack)
+    {
+        var url = BaseUrl+"User.userEdit&username="+user.username+
+                "&nickname="+user.nickname+
+                "&truename="+user.truename+
+                "&sex="+user.sex+
+                "&birthday="+user.birthday+
+                "&address="+user.address;
+
+        XHttpGet( url, callBack);
+    },
+
+    //用户头像修改
+    userHeadEdit: function(data,callBack)
+    {
+        var url = BaseUrl+"User.headEdit";
+        XHttpUpload(url,data,callBack);
+
+    },
+
+    //获取用户信息
+    userGetUserInfo: function(user,callBack)
+    {
+        var url = BaseUrl+"User.getUserInfo&username="+user.username;
+
+        XHttpGet( url, callBack);
+
+    },
+
 
 }
 

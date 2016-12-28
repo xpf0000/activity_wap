@@ -12,10 +12,13 @@ require.config({
         auislide:'aui-slide',
         store:'store',
         json2:'json2',
+        toast:'toast',
+        city_picker:'city_picker',
     },
     shim:{
         vue: { deps: ['domReady!'],exports: "vue" },
         net:{ deps: ['framework7']},
+        toast:{ deps: ['framework7']},
         serviceApi:{ deps: ['net']},
         store:{ deps: ['json2']},
     }

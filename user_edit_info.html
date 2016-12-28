@@ -20,27 +20,72 @@
 	<div class="view view-main">
 		<div class="pages navbar-through toolbar-through">
 			<div data-page="user_edit_info" class="page">
-				<div class="page-content">
+				<div class="page-content" id="user_edit_info">
 
 <header class="page_header">
-<a href="#" class="nav_back back"></a>
-    <h1 class="page_name">编辑资料</h1> 
+<a href="user_index.html" class="nav_back back"></a>
+    <h1 class="page_name">编辑资料</h1>
 </header>
+
 <div class="page_w">
 <div class="edit_info_list">
+
+	<form id="uploadHead">
+	<input id="file" type="file" name="file" @change="fileChange($event)" accept="image/*" hidden="true" />
+	</form>
+
 <ul>
-<li style="height:90px; line-height:90px;">头像<em></em><img src="images/face02.jpg"></li>
-<li>昵称<input type="text" id="user_name" class="edit_input" placeholder="请输入昵称" ></li>
-<li><span class="db fl" style="">性别</span><span class="db fr" style="width:140px; height:40px;"><input class="a_radio" type="radio" name="a_radio" checked style=""><div class="radio_name fl">男</div><input class="a_radio" type="radio" name="a_radio"><div class="radio_name fl">女</div></span></li>
-<li>出生年月<span><input value="" class="edit_input" readonly name="appDate" id="calendar-default" type="text" placeholder="2016-01-01" ></span></li>
-<li class="page-current" id="page-city-picker">地区<span><input id='city-picker' type="text" readonly placeholder="城市选择" class="edit_input"></span></li>
+
+<li style="height:90px; line-height:90px;" @touchend="choosehead">
+	头像<em></em>
+	<img :src="headimg">
+
+</li>
+
+<li>昵称
+	<input type="text" v-model="nickname" id="user_name" class="edit_input" placeholder="请输入昵称" >
+</li>
+
+<li>
+	<span class="db fl" style="">
+		性别
+	</span>
+	<span class="db fr" style="width:140px; height:40px;">
+		<input class="a_radio" type="radio" name="a_radio" value="0" v-model="sex">
+		<div class="radio_name fl">男</div>
+		<input class="a_radio" type="radio" value="1" v-model="sex" name="a_radio">
+		<div class="radio_name fl">女</div>
+	</span>
+</li>
+
+	<li>
+	出生年月
+	<span>
+	<input v-model="birthday" value="" class="edit_input" readonly id="calendar-default" type="text" placeholder="2016-01-01" >
+	</span>
+	</li>
+
+
+<li class="page-current" id="page-city-picker">
+	地区
+	<span>
+	<input v-model="address" type="text" readonly id="picker-dependent" placeholder="城市选择" class="edit_input">
+	</span>
+</li>
+
 </ul>
 </div>
 
-<div class="p_div"><input class="p_button tc" value="提交修改" type="submit" /></div>
- 
-  
+
+	<a href="#" @touchend="doSubmit()" class="button button-big button-fill" style="background: #3fcc84;margin: 20px 12px 12px 12px;">提交修改</a>
+
+
+
 </div>
+
+
+
+
 </div>
 				</div>
 			</div>

@@ -87,7 +87,7 @@ html,body{background-color:#f4f5f6; height:100%;margin:0px; padding:0px;}
 * {
 	-webkit-box-sizing: border-box;
 	      box-sizing: border-box;
-	-webkit-user-select: none;
+	-webkit-user-select: auto;
 	-webkit-tap-highlight-color: transparent;
 	-webkit-tap-highlight-color: transparent;
 	outline: none;
