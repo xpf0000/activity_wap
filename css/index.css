@@ -207,7 +207,28 @@ header span {height:45px; width:60px; position:absolute; right:0; top:0;}
 /*信息发布*/
 .p_page_banner {background-position: center center;background-repeat: no-repeat;background-size: cover;border-bottom: 1px solid rgba(0, 0, 0, 0.15);
     box-sizing: border-box; height: 130px; overflow: hidden; position: relative;width: 100%;}
-.p_title {background:transparent; width:90%; color:#fff; margin:0 auto; border:0; position:absolute; top:10px; left:10px; font-size:18px;text-shadow:2px 2px 2px #333333; height:40px; line-height:20px;}
+.p_title {
+    background:transparent;
+    width:90%;
+    color:#fff;
+    margin:0 auto;
+    border:0;
+    position:absolute;
+    top:10px;
+    left:10px;
+    font-size:18px;
+    text-shadow:2px 2px 2px #333333;
+    height:40px;
+    line-height:20px;
+
+}
+
+ #mtitle::-webkit-input-placeholder {color:#fff;}
+ #mtitle:-moz-placeholder {color:#fff;}
+ #mtitle::-moz-placeholder {color:#fff;}
+ #mtitle:-ms-input-placeholder {color:#fff;}
+
+
 .p_box { margin:6px 8px; height:120px; background:#fff;border-radius:5px; border:1px solid #eae9e9;position: relative;}
 .p_img {width:90px; height:90px;background-position: center center;background-repeat: no-repeat;background-size: cover;box-sizing: border-box; margin:15px;border-radius:5px;}
 .p_memo { font-size:15px;}

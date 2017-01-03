@@ -1,4 +1,3 @@
-var BaseUrl = "http://182.92.70.85/hlppapi/Public/Found/?service=";
 
 require.config({
     baseUrl: 'lib',  //相对于index.html页面文件的地址
@@ -19,7 +18,7 @@ require.config({
         vue: { deps: ['domReady!'],exports: "vue" },
         net:{ deps: ['framework7']},
         toast:{ deps: ['framework7']},
-        serviceApi:{ deps: ['net']},
+        serviceApi:{ deps: ['net'],exports: "serviceApi"},
         store:{ deps: ['json2']},
     }
 });
@@ -30,6 +29,10 @@ require(['framework7'], function() {
     //$$ = Dom7;
 
 });
+
+Array.prototype.insert = function (index, item) {
+    this.splice(index, 0, item);
+};
 
 function getUrlParam(name)
 {

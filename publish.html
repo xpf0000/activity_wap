@@ -28,23 +28,70 @@
 <a href="index.html" class="nav_back back"></a>
     <h1 class="page_name">编辑</h1>  
 </header>
+
+
+
+
 <div class="page_w">
 
+	<form id="coverform">
+	<input id="cover" type="file" name="file" @change="coverChange($event)" accept="image/*" hidden="true" />
+	</form>
 
-<div class="p_page_banner" style="background-image: url(http://static2.ivwen.com/user/7224114/c75747eb2c500001204e135077f080c0.jpg);">
-<textarea class="p_title">点击设置标题</textarea>
-<button class="p_up_img"></button>
+<div class="p_page_banner" :style="'background-image: url('+cover+');'">
+<textarea id="mtitle" name="title" class="p_title" placeholder="点击设置标题" v-model="title"></textarea>
+<button class="p_up_img" @touchend="chooseCover"></button>
 </div>
 
 
-<div v-for="item in list">
-<div class="p_add" id="p_add01"></div>
-<div id="p_upload_class01" style=" height:32px; line-height:32px;display:none; padding-top:6px;">
-<div class="p_upload_class" ><a href="#" class="p_up_words db open-popup" data-popup=".popup_a">文字信息</a><a href="#" class="p_up_photo db">图片信息</a><div class="cl"></div></div>
+<div v-for="(item,index) in list">
+<div class="p_add" :id="'p_add'+index" @touchend="addclick(index)"></div>
+<div :id="'p_upload_class'+index" style=" height:32px; line-height:32px;display:none; padding-top:6px;">
+
+<div class="p_upload_class" >
+	<a href="#" class="p_up_words db" @touchend="showTxtEdit(index,true)">
+		文字信息
+	</a>
+	<a href="#" class="p_up_photo db" @touchend="chooseimg(index,true)">
+		图片信息
+	</a>
+	<div class="cl"></div>
 </div>
-<div class="p_box"><div class="p_img fl" style="background-image: url(http://static2.ivwen.com/user/7224114/c75747eb2c500001204e135077f080c0.jpg);"></div><div class="p_memo fl mt15">点击这里输入照片说明</div><div class="cl"></div>
-    <div class="p_reduce" @touchend="clip(item.id)"></div>
-    <div class="p_down" @touchend="movedown(item.id)"></div>
+
+</div>
+<div class="p_box">
+
+	<form :id="'mform'+index">
+	<input :id="'file'+index"
+		   multiple="multiple"
+		   type="file"
+		   :name="'file'+index+'[]'"
+		   @change="imgChange($event,index)"
+		   @blur="imgChange($event,index)"
+		   @input="imgChange($event,index)"
+		   hidden="true" v-if="isnew"/>
+		<input :id="'file'+index"
+			   type="file"
+			   :name="'file'+index+'[]'"
+			   @change="imgChange($event,index)"
+			   @blur="imgChange($event,index)"
+			   @input="imgChange($event,index)"
+			   hidden="true"
+			    v-else/>
+	</form>
+
+	<textarea :name="'txt'+index" v-html="item.txt" hidden="true"></textarea>
+
+	<div class="p_img fl" :style="'background-image: url('+item.img+');'" @touchend="chooseimg(index,false)">
+	</div>
+
+	<div class="p_memo fl mt15" @touchend="showTxtEdit(index,false)" v-html="item.txt">
+		点击这里输入照片说明
+	</div>
+
+	<div class="cl"></div>
+    <div class="p_reduce" @touchend="clip(index)"></div>
+    <div class="p_down" @touchend="movedown(index)"></div>
 </div>
 </div>
 
@@ -72,14 +119,21 @@
 <li style="height:106px; line-height:30px;">活动标签<span><em id="em01">骑行</em><em id="em02">徒步</em><em id="em03">滑雪</em><em id="em04">骑行</em><em id="em05">徒步</em><em id="em06">滑雪</em><em id="em07">骑行</em><em id="em08">徒步</em><em id="em09">滑雪</em><em id="em10">骑行</em><em id="em11">徒步</em><em id="em12">滑雪</em><div class="cl"></div></span></li>
 </ul>
 </div>
-<div class="p_div"><input class="p_button tc" value="提交发布" type="submit" /></div>
+<div class="p_div">
+	<input class="p_button tc" value="提交发布" type="button" @touchend="doSubmit" />
+</div>
+
 <div class="am-sign-up popup popup_a">
 <div class="box-filter-hd">请输入内容<a href="#" class="ico-close db close-popup"></a></div>
 <div style="margin:15px;">
-<textarea class="p_content">【喜德盛骑游先锋俱乐部】 【活动时间】：2016年5月21日 （周六） 【集合时间】：8:30—8:40出发 【集合地点】：王城大道汽车城（穆斯林刀削面） 第二集合点：9:00分在国花园集合 需要调试车子的骑友请提前到道北店调试爱车。 【目的地】：山地车主题公园 【发起人】：飞舞18638830859 【 领 骑 】：云端 师弟 【 收 队 】：一瓶 老年轻 【 路 况 】：水泥路面 加 森林道路 【骑行难度】：中（建议有一定骑行经验者即可参加） 【活动要求】：必须佩戴头盔等护具 【活动目的】：健康锻炼，增进友谊，享受生活，分享快乐。 【往返里程】：约 58 公里 小浪底山地车越野赛道是中原地区首个森林氧吧山地车 主题公园；占地600余亩环境 优美、有山、有树、有草坡， 是天然的氧吧。景区山体地形自然起伏，落差较大，场地多 样化，适合多种越</textarea>
+<textarea class="p_content">
+
+</textarea>
 </div>
 <div style="width:100%; margin:0 auto; max-width:640px;position:fixed; bottom:0;">
-<div class="p_div"><input class="p_button_b tc" value="提交发布" type="submit" /></div>
+<div class="p_div">
+	<input class="p_button_b tc" value="确定" type="button" @touchend="txteditend"/>
+</div>
 </div>
 </div>
 </div>

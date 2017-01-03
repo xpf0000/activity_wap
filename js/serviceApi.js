@@ -1,10 +1,10 @@
 /**
  * Created by Administrator on 2016/12/21 0021.
  */
+var BaseUrl = "http://182.92.70.85/hlppapi/Public/Found/?service=";
 
 var Service =
 {
-
     //广告
     commonGetGuanggao: function(typeid,callBack)
     {
@@ -24,6 +24,8 @@ var Service =
     //首页分类
     articleGetCategory: function(callBack)
     {
+
+
         var url = BaseUrl+"Article.getCategory";
 
         XHttpGet( url, callBack);
@@ -82,6 +84,32 @@ var Service =
         XHttpGet( url, callBack);
 
     },
+
+    //新增普通图片
+    articleAddPic: function(data,callBack)
+    {
+        var url = BaseUrl+"Article.addPic";
+        XHttpUpload(url,data,callBack);
+    },
+
+    //新增文章信息
+    articleAddArticle: function(data,callBack)
+    {
+        var url = BaseUrl+"Article.addArticle";
+        XHttpUpload(url,data,callBack);
+
+    },
+
+    //获取用户发布列表
+    usersGetArticleList: function(user,page,perNumber,callBack)
+    {
+        var url = BaseUrl+"Users.getArticleList&uid="+user.id+"&page="+page+"&perNumber="+perNumber;
+
+        XHttpGet( url, callBack);
+
+    },
+
+
 
 
 }

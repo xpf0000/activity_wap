@@ -14,12 +14,36 @@ var ActivityListPageModel = {
 
     category_id : '',
 
+    user:{},
+
     reset : function()
     {
         this.page = 1;
         this.pagesize = 10;
         this.end = false;
         this.running = false;
+    },
+
+    handleData: function(data,callback)
+    {
+        var info = data.data.info;
+        if(info)
+        {
+            if(info.length < this.pagesize)
+            {
+                this.end = true;
+            }
+            else
+            {
+                this.end = false;
+                this.page += 1;
+            }
+
+            callback(info,this.end);
+
+        }
+        this.running = false;
+
     },
 
     getlist : function(callback)
@@ -36,27 +60,28 @@ var ActivityListPageModel = {
 
         Service.articleGetList(this.category_id,this.page,this.pagesize,function(data)
         {
-            var info = data.data.info;
-            if(info)
-            {
-                if(info.length < abc.pagesize)
-                {
-                    abc.end = true;
-                }
-                else
-                {
-                    abc.end = false;
-                    abc.page += 1;
-                }
-
-                callback(info,abc.end);
-
-            }
-            abc.running = false;
-
-            abc = null;
-
+            abc.handleData(data,callback);
         });
+
+    },
+
+    getUserPostlist : function(callback)
+    {
+        if(this.end || this.running)
+        {
+            console.log("end: "+this.end+" | running: "+this.running);
+            return;
+        }
+
+        this.running = true;
+
+        var abc = this;
+
+        Service.usersGetArticleList(this.user,this.page,this.pagesize,function(data)
+        {
+            abc.handleData(data,callback);
+        });
+
     },
 
 };
@@ -120,6 +145,7 @@ var UrlArr = [];
 
 var User = {
     id:'',
+    uid:'',
     username:'',
     nickname:'尚未登录',
     headimage:'images/face02.jpg',
@@ -215,6 +241,16 @@ requirejs(['main'], function (main) {
                 setTimeout(function(){
 
                     initPublishJS();
+
+                },1);
+
+            }
+            else if(page.name == 'user_info_list2')
+            {
+                console.log("user_info_list2 page !!!!!!!!!");
+                setTimeout(function(){
+
+                    initUserList2JS();
 
                 },1);
 
@@ -563,6 +599,17 @@ requirejs(['main'], function (main) {
                 },
 
                 methods:{
+
+                    toUserList:function()
+                    {
+                        if(!checkLogin())
+                        {
+                            return;
+                        }
+
+                        mainView.router.loadPage({url:'user_info_list2.html'});
+                    },
+
                     toUserEdit:function()
                     {
                         if(!checkLogin())
@@ -570,7 +617,7 @@ requirejs(['main'], function (main) {
                             return;
                         }
 
-                        mainView.router.loadPage({url:'user_edit_info.html',pushState:true});
+                        mainView.router.loadPage({url:'user_edit_info.html'});
 
                     },
 
@@ -797,36 +844,245 @@ requirejs(['main'], function (main) {
 
         function initPublishJS()
         {
+
             var vm = new Vue({
                 el: '#publish',
                 data: {
                     list:[],
+                    lastindex:-1,
+                    cover:'http://static2.ivwen.com/user/7224114/c75747eb2c500001204e135077f080c0.jpg',
+                    coverid:'',
+                    isnew:false,
+                    isactity:false,
+                    title:'dsjfkdsjkf',
                 },
 
                 methods:{
-                    clip:function(id)
-                    {
-                        console.log("clip id: "+id);
 
-                        var b = -1;
-                        for(i in vm.list)
+                    txteditend:function()
+                    {
+
+                        var str = $$(".p_content").val();
+
+                        if(vm.isnew)
                         {
-                            if(vm.list[i].id == id)
+                            var obj = {};
+                            obj.txt = str;
+                            vm.list.splice(vm.lastIndex, 0, obj);
+                        }
+                        else
+                        {
+                            if(vm.lastIndex >= 0 && vm.lastIndex < vm.list.length)
                             {
-                                b = i;
+                                vm.list[vm.lastIndex].txt = str;
                             }
                         }
 
-                        if(b >= 0 )
-                        {
-                            vm.list.splice(b,1);
+                        myApp.closeModal('.popup_a');
+                        $$(".p_content").val("");
+
+                        vm.isnew = false;
+                    },
+
+                    showTxtEdit:function(index,isnew)
+                    {
+                        console.log(isnew);
+
+                        vm.isnew = isnew;
+
+                        myApp.popup('.popup_a');
+                        vm.lastIndex = index;
+                    },
+
+                    chooseCover:function()
+                    {
+                        var URL = window.URL || window.webkitURL;
+                        URL.revokeObjectURL(vm.cover);
+                        $$("#cover").click();
+                    },
+
+                    chooseimg:function(index,isnew)
+                    {
+                        vm.isnew = isnew;
+                        $$("#file"+index).click();
+
+                    },
+
+                    coverChange:function(event)
+                    {
+                        var files = event.target.files, file;
+                        if (files && files.length > 0) {
+
+                            file = files[0];
+
+
+                            if(file.size > 1024 * 1024 * 2) {
+                                alert('图片大小不能超过 2MB!');
+                                return false;
+                            }
+
+                            var URL = window.URL || window.webkitURL;
+
+                            var imgURL = URL.createObjectURL(file);
+
+                            console.log("imgURL: "+imgURL);
+
+
+                            vm.cover = imgURL;
+
+                            var form = new FormData($$( "#coverform" )[0]);
+                            form.append('uid',User.id);
+                            form.append('username',User.username);
+
+                            Service.articleAddPic(form,function(data){
+
+                                var code = data.data.code;
+                                var id = data.data.info[0].id;
+                                var url = data.data.info[0].url;
+                                if(code == 0)
+                                {
+                                    vm.coverid = id;
+                                    vm.cover = url;
+                                }
+
+                            });
+
+
+
                         }
+                    },
+
+                    imgChange:function(event,index)
+                    {
+                        var files = event.target.files;
+                        if (files && files.length > 0) {
+
+                            var form = new FormData($$( "#mform"+index)[0]);
+                            form.append('uid',User.id);
+                            form.append('username',User.username);
+
+                            Service.articleAddPic(form,function(data){
+
+                                var code = data.data.code;
+                                var info = data.data.info;
+                                if(code == 0)
+                                {
+                                    if(info.length > 1)
+                                    {
+                                        $$.each(info, function (i, item) {
+
+                                            if(i == 0)
+                                            {
+                                                vm.list[index].imgid = item.id;
+                                                vm.list[index].img = item.url;
+                                            }
+                                            else
+                                            {
+                                                var obj = {};
+                                                obj.txt = "点击这里输入照片说明";
+                                                obj.img = item.url;
+                                                obj.imgid = item.id;
+                                                vm.list.splice(index, 0, obj);
+                                                vm.isnew = false;
+                                            }
+
+                                        });
+                                    }
+                                    else
+                                    {
+                                        vm.list[index].imgid = info[0].id;
+                                        vm.list[index].img = info[0].url;
+                                    }
+
+                                }
+
+                            });
+
+
+                        }
+                    },
+
+                    addclick:function(index)
+                    {
+                        console.log("index: "+index);
+                        $$("#p_upload_class"+index).show();
+                        $$("#p_add"+index).hide();
+
+                        if(vm.lastindex >= 0)
+                        {
+                            $$("#p_upload_class"+vm.lastindex).hide();
+                            $$("#p_add"+vm.lastindex).show();
+                        }
+
+                        vm.lastindex = index;
 
 
                     },
 
-                    movedown:function(id)
+                    clip:function(index)
                     {
+                        if(index >= 0 )
+                        {
+                            vm.list.splice(index,1);
+                        }
+                    },
+
+                    movedown:function(index)
+                    {
+
+                        console.log("index: "+index);
+
+                        if(index < vm.list.length-1)
+                        {
+                            var obj = vm.list[index];
+                            var obj1 = vm.list[index+1];
+
+                            Vue.set(vm.list, index, obj1);
+                            Vue.set(vm.list, index+1, obj);
+
+                        }
+                    },
+
+                    doSubmit:function()
+                    {
+                        var arrString=JSON.stringify(vm.list);
+                        console.log(arrString);
+
+                        alert(arrString);
+
+                        var form = new FormData();
+                        form.append('uid',User.id);
+                        form.append('username',User.username);
+                        form.append('category_id',"1");
+                        form.append('title',vm.title);
+                        form.append('cover_id',vm.coverid);
+                        form.append('content',arrString);
+
+                        alert("!!!!!!!!!!!!!!!!!");
+
+                        Service.articleAddArticle(form,function(data){
+
+                            alert(data);
+
+                            var code = data.data.code;
+                            var msg = data.data.msg;
+
+                            if(code == 0)
+                            {
+                                msg = "发布成功";
+                            }
+
+                            var toast = myApp.toast(msg, '', {});
+
+                            toast.onDissMissListener(function(){
+
+                                mainView.router.back();
+
+                            });
+
+                            toast.show();
+
+                        });
 
                     },
 
@@ -835,14 +1091,111 @@ requirejs(['main'], function (main) {
 
             });
 
+
+            require(['zepto'],function(){
+
+                $("#p_sign_up").click(function(){
+                    $("#p_form_li").toggle();
+                    vm.isactity = !vm.isactity;
+                });
+                $("#em01").click(function(){
+                    $("#em01").toggleClass("c_em");
+                });
+                $("#em02").click(function(){
+                    $("#em02").toggleClass("c_em");
+                });
+                $("#em03").click(function(){
+                    $("#em03").toggleClass("c_em");
+                });
+                $("#em04").click(function(){
+                    $("#em04").toggleClass("c_em");
+                });
+                $("#em05").click(function(){
+                    $("#em05").toggleClass("c_em");
+                });
+                $("#em06").click(function(){
+                    $("#em06").toggleClass("c_em");
+                });
+                $("#em07").click(function(){
+                    $("#em07").toggleClass("c_em");
+                });
+                $("#em08").click(function(){
+                    $("#em08").toggleClass("c_em");
+                });
+                $("#em09").click(function(){
+                    $("#em09").toggleClass("c_em");
+                });
+                $("#em10").click(function(){
+                    $("#em10").toggleClass("c_em");
+                });
+                $("#em11").click(function(){
+                    $("#em11").toggleClass("c_em");
+                });
+                $("#em12").click(function(){
+                    $("#em12").toggleClass("c_em");
+                });
+
+
+            });
+
+
             for(i=0;i<3;i++)
             {
                 var obj = {};
-                obj.id = i+"";
-                obj.txt = "第"+(i+1)+"个项";
+                obj.txt = "点击这里输入照片说明";
+                obj.img = "http://static2.ivwen.com/user/7224114/c75747eb2c500001204e135077f080c0.jpg";
                 vm.list.push(obj);
             }
 
+        }
+
+
+        function initUserList2JS()
+        {
+            var vm = new Vue({
+                el: '#user_info_list2',
+                data: {
+                    msg : '信息加载中...',
+                    end : false,
+                    list:[],
+                },
+
+                methods:{
+
+                },
+
+            });
+
+
+            var listObj = Object.create(ActivityListPageModel);
+            listObj.user = User;
+            function getList(arr,end)
+            {
+
+                $$.each(arr, function (index, item) {
+                    item.timestr = DateTimeUtil.UnixToDate(item.create_time);
+                });
+
+                vm.list = vm.list.concat(arr);
+
+                if(end)
+                {
+                    vm.msg = "已全部加载完毕";
+                    vm.end = true;
+                }
+
+            }
+
+            listObj.getUserPostlist(getList);
+
+
+            $$('#user_info_list2').on('infinite', function () {
+
+                listObj.getUserPostlist(getList);
+
+            });
+
+            $$('#user_info_list2').on('scroll', handleInfiniteScroll);
         }
 
 
