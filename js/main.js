@@ -5,7 +5,7 @@ require.config({
         vue: 'vue',
         domReady:'domReady',
         net: 'XRequest',
-        serviceApi: '../js/serviceApi',
+        Service: '../js/serviceApi',
         framework7:'framework7',
         zepto:'zepto',
         auislide:'aui-slide',
@@ -13,12 +13,13 @@ require.config({
         json2:'json2',
         toast:'toast',
         city_picker:'city_picker',
+        xupload:'../js/XImageUpload',
     },
     shim:{
         vue: { deps: ['domReady!'],exports: "vue" },
         net:{ deps: ['framework7']},
         toast:{ deps: ['framework7']},
-        serviceApi:{ deps: ['net'],exports: "serviceApi"},
+        Service:{ deps: ['net']},
         store:{ deps: ['json2']},
     }
 });

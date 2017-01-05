@@ -84,6 +84,44 @@ var ActivityListPageModel = {
 
     },
 
+    getUserCollectlist : function(callback)
+    {
+        if(this.end || this.running)
+        {
+            console.log("end: "+this.end+" | running: "+this.running);
+            return;
+        }
+
+        this.running = true;
+
+        var abc = this;
+
+        Service.usersGetCollectList(this.user,this.page,this.pagesize,function(data)
+        {
+            abc.handleData(data,callback);
+        });
+
+    },
+
+    getUserJoinlist : function(callback)
+    {
+        if(this.end || this.running)
+        {
+            console.log("end: "+this.end+" | running: "+this.running);
+            return;
+        }
+
+        this.running = true;
+
+        var abc = this;
+
+        Service.usersGetJoinList(this.user,this.page,this.pagesize,function(data)
+        {
+            abc.handleData(data,callback);
+        });
+
+    },
+
 };
 
 function getCategory(callback)
@@ -142,7 +180,9 @@ var handleInfiniteScroll = function()
 var Vue;
 var $$;
 var UrlArr = [];
-
+var myApp = null;
+var WapBaseUrl = "http://192.168.1.105/activity_wap/";
+var Service;
 var User = {
     id:'',
     uid:'',
@@ -152,14 +192,26 @@ var User = {
     msg:'登录',
 };
 
-var WapBaseUrl = "http://192.168.1.105/activity_wap/";
+function checkLogin()
+{
+
+    if(User.username == null || User.username == undefined || User.username == "")
+    {
+        mainView.router.loadPage({url:'login.html',pushState:true});
+        return false;
+    }
+
+    return true;
+}
+
 
 requirejs(['main'], function (main) {
 
-    require(['vue','store','serviceApi','toast','auislide'], function(v,store) {
+    require(['vue','store','Service','xupload','toast','auislide'], function(v,store,s) {
 
         Vue = v;
         $$ = Dom7;
+        Service = s;
 
         initUser();
 
@@ -287,7 +339,7 @@ requirejs(['main'], function (main) {
 
         });
 
-        var myApp = new Framework7();
+        myApp = new Framework7();
 
         mainView = myApp.addView('.view-main', {
             // Because we want to use dynamic navbar, we need to enable it for this view:
@@ -295,9 +347,18 @@ requirejs(['main'], function (main) {
         });
 
 
-        function initUser()
+        function initUser(u)
         {
-            var obj = store.get("user");
+            var obj;
+
+            if(u != null && u != undefined)
+            {
+                obj = u;
+            }
+            else {
+                obj = store.get("user");
+            }
+
             if(obj != null && obj != undefined)
             {
                 User = obj;
@@ -445,8 +506,36 @@ requirejs(['main'], function (main) {
 
         function initListJS()
         {
+
             var id = getUrlParam("id");
             var title = getUrlParam("title");
+
+            var fvm = new Vue({
+                el: '#filter',
+                data: {
+                    category:[],
+                },
+
+                methods:{
+
+                    chooseid: function (id,title)
+                    {
+                        vm.filter.id = id;
+                        vm.filter.title = title;
+                        vm.msg = "加载中...";
+                        vm.end = false;
+                        vm.list = [];
+                        listObj.category_id = id;
+                        listObj.reset();
+                        listObj.getlist(getList);
+
+                        var u=WapBaseUrl+"list.html?id="+id+"&title="+title;
+                        window.history.pushState({},0,u);
+
+                    }
+
+                },
+            });
 
             var vm = new Vue({
                 el: '#list',
@@ -464,29 +553,6 @@ requirejs(['main'], function (main) {
                     },
 
                     list:[],
-
-                    category:[],
-
-
-                },
-
-                methods:{
-
-                    chooseid: function (id,title)
-                    {
-                        this.filter.id = id;
-                        this.filter.title = title;
-                        vm.msg = "加载中...";
-                        vm.end = false;
-                        vm.list = [];
-                        listObj.category_id = id;
-                        listObj.reset();
-                        listObj.getlist(getList);
-
-                        var u=WapBaseUrl+"list.html?id="+id+"&title="+title;
-                        window.history.pushState({},0,u);
-
-                    }
 
                 },
 
@@ -523,7 +589,7 @@ requirejs(['main'], function (main) {
 
             getCategory(function(arr)
             {
-                vm.category = arr;
+                fvm.category = arr;
             });
 
 
@@ -548,27 +614,59 @@ requirejs(['main'], function (main) {
                 el: '#info',
                 data: {
                     info:{},
+                    list:[],
                 },
+
+            });
+
+            var bottom = new Vue({
+                el: '#info_bottom',
+                data: {},
 
                 methods:{
 
                     doCollect:function()
                     {
-
-                        console.log("点击收藏！！！！");
-
-                        var user = store.get("user");
-
-                        if(user == null || user == undefined)
+                        if(!checkLogin())
                         {
-
+                            return;
                         }
 
+                        Service.articleAddCollect(vm.info.id,User,"收藏成功","收藏失败",function(b){
+
+
+
+                        });
 
                     },
                 },
 
             });
+
+            var join = new Vue({
+                el: '#join',
+                data: {},
+
+                methods:{
+
+                    doJoin:function()
+                    {
+                        if(!checkLogin())
+                        {
+                            return;
+                        }
+
+                        Service.articleAddJoin(vm.info.id,User,"报名成功","报名失败",function(b){
+
+
+
+                        });
+
+                    },
+                },
+
+            });
+
 
             Service.articleGetArticle(id,function(data)
             {
@@ -578,6 +676,17 @@ requirejs(['main'], function (main) {
                     var obj = info[0];
 
                     obj.time = DateTimeUtil.UnixToDate(obj.update_time);
+
+                    try
+                    {
+                        var arr = JSON.parse(obj.content);
+                        vm.list = arr;
+                    }
+                    catch (err)
+                    {
+
+                    }
+
 
                     vm.info = obj;
                 }
@@ -600,14 +709,14 @@ requirejs(['main'], function (main) {
 
                 methods:{
 
-                    toUserList:function()
+                    toUserList:function(flag)
                     {
                         if(!checkLogin())
                         {
                             return;
                         }
 
-                        mainView.router.loadPage({url:'user_info_list2.html'});
+                        mainView.router.loadPage({url:'user_info_list2.html?flag='+flag});
                     },
 
                     toUserEdit:function()
@@ -648,21 +757,6 @@ requirejs(['main'], function (main) {
 
             UserVM.uinfo = User;
 
-            function checkLogin()
-            {
-
-                console.log(User);
-
-                if(User.username == null || User.username == undefined || User.username == "")
-                {
-                    mainView.router.loadPage({url:'login.html',pushState:true});
-                    return false;
-                }
-
-                return true;
-            }
-
-
         }
 
         function initLoginJS()
@@ -680,23 +774,33 @@ requirejs(['main'], function (main) {
                 methods:{
                     doLogin:function(flag)
                     {
-
                         if (vm.running){return;};
                         vm.running = true;
 
+
                         if(flag == 0)
                         {
+
                             Service.userLogin(vm.account,vm.pass,function(data)
                             {
                                 var code = data.data.code;
                                 var msg = data.data.msg;
                                 var info = data.data.info;
+
                                 if(info.length > 0)
                                 {
                                     var obj = info[0];
-                                    store.set("user",obj);
 
-                                    initUser();
+                                    try
+                                    {
+                                        store.set("user",obj);
+                                    }
+                                    catch (err)
+                                    {
+
+                                    }
+
+                                    initUser(obj);
 
                                     mainView.router.back();
 
@@ -844,7 +948,6 @@ requirejs(['main'], function (main) {
 
         function initPublishJS()
         {
-
             var vm = new Vue({
                 el: '#publish',
                 data: {
@@ -854,7 +957,18 @@ requirejs(['main'], function (main) {
                     coverid:'',
                     isnew:false,
                     isactity:false,
-                    title:'dsjfkdsjkf',
+                    title:'',
+                    nowindex:-1,
+                    clist:[],
+
+                    s_time:'',
+                    e_time:'',
+                    price:'',
+                    a_number:'',
+
+                    cname : '',
+                    cid : '',
+
                 },
 
                 methods:{
@@ -868,6 +982,7 @@ requirejs(['main'], function (main) {
                         {
                             var obj = {};
                             obj.txt = str;
+                            obj.img = "http://static2.ivwen.com/user/7224114/c75747eb2c500001204e135077f080c0.jpg";
                             vm.list.splice(vm.lastIndex, 0, obj);
                         }
                         else
@@ -904,7 +1019,15 @@ requirejs(['main'], function (main) {
                     chooseimg:function(index,isnew)
                     {
                         vm.isnew = isnew;
-                        $$("#file"+index).click();
+                        vm.nowindex = index;
+                        if(isnew)
+                        {
+                            $$("#mfile").click();
+                        }
+                        else
+                        {
+                            $$("#file").click();
+                        }
 
                     },
 
@@ -952,19 +1075,47 @@ requirejs(['main'], function (main) {
                         }
                     },
 
-                    imgChange:function(event,index)
+                    imgChange:function(event)
                     {
+                        var index = vm.nowindex;
+                        //var p = {
+                        //
+                        //    url:"http://182.92.70.85/hlppapi/Public/Found/?service=Article.addPic",
+                        //    upBody:{
+                        //        uid: User.id,
+                        //        username: User.username,
+                        //    },
+                        //
+                        //};
+                        //
+                        //var upload = new XImageUpload(p);
+                        //
+                        //upload.upLoad(event);
+
                         var files = event.target.files;
+                        var form = {};
                         if (files && files.length > 0) {
 
-                            var form = new FormData($$( "#mform"+index)[0]);
+                            myApp.showPreloader("上传中...");
+
+                            if(vm.isnew)
+                            {
+                                form = new FormData($$( "#mform")[0]);
+                            }
+                            else
+                            {
+                                form = new FormData($$( "#form")[0]);
+                            }
+
                             form.append('uid',User.id);
                             form.append('username',User.username);
 
                             Service.articleAddPic(form,function(data){
 
+                                myApp.hidePreloader();
                                 var code = data.data.code;
                                 var info = data.data.info;
+
                                 if(code == 0)
                                 {
                                     if(info.length > 1)
@@ -1000,6 +1151,8 @@ requirejs(['main'], function (main) {
 
 
                         }
+
+
                     },
 
                     addclick:function(index)
@@ -1021,6 +1174,13 @@ requirejs(['main'], function (main) {
 
                     clip:function(index)
                     {
+                        if(vm.list.length == 1)
+                        {
+                            var toast = myApp.toast("至少要有一张图片或文字", '', {});
+                            toast.show();
+                            return;
+                        }
+
                         if(index >= 0 )
                         {
                             vm.list.splice(index,1);
@@ -1045,44 +1205,96 @@ requirejs(['main'], function (main) {
 
                     doSubmit:function()
                     {
-                        var arrString=JSON.stringify(vm.list);
-                        console.log(arrString);
+                        if(User.id == null || User.id == undefined || User.id == "")
+                        {
+                            mainView.router.loadPage({url:'login.html',pushState:true});
+                            return;
+                        }
 
-                        alert(arrString);
+                        if(vm.coverid == "")
+                        {
+                            var toast = myApp.toast("请选择封面", '', {});
+                            toast.show();
+                            return;
+                        }
+
+                        if(vm.title == "")
+                        {
+                            var toast = myApp.toast("请输入标题", '', {});
+                            toast.show();
+                            return;
+                        }
+
+                        if(vm.list.length == 0)
+                        {
+                            var toast = myApp.toast("内容不能为空", '', {});
+                            toast.show();
+                            return;
+                        }
+
+                        if(vm.cname == "")
+                        {
+                            var toast = myApp.toast("请选择分类", '', {});
+                            toast.show();
+                            return;
+                        }
+                        else
+                        {
+                            $$.each(vm.clist,function(index,item){
+
+                                if(item.title == vm.cname)
+                                {
+                                    vm.cid = item.id;
+                                }
+
+                            });
+                        }
+
+                        if(vm.isactity)
+                        {
+                            if(vm.s_time == "" || vm.e_time == "" || vm.price == "" || vm.a_number == "")
+                            {
+                                var toast = myApp.toast("请完善活动信息", '', {});
+                                toast.show();
+                                return;
+                            }
+                        }
+
+
+
+                        var arrString=JSON.stringify(vm.list).replace("点击这里输入照片说明","");
+                        myApp.showPreloader("上传中...");
 
                         var form = new FormData();
                         form.append('uid',User.id);
                         form.append('username',User.username);
-                        form.append('category_id',"1");
+                        form.append('category_id',vm.cid);
                         form.append('title',vm.title);
                         form.append('cover_id',vm.coverid);
                         form.append('content',arrString);
 
-                        alert("!!!!!!!!!!!!!!!!!");
+                        if(vm.isactity)
+                        {
 
-                        Service.articleAddArticle(form,function(data){
+                            form.append('s_time',vm.s_time);
+                            form.append('e_time',vm.e_time);
+                            form.append('price',vm.price);
+                            form.append('a_number',vm.a_number);
 
-                            alert(data);
+                            Service.articleAddEvent(form,function(data){
 
-                            var code = data.data.code;
-                            var msg = data.data.msg;
-
-                            if(code == 0)
-                            {
-                                msg = "发布成功";
-                            }
-
-                            var toast = myApp.toast(msg, '', {});
-
-                            toast.onDissMissListener(function(){
-
-                                mainView.router.back();
+                                handleresult(data);
 
                             });
+                        }
+                        else
+                        {
+                            Service.articleAddArticle(form,function(data){
 
-                            toast.show();
+                                handleresult(data);
 
-                        });
+                            });
+                        };
 
                     },
 
@@ -1090,6 +1302,80 @@ requirejs(['main'], function (main) {
                 },
 
             });
+
+
+            function handleresult(data)
+            {
+                myApp.hidePreloader();
+
+                var code = data.data.code;
+                var msg = data.data.msg;
+
+                if(code == 0)
+                {
+                    msg = "发布成功";
+                }
+
+                var toast = myApp.toast(msg, '', {});
+                toast.show();
+
+                mainView.router.back();
+
+
+            }
+
+            var s_calendar= myApp.calendar({
+                input: '#calendar-stime',
+
+                formatValue: function (picker, values) {
+                    vm.s_time = values/1000;
+                    return DateTimeUtil.UnixToDate(values/1000);
+                },
+
+            });
+
+            var e_calendar= myApp.calendar({
+                input: '#calendar-etime',
+
+                formatValue: function (picker, values) {
+                    vm.e_time = values/1000;
+                    return DateTimeUtil.UnixToDate(values/1000);
+                },
+
+            });
+
+            getCategory(function(info){
+                vm.clist = [];
+                vm.clist = info;
+                var sarr = [];
+                $$.each(info, function (i, item) {
+
+                    sarr.push(item.title);
+
+                });
+
+
+
+                var cpicker = myApp.picker({
+                    input: '#picker-device',
+
+                    formatValue: function (picker, values) {
+                        vm.cname = values;
+                        return values;
+                    },
+
+                    cols: [
+                        {
+                            textAlign: 'center',
+                            values: sarr,
+                        }
+                    ]
+                });
+
+            });
+
+
+
 
 
             require(['zepto'],function(){
@@ -1139,7 +1425,7 @@ requirejs(['main'], function (main) {
             });
 
 
-            for(i=0;i<3;i++)
+            for(i=0;i<1;i++)
             {
                 var obj = {};
                 obj.txt = "点击这里输入照片说明";
@@ -1152,12 +1438,16 @@ requirejs(['main'], function (main) {
 
         function initUserList2JS()
         {
+
+            var flag = getUrlParam("flag");
+
             var vm = new Vue({
                 el: '#user_info_list2',
                 data: {
                     msg : '信息加载中...',
                     end : false,
                     list:[],
+                    pagetitle:'',
                 },
 
                 methods:{
@@ -1186,14 +1476,44 @@ requirejs(['main'], function (main) {
 
             }
 
-            listObj.getUserPostlist(getList);
+            switch(flag)
+            {
+                case "1":
+                    vm.pagetitle = "我发布的";
+                    listObj.getUserPostlist(getList);
+
+                    $$('#user_info_list2').on('infinite', function () {
+
+                        listObj.getUserPostlist(getList);
+
+                    });
+                    break;
+
+                case "2":
+                    vm.pagetitle = "我收藏的";
+                    listObj.getUserCollectlist(getList);
+
+                    $$('#user_info_list2').on('infinite', function () {
+
+                        listObj.getUserPostlist(getList);
+
+                    });
+                    break;
+
+                case "3":
+                    vm.pagetitle = "我参与的";
+                    listObj.getUserJoinlist(getList);
+
+                    $$('#user_info_list2').on('infinite', function () {
+
+                        listObj.getUserPostlist(getList);
+
+                    });
+                    break;
+
+            }
 
 
-            $$('#user_info_list2').on('infinite', function () {
-
-                listObj.getUserPostlist(getList);
-
-            });
 
             $$('#user_info_list2').on('scroll', handleInfiniteScroll);
         }

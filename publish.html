@@ -44,6 +44,24 @@
 </div>
 
 
+	<form id="mform">
+		<input id="mfile"
+			   multiple="multiple"
+			   type="file"
+			   name="file[]"
+			   @change="imgChange($event)"
+			   hidden="true" />
+
+	</form>
+
+	<form id="form">
+		<input id="file"
+			   type="file"
+			   name="file[]"
+			   @change="imgChange($event)"
+			   hidden="true" />
+	</form>
+
 <div v-for="(item,index) in list">
 <div class="p_add" :id="'p_add'+index" @touchend="addclick(index)"></div>
 <div :id="'p_upload_class'+index" style=" height:32px; line-height:32px;display:none; padding-top:6px;">
@@ -60,25 +78,6 @@
 
 </div>
 <div class="p_box">
-
-	<form :id="'mform'+index">
-	<input :id="'file'+index"
-		   multiple="multiple"
-		   type="file"
-		   :name="'file'+index+'[]'"
-		   @change="imgChange($event,index)"
-		   @blur="imgChange($event,index)"
-		   @input="imgChange($event,index)"
-		   hidden="true" v-if="isnew"/>
-		<input :id="'file'+index"
-			   type="file"
-			   :name="'file'+index+'[]'"
-			   @change="imgChange($event,index)"
-			   @blur="imgChange($event,index)"
-			   @input="imgChange($event,index)"
-			   hidden="true"
-			    v-else/>
-	</form>
 
 	<textarea :name="'txt'+index" v-html="item.txt" hidden="true"></textarea>
 
@@ -104,18 +103,38 @@
 <!--<div class="p_add"></div>-->
 
 
+	<div class="p_c_class">
+		<input type="text" placeholder="请选择分类" readonly id="picker-device" />
+	</div>
+
+	<div class="p_sign_up tc list-block" style="position: relative; margin: 6px 8px;">添加报名 <li  style="position: absolute; top:-6px;width: 100%;">
+		<label class="label-checkbox item-content" id="p_sign_up">
+			<input type="checkbox" name="my-checkbox" value="yes">
+			<div class="item-media">
+				<i class="icon icon-form-checkbox" ></i>
+			</div>
+		</label>
+	</li></div>
 
 
 
-<div class="p_sign_up tc" id="p_sign_up">添加报名</div>
 <div class="p_form_li bg-ff mt10" id="p_form_li" style="display:none">
 <ul>
-<li>开始时间<input type="text" id="begin_time" name="begin_time" class="sign_input" placeholder="请设置开始时间" ></li>
-<li>结束时间<input type="text" id="begin_time" name="begin_time" class="sign_input" placeholder="请设置开始时间" ></li>
-<li>活动地点<input type="text" id="begin_time" name="begin_time" class="sign_input" placeholder="请选择活动地点" ></li>
-<li>活动类型<input type="text" id="begin_time" name="begin_time" class="sign_input" placeholder="请选择活动类型" ></li>
-<li>活动费用<input type="text" id="begin_time" name="begin_time" class="sign_input" placeholder="请设置活动费用" ></li>
-<li>人数限制<input type="text" id="begin_time" name="begin_time" class="sign_input" placeholder="请设置最多报名人数" ></li>
+<li>开始时间
+	<input readonly id="calendar-stime" type="text"  name="s_time"  placeholder="请设置开始时间" style="float: right;" >
+</li>
+<li>结束时间
+	<input readonly id="calendar-etime" type="text"  name="e_time"  placeholder="请设置开始时间" style="float: right;">
+</li>
+
+<li>活动费用
+	<input type="number"  id="price" v-model="price" name="price"  placeholder="请设置活动费用" style="float: right;">
+</li>
+
+<li>人数限制
+	<input type="number"  id="num" v-model="a_number" name="a_number"  placeholder="请设置最多报名人数" style="float: right;">
+</li>
+
 <li style="height:106px; line-height:30px;">活动标签<span><em id="em01">骑行</em><em id="em02">徒步</em><em id="em03">滑雪</em><em id="em04">骑行</em><em id="em05">徒步</em><em id="em06">滑雪</em><em id="em07">骑行</em><em id="em08">徒步</em><em id="em09">滑雪</em><em id="em10">骑行</em><em id="em11">徒步</em><em id="em12">滑雪</em><div class="cl"></div></span></li>
 </ul>
 </div>

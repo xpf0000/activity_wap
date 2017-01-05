@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>My App</title>
+    <link rel="stylesheet" href="css/framework7.ios.css">
+    <link rel="stylesheet" href="css/framework7.ios.colors.css">
+    <link rel="stylesheet" href="css/index.css">
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-55082724-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+</head>
+<body>
+<div class="views">
+    <div class="view view-main">
+        <div class="pages">
+            <div data-page="home" class="page navbar-fixed toolbar-fixed">
+                <div class="navbar">
+                    <div class="navbar-inner">
+                        <div class="left"></div>
+                        <div class="center">Popup</div>
+                        <div class="right"></div>
+                    </div>
+                </div>
+
+
+                <div class="page-content">
+                    <!--<div class="content-block">-->
+                        <p><a href="#" data-popup=".popup-about" class="open-popup">Open About Popup </a></p>
+                        <p><a href="#" data-popup=".popup-services" class="open-popup">Open Services Popup </a></p>
+                    <!--</div>-->
+
+
+                    <div class="xgrid">
+                        <div class="col-33" style="background: #2a5af8;height: 80px;">
+                            0
+                        </div>
+                        <div class="col-33" style="background: #ff3b30;height: 20px;">1</div>
+                        <div class="col-33" style="background: #f1c40f;height: 50px;">2</div>
+                        <div class="col-33" style="background: #fc4d48;height: 120px;">3</div>
+
+                        <div class="col-33" style="background: #e6e5e5;height: 30px;">4</div>
+                        <div class="col-33" style="background: #a234ff;height: 80px;">5</div>
+                        <div class="col-33" style="background: #2a5af8;height: 80px;">5</div>
+
+                    </div>
+
+                        <!--</div>-->
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="popup popup-about" style="margin-top: 100px;">
+    <!--<div class="content-block">-->
+        <p>About</p>
+        <p><a href="#" class="close-popup">Close popup</a></p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque ac diam ac quam euismod porta vel a nunc. Quisque sodales scelerisque est, at porta justo cursus ac. Integer vitae quam a ante lobortis lobortis. Nam vehicula sagittis quam, sit amet congue purus consequat sed. Maecenas eget mattis lectus. Aliquam luctus luctus leo ac fringilla. Sed nec eros vel purus tincidunt tincidunt in in orci. Sed tellus neque, pellentesque nec metus id, congue elementum odio. Donec turpis tellus, mollis ac leo eget, accumsan fermentum lorem. Aliquam et elementum neque. Vestibulum sed egestas ipsum.</p>
+    <!--</div>-->
+</div>
+<div class="popup popup-services">
+    <div class="content-block">
+        <p>Services</p>
+        <p><a href="#" class="close-popup">Close popup</a></p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque ac diam ac quam euismod porta vel a nunc. Quisque sodales scelerisque est, at porta justo cursus ac. Integer vitae quam a ante lobortis lobortis. Nam vehicula sagittis quam, sit amet congue purus consequat sed. Maecenas eget mattis lectus. Aliquam luctus luctus leo ac fringilla. Sed nec eros vel purus tincidunt tincidunt in in orci. Sed tellus neque, pellentesque nec metus id, congue elementum odio. Donec turpis tellus, mollis ac leo eget, accumsan fermentum lorem. Aliquam et elementum neque. Vestibulum sed egestas ipsum.</p>
+    </div>
+</div>
+<script type="text/javascript" src="lib/framework7.min.js"></script>
+<script>
+    var myApp = new Framework7();
+
+    var $$ = Dom7;
+</script>
+</body>
+</html>

@@ -9,8 +9,8 @@
 <title>活动列表-河洛泡泡</title>
 <link rel="stylesheet" type="text/css" href="css/base.css"/>
 <link type="text/css" rel="stylesheet" href="css/index.css">
-<link rel="stylesheet" href="css/framework7.ios.min.css">
-<link rel="stylesheet" href="css/framework7.ios.colors.min.css">
+<link rel="stylesheet" href="css/framework7.ios.css">
+<link rel="stylesheet" href="css/framework7.ios.colors.css">
 <link rel="stylesheet" href="css/my-app.css">
     <script data-main="js/index" src="lib/require-min.js" ></script>
 </head>
@@ -24,65 +24,10 @@
 
 <header class="page_header">
 <a href="index.html" class="nav_back back"></a>
-    <h1 class="page_name">活动列表</h1> 
+<h1 class="page_name">活动列表</h1>
+<a href="#" data-popup=".popup_a" class="open-popup class_menu">分类</a>
 </header>
-<div class="page_w">
-<div class="m-filter clearfix" id="m-filter">
 
-  <div class="filter-menu" id="filter-menu">
-      <a href="#" data-popup=".popup_a" class="open-popup">
-          <em class="sort-img"></em><span v-html="filter.title"></span></a>
-      <a href="#" data-popup=".popup_b" class="open-popup">时间</a>
-      <a href="#" data-popup=".popup_c" class="open-popup">费用</a>
-  </div>
-
-   <div class="popup popup_a">
-    <div class="box-filter-hd">分类
-        <a href="#" class="ico-close db close-popup"></a>
-    </div>
-    <div class="box-filter-bd">
-      <div name="orderType">
-        <div class="sort-view bg_fff">
-          <div class="brand" id="tt"><div class="class_list_icon">
-
-<ul>
-
-<li v-for="item in category">
-
-    <a class="close-popup" href="#" @touchend="chooseid(item.id,item.title)">
-        <span class="index_icon class_icon00 db"></span>
-        <span class="class_name db" v-html="item.title"></span>
-    </a>
-
-</li>
-
-</ul>
-
-<div class="clear"></div>
-</div></div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="popup popup_b">
-    <div class="box-filter-hd">时间<a href="#" class="ico-close db close-popup"></a></div>
-    <div class="box-filter-bd">
-      <div name="orderType">
-        <div class="sort-view bg_fff">
-          <div class="brand" id="ttime"> <a href="#">全部时间</a><a href="#">最近一个月</a><a href="#"> 最近一周 </a><a href="#">今天</a>
-           
-            <a  href="#">明天</a> <a  href="#">本周末</a> </div>
-        </div>
-      </div>
-    </div>
-  </div>
-   <div class="popup popup_c">
-    <div class="box-filter-hd">费用<a href="#" class="ico-close db close-popup"></a></div>
-    <div class="box-filter-bd">
-      <div class="sort-values" name="orderType"> <a staticpath="s1" value="1" class="current"><em>默认排序</em></a> <a staticpath="s5" value="5"><em>免费活动</em></a> <a staticpath="s4" value="4"><em>1-50元</em></a> <a staticpath="s3" value="3"><em>50-100元</em></a> <a staticpath="s6" value="6"><em>100-300元</em></a><a staticpath="s9" value="9"><em>300-500元</em></a> <a staticpath="s8" value="8"><em>500-1000元</em></a><a staticpath="s7" value="7"><em>1000元以上</em></a></div>
-    </div>
-  </div>
-</div>
 <div class="index_info_list">
 
     <ul>
@@ -99,26 +44,54 @@
 
 </div>
 
-<div class="page_load">
-    <span class="fl" style="margin-top:6px;" v-if="!end">
-        <img src="images/loadding.gif" width="25" height="25">
-    </span>
-    <span class="fl" v-html="msg"></span>
+<div class="xgrid">
+    <div class="col-100" style="padding: 12px;">
+        <img src="images/loadding.gif" width="25" height="25" v-if="!end">
+        <span class="fl" v-html="msg"></span>
+    </div>
     <div class="clear"></div>
 </div>
 
 <div class="bb_bg"></div>
-<footer class="b_menu">
-<a href=""><span class="b_icon01_current db"></span><em class="current_menu">活动</em></a>
-<a href=""><span class="b_icon02 db"></span><em>发布</em></a>
-<a href=""><span class="b_icon03 db"></span><em>我的</em></a>
-</footer>
+
 </div>
-</div>
+
+                <footer class="b_menu">
+                    <a href=""><span class="b_icon01_current db"></span><em class="current_menu">活动</em></a>
+                    <a href=""><span class="b_icon02 db"></span><em>发布</em></a>
+                    <a href=""><span class="b_icon03 db"></span><em>我的</em></a>
+                </footer>
+
+
+
+                <div class="popup popup_a" id="filter">
+
+                    <div class="box-filter-hd">分类
+                        <a href="#" class="ico-close db close-popup"></a>
+                    </div>
+                    <div class="box-filter-bd">
+
+                        <div class="xgrid">
+                            <div class="col-20" style="padding: 10px;" v-for="item in category">
+                                <a class="close-popup" href="#" @touchend="chooseid(item.id,item.title)">
+                                    <img :src="item.url" style="width: 48px;height: 48px;">
+                                    <div class="class_name db" style="text-align: center;" v-html="item.title"></div>
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
 				</div>
 			</div>
 		</div>
 	</div>
+
+
+
 
 </body>
 </html>

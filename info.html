@@ -9,8 +9,8 @@
 <title>活动详情-河洛泡泡</title>
 <link rel="stylesheet" type="text/css" href="css/base.css"/>
 <link type="text/css" rel="stylesheet" href="css/index.css">
-<link rel="stylesheet" href="css/framework7.ios.min.css">
-<link rel="stylesheet" href="css/framework7.ios.colors.min.css">
+<link rel="stylesheet" href="css/framework7.ios.css">
+<link rel="stylesheet" href="css/framework7.ios.colors.css">
 <link rel="stylesheet" href="css/my-app.css">
 
   <script data-main="js/index" src="lib/require-min.js" ></script>
@@ -23,16 +23,43 @@
 			<div data-page="info" class="page">
 				<div class="page-content" id="info">
 <header class="page_header">
-<a href="#" class="nav_back back"></a>
+<a href="index.html" class="nav_back back"></a>
     <h1 class="page_name">活动详情</h1>  
 </header>
 <div class="page_w">
 <div class="page_tit" v-html="info.title"></div>
+
+    <!--头像 时间-->
 <div class="author_info">
-<a href=""><img :src="info.headimage"><span class="user_name" v-html="info.nickname"></span></a><span class="author_other f16" v-html="info.time"></span>
+<a href="user_info_list.html">
+    <img :src="info.headimage">
+    <span class="author_name" v-html="info.nickname"></span>
+</a>
+    <span class="author_other f16" v-html="info.time"></span>
 </div>
+
+
+
 <div class="event_info_s">
-<div class="event_info_c" v-html="info.content">
+<div class="event_info_c">
+    
+    <ul>
+        
+        <li v-for="item in list">
+            
+            <ul>
+                <li v-html="item.txt">
+                </li>
+                <li>
+                    <img :src="item.img">
+                </li>
+            </ul>
+            
+            
+        </li>
+
+        
+    </ul>
 
 </div>
   <span class="author_other f16" style="padding-left:15px;">阅读:<span v-html="info.view"></span>&nbsp;&nbsp;&nbsp;&nbsp;报名:<span v-html="info.view"></span></span>
@@ -41,23 +68,7 @@
     
  
 
-<div class="page_bottom_btn">
 
-<a href="#" class="page_Collection fl db" @touchend="doCollect">
-  <span class="Collection_icon2 db"></span>
-  <span class="Collection_f db tc">收藏</span>
-</a>
-
-<a href="#" class="page_share fl db open-picker db" data-picker=".picker_a">
-  <span class="share_icon db"></span>
-  <span class="share_f db tc">分享</span>
-</a>
-
-<a href="#" class="page_btn2 fr tc white db open-picker" data-picker=".picker_b">
-  报名
-</a>
-
-</div>
 <!--
 
 <div class="page_bottom_btn">
@@ -80,33 +91,60 @@
   <div class="am-share-footer"><a href="#" data-picker=".picker_a" class="close-picker share_btn">取消</a></div>
 </div>
 
-<div class="am-sign-up picker-modal picker_b">
-<h3 class="am-share-title">活动信息<a href="#" class="sign_up_close db fr close-picker" data-picker=".picker_b"></a></h3>
-<div class="event_info">
-<div class="event_info_l"><span class="event_info_icon info_icon01"></span><span class="event_info_f">时间</span>06-24 8:00至06-25  22:00<div class="clear"></div></div>
-<div class="event_info_l"><span class="event_info_icon info_icon02"></span><span class="event_info_f">标签</span><div class="event_label"><ul><li><a href="">徒步</a></li><li><a href="">赏花</a></li><li><a href="">爬山</a></li></ul></div><div class="clear"></div></div>
-<div class="event_info_l"><span class="event_info_icon info_icon03"></span><span class="event_info_f">人数</span>限35人，已报名2人<div class="clear"></div></div>
-<div class="event_info_l"><span class="event_info_icon info_icon04"></span><span class="event_info_f">费用</span><span class="event_price">￥60</span><div class="clear"></div></div>
+
 </div>
-<div class="am-share-title">填写报名信息</div>
-<div class="form_group">
-<ul>
-<li><em class="sign_up_name db">姓名</em><input name="user_name" type="text" placeholder="请输入姓名" class="login_text"/></li>
-<li><em class="sign_up_Gender db">性别</em><span class="db" style="width:140px; height:40px; margin-left: 60px;"><input class="a_radio" type="radio" name="a_radio" checked style=""><div class="radio_name fl">男</div><input class="a_radio" type="radio" name="a_radio"><div class="radio_name fl">女</div></span></li>
-<li><em class="sign_up_mob db">手机号</em><input name="user_name" type="text" placeholder="请输入手机号" class="login_text"/></li>
-<li><em class="sign_up_id db">身份证</em><input name="user_name" type="text" placeholder="请输入身份证号" class="login_text"/></li>
-</ul>
-<div class="form_group_btn"><button onClick="showDefault()" class="form_group_btn_c" id="form_btn">提交报名</button></div>
+
 </div>
+
+                <div class="popup picker_b am-sign-up" id="join">
+
+                    <div class="bottom">
+
+                    <h3 class="am-share-title">活动信息<a href="#" class="sign_up_close db fr close-popup"></a></h3>
+                    <div class="event_info">
+                        <div class="event_info_l"><span class="event_info_icon info_icon01"></span><span class="event_info_f">时间</span>06-24 8:00至06-25  22:00<div class="clear"></div></div>
+                        <div class="event_info_l"><span class="event_info_icon info_icon02"></span><span class="event_info_f">标签</span><div class="event_label"><ul><li><a href="">徒步</a></li><li><a href="">赏花</a></li><li><a href="">爬山</a></li></ul></div><div class="clear"></div></div>
+                        <div class="event_info_l"><span class="event_info_icon info_icon03"></span><span class="event_info_f">人数</span>限35人，已报名2人<div class="clear"></div></div>
+                        <div class="event_info_l"><span class="event_info_icon info_icon04"></span><span class="event_info_f">费用</span><span class="event_price">￥60</span><div class="clear"></div></div>
+                    </div>
+                    <div class="am-share-title">填写报名信息</div>
+                    <div class="form_group">
+                        <ul>
+                            <li><em class="sign_up_name db">姓名</em><input name="user_name" type="text" placeholder="请输入姓名" class="login_text"/></li>
+                            <li><em class="sign_up_Gender db">性别</em><span class="db" style="width:140px; height:40px; margin-left: 60px;"><input class="a_radio" type="radio" name="a_radio" checked style=""><div class="radio_name fl">男</div><input class="a_radio" type="radio" name="a_radio"><div class="radio_name fl">女</div></span></li>
+                            <li><em class="sign_up_mob db">手机号</em><input name="user_name" type="text" placeholder="请输入手机号" class="login_text"/></li>
+                            <li><em class="sign_up_id db">身份证</em><input name="user_name" type="text" placeholder="请输入身份证号" class="login_text"/></li>
+                        </ul>
+                        <div class="form_group_btn"><button @click="doJoin" class="form_group_btn_c" id="form_btn">提交报名</button></div>
+                    </div>
+
+                    </div>
+
+                </div>
+
+                <div id="info_bottom" class="page_bottom_btn" style="height: 50px;line-height: 50px;">
+
+                    <a href="#" class="page_Collection fl db" @click="doCollect">
+                        <span class="Collection_icon2 db" style="margin-top: 4px;"></span>
+                        <span class="Collection_f db tc">收藏</span>
+                    </a>
+
+                    <a href="#" class="page_share fl db open-picker db" data-picker=".picker_a">
+                        <span class="share_icon db" style="margin-top: 4px;"></span>
+                        <span class="share_f db tc">分享</span>
+                    </a>
+
+                    <a href="#" data-popup=".picker_b" class="page_btn2 fr tc white db open-popup" style="height: 100%;line-height: 50px;">
+                        报名
+                    </a>
+
 </div>
-</div>
+
 
 </div>
 </div>
 </div>
 </div>
-</div>
-
 
 
 </body>
