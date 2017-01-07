@@ -51,7 +51,7 @@ header span {height:45px; width:60px; position:absolute; right:0; top:0;}
 .box-filter-hd {width:100%;line-height:30px;left:0;z-index:99;}
 .box-filter-hd {height:45px;line-height:45px;top:0;left:0;background-color:#eee;color:#999;padding-left:12px;box-sizing:border-box;text-align:left;}
 .box-filter-hd em {color:#999;font-size:17px;}
-.box-filter-bd {position:relative;width:100%;height:92%;overflow:hidden;background:#fff; overflow:hidden;}
+.box-filter-bd {position:relative;width:100%;height:100%;overflow:hidden;background:#fff; overflow:hidden;}
 #ttime a { display:block; width:33%; height:50px; float:left; text-align:center; font-size:14px; line-height:50px; border-bottom:1px solid #cbcbcb;border-right:1px solid #cbcbcb;}
 .sort-values a { max-height: 62px; padding: 9px 0 9px 22px; display: block; border-bottom: 1px solid #f7f7f7; border-top: 1px solid #fff;text-align: left; overflow: hidden;}
 .sort-values a.current{ color:#fa352f;}
@@ -164,19 +164,20 @@ header span {height:45px; width:60px; position:absolute; right:0; top:0;}
 
 
 .sign_up_close ,.sign_up_name ,.sign_up_Gender ,.sign_up_mob ,.sign_up_id ,.sign_up_pwd ,.sign_up_code {background:url("../images/sign_up_icon.png") no-repeat; background-size:25px 175px; width:45px; height:25px; line-height:25px; position:absolute; margin-left:10px; margin-top:14px; text-align: right;}
-.sign_up_close {background-position:0 0 ; margin-right:10px; position:static; margin-top:0; width: 25px;}
+.sign_up_close {background-position:0 0 ; margin-right:10px; position:static; margin-top:0;}
 .sign_up_name {background-position:0 -25px;}
 .sign_up_Gender {background-position:0 -50px;}
 .sign_up_mob {background-position:0 -75px;}
 .sign_up_id {background-position:0 -100px;}
 .sign_up_code {background-position:0 -123px;}
 .sign_up_pwd {background-position:0 -150px;}
-.form_group ul li { height:51px; line-height:51px; border-bottom:1px solid #e4e4e4; position:relative;}
+.form_group ul li {line-height:51px; border-bottom:1px solid #e4e4e4; position:relative;}
 .form_group ul li:first-child {border-top:1px solid #e4e4e4;}
 .form_group ul li .login_text { border:none; width:85%; padding-left:35px; height:44px; line-height:44px;}
 .form_group_btn { text-align:center;}
 .form_group_btn button { background:#3fcc84; color:#fff; border:0; font-size:15px;border-radius:3px; width:96%; margin:0 auto; height:36px; line-height:36px;}
-
+.name_label {padding-left: 70px; padding-top: 10px;}
+.name_label ul li { float:left; background:#f4f5f6; border:1px solid #e0dfdf;height:30px; line-height:30px; text-align:center; padding:0 10px;border-radius:3px; margin:0 6px 7px 0; color:#737373; }
 /*分享到*/
 
 
@@ -241,11 +242,27 @@ header span {height:45px; width:60px; position:absolute; right:0; top:0;}
 .p_box { margin:6px 8px; height:120px; background:#fff;border-radius:5px; border:1px solid #eae9e9;position: relative;}
 .p_img {width:90px; height:90px;background-position: center center;background-repeat: no-repeat;background-size: cover;box-sizing: border-box; margin:15px;border-radius:5px;}
 .p_memo { font-size:15px;}
-.p_add {width:30px; height:30px; line-height:30px;background:url(../images/add.png) no-repeat; background-size:30px 90px; margin:5px auto;background-position:0 0; cursor:pointer;}
+.p_add {
+    width:30px;
+    height:30px;
+    line-height:30px;
+    background:url(../images/add.png) no-repeat;
+    background-size:30px 90px;
+    margin:5px auto;
+    background-position:0 0;
+    cursor:pointer;
+}
 .p_reduce ,.p_up ,.p_down {width:18px; height:18px; background:url(../images/add.png) no-repeat; background-size:36px 108px; position:absolute; }
 .p_reduce {top:0px; left:0px;background-position:0 -36px;}
 .p_up { height:7px;top:5px; right:5px;background-position:0 -54px;}
-.p_down {height:7px;bottom:5px; right:5px;background-position:0 -65px;}
+.p_down {
+    height:18px;
+    width: 18px;
+    bottom:5px;
+    right:6px;
+    background:url(../images/down_blue.png) no-repeat;
+    background-size:18px 18px;
+}
 .p_sign_up { background:#fff;border-radius:6px; border:1px solid #eae9e9; height:35px; line-height:35px; margin:6px 8px; font-size:15px; cursor:pointer;}
 .p_form_li ul li {height:50px; line-height:50px;border-bottom:1px solid #ebeced; margin:0 5px; font-size:15px;padding-left:8px;position:relative;}
 .sign_input { height:50px; line-height:50px; text-align:right; border:0; position:absolute; background:transparent; font-size:15px; text-align:right; right:15px;width:70%;}
@@ -266,10 +283,42 @@ header span {height:45px; width:60px; position:absolute; right:0; top:0;}
 .page_w {padding-top:0px;}
 .page_header {margin-bottom:5px;}
 .p_div {max-width:640px;}
-.p_button_b {height:40px; line-height:40px; font-size:15px; background:#3fcc84; color:#fff; border:0;width:100%;border-radius:4px;}
-.p_form_li ul li input {width:50px; height:25px; line-height:25px; text-align:center; margin:3px 4px;border:1px solid #eae9e9; display:block; float:left; font-size:12px;border-radius:2px; cursor:pointer;}
-.p_c_class { margin: 6px 8px;border-radius:6px; background: #fff; height: 35px; line-height: 35px; position: relative;}
-.p_c_class input { position:absolute; left: 15px; display: block; border: 0; font-size: 15px; top: 5px;width: 96%;background:url(../images/on_1.png) no-repeat right;background-size:24px 8px;  cursor: pointer;}
+.p_button_b {
+    height:40px;
+    line-height:40px;
+    font-size:15px;
+    background:#3fcc84;
+    color:#fff;
+    border:0;
+    width:100%;
+    border-radius:4px;
+}
+
+/*.p_form_li ul li input {width:50px; height:25px; line-height:25px; text-align:center; margin:3px 4px;border:1px solid #eae9e9; display:block; float:left; font-size:12px;border-radius:2px; cursor:pointer;}*/
+
+/*.p_form_li ul li input {width:50px; height:25px; line-height:25px; text-align:center; margin:3px 4px;border:1px solid #eae9e9; display:block; float:left; font-size:12px;border-radius:2px; cursor:pointer;}*/
+.p_c_class {
+    margin: 6px 8px;
+    border-radius:6px;
+    background: #fff;
+    height: 38px;
+    line-height: 38px;
+    position: relative;
+}
+.p_c_class input {
+    line-height: 38px;
+    position:absolute;
+    left: 15px;
+    display: block;
+    border: 0;
+    font-size: 15px;
+    top: 0px;
+    width: 96%;
+    background:url(../images/down.png) no-repeat right;
+    background-size:20px 20px;
+    background-position: 98% 5px;
+    cursor: pointer;
+}
 
 
 /*报名管理*/
@@ -324,7 +373,14 @@ header span {height:45px; width:60px; position:absolute; right:0; top:0;}
 .edit_info_list ul li{ height:50px; line-height:50px;border-bottom:1px solid #ebeced; margin:0 5px; font-size:14px;padding-left:8px;}
 .edit_input { height:50px; line-height:50px; text-align:right; border:0; position:absolute; background:transparent; font-size:15px; text-align:right; right:15px;width:75%;}
 .info_face { height:90px; line-height:90px;}
-.edit_info_list ul li img { height:80px; line-height:80px; float:right; border-radius: 50%; margin-top:5px;}
+.edit_info_list ul li img {
+    width: 80px;
+    height:80px;
+    line-height:80px;
+    float:right;
+    border-radius: 50%;
+    margin-top:5px;
+}
 .edit_info_list ul li em { float:right;width:50px; height:45px; line-height:45px; display:block; color:#b2b2b2;background:url(../images/user.png) no-repeat top left;background-size:40px 240px;background-position:0 -155px; float:right; margin-top:20px;}
 .p_div {padding:8px;}
 .p_button {height:40px; line-height:40px; font-size:15px; background:#3fcc84; color:#fff; border:0;width:100%;border-radius:4px; }
@@ -483,4 +539,24 @@ header , .user_header{ height:45px; line-height:45px;  text-align:center;positio
 .xgrid .col-33 {
     width: 33.333%;
     float: left;
+}
+
+
+
+
+.file {
+    display: inline-block;
+    overflow: hidden;
+    text-decoration: none;
+    text-indent: 0;
+}
+.file input {
+    position: absolute;
+    font-size: 100px;
+    right: 0;
+    top: 0;
+    opacity: 0;
+}
+.file:hover {
+    text-decoration: none;
 }

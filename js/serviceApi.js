@@ -35,17 +35,9 @@ define(["Service"], function(Service) {
             },
 
             //活动详情
-            articleGetArticle: function(id,callBack)
+            articleGetArticle: function(id,uid,callBack)
             {
-                var url = this.BaseUrl+"Article.getArticle&id="+id;
-
-                XHttpGet( url, callBack);
-            },
-
-            //活动详情
-            articleAddCollect: function(id,uid,username,callBack)
-            {
-                var url = this.BaseUrl+"Article.addCollect&id="+id+"&uid="+uid+"&username="+username;
+                var url = this.BaseUrl+"Article.getArticle&id="+id+"&uid="+uid;
 
                 XHttpGet( url, callBack);
             },
@@ -141,22 +133,55 @@ define(["Service"], function(Service) {
             },
 
             //增加活动收藏信息
-            articleAddCollect: function(id,user,success,err,callBack)
+            articleAddCollect: function(id,user,callBack)
             {
                 var url = this.BaseUrl+"Article.addCollect&id="+id+"&uid="+user.id+"&username="+user.username;
 
-                XHttpDo( url,success,err,callBack);
+                XHttpDo( url,"收藏成功","收藏失败",callBack);
 
             },
 
+            //删除收藏信息
+            usersDelCollect: function(id,user,callBack)
+            {
+                var url = this.BaseUrl+"Users.delCollect&id="+id+"&uid="+user.id+"&username="+user.username;
+                XHttpDo( url,"取消收藏成功","取消收藏失败",callBack);
+            },
+
+
+            //获取报名用户信息列表
+            usersGetUinfoList: function(user,callBack)
+            {
+                var url = this.BaseUrl+"Users.getUinfoList&uid="+user.id;
+
+                XHttpGet( url, callBack);
+
+            },
 
             //活动报名
-            articleAddJoin: function(id,user,success,err,callBack)
+            articleAddJoin: function(data,callBack)
             {
-                var url = this.BaseUrl+"Article.addJoin&id="+id+"&uid="+user.id+"&username="+user.username;
-                XHttpDo( url,success,err,callBack);
+                var url = this.BaseUrl+"Article.addJoin";
+                XHttpDo2(url,data,"报名成功","报名失败",callBack);
+
             },
 
+            //取消报名
+            usersDelJoin: function(id,user,callBack)
+            {
+                var url = this.BaseUrl+"Users.delJoin&id="+id+"&uid="+user.id+"&username="+user.username;
+                XHttpDo(url,"取消报名成功","取消报名失败",callBack);
+
+            },
+
+            //获取活动信息
+            articleGetEvent: function(id,callBack)
+            {
+                var url = this.BaseUrl+"Article.getEvent&id="+id;
+
+                XHttpGet( url, callBack);
+
+            },
 
 
 

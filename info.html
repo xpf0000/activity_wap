@@ -80,40 +80,82 @@
 
 
 
-<div class="am-share picker-modal picker_a">
-  <h3 class="am-share-title">分享到</h3>
-  <ul class="am-share-sns">
-    <li><a href="#"> <i class="share-icon-qq"></i> <span>QQ好友</span> </a> </li>
-    <li><a href="#"> <i class="share-icon-wx"></i> <span>微信好友</span> </a> </li>
-    <li><a href="#"> <i class="share-icon-weibo"></i> <span>新浪微博</span> </a> </li>
-    <li><a href="#"> <i class="share-icon-wx2"></i> <span>微信朋友圈</span> </a> </li>
-  </ul>
-  <div class="am-share-footer"><a href="#" data-picker=".picker_a" class="close-picker share_btn">取消</a></div>
-</div>
+
 
 
 </div>
 
 </div>
+
+
+                <div class="am-share picker-modal picker_a" style="height: auto">
+                    <h3 class="am-share-title">分享到</h3>
+                    <ul class="am-share-sns">
+                        <li><a href="#"> <i class="share-icon-qq"></i> <span>QQ好友</span> </a> </li>
+                        <li><a href="#"> <i class="share-icon-wx"></i> <span>微信好友</span> </a> </li>
+                        <li><a href="#"> <i class="share-icon-weibo"></i> <span>新浪微博</span> </a> </li>
+                        <li><a href="#"> <i class="share-icon-wx2"></i> <span>微信朋友圈</span> </a> </li>
+                    </ul>
+                    <div class="am-share-footer"><a href="#" data-picker=".picker_a" class="close-picker share_btn">取消</a></div>
+                </div>
 
                 <div class="popup picker_b am-sign-up" id="join">
 
                     <div class="bottom">
 
-                    <h3 class="am-share-title">活动信息<a href="#" class="sign_up_close db fr close-popup"></a></h3>
+                    <h3 class="am-share-title">活动信息<a href="#" class="sign_up_close db fr close-popup" style="margin-right: 0px;"></a></h3>
                     <div class="event_info">
-                        <div class="event_info_l"><span class="event_info_icon info_icon01"></span><span class="event_info_f">时间</span>06-24 8:00至06-25  22:00<div class="clear"></div></div>
-                        <div class="event_info_l"><span class="event_info_icon info_icon02"></span><span class="event_info_f">标签</span><div class="event_label"><ul><li><a href="">徒步</a></li><li><a href="">赏花</a></li><li><a href="">爬山</a></li></ul></div><div class="clear"></div></div>
-                        <div class="event_info_l"><span class="event_info_icon info_icon03"></span><span class="event_info_f">人数</span>限35人，已报名2人<div class="clear"></div></div>
-                        <div class="event_info_l"><span class="event_info_icon info_icon04"></span><span class="event_info_f">费用</span><span class="event_price">￥60</span><div class="clear"></div></div>
+
+                        <div class="event_info_l"><span class="event_info_icon info_icon01"></span><span class="event_info_f">时间</span>
+                            <span v-html="info.s_str"></span>至<span v-html="info.e_str">
+                            </span><div class="clear">
+                            </div>
+                        </div>
+
+                        <!--<div class="event_info_l"><span class="event_info_icon info_icon02"></span>-->
+                            <!--<span class="event_info_f">标签</span>-->
+                            <!--<div class="event_label">-->
+                                <!--<ul>-->
+                                    <!--<li><a href="">徒步</a></li>-->
+                                    <!--<li><a href="">赏花</a></li>-->
+                                    <!--<li><a href="">爬山</a></li>-->
+                                <!--</ul>-->
+                            <!--</div>-->
+                            <!--<div class="clear"></div>-->
+                        <!--</div>-->
+
+                        <div class="event_info_l"><span class="event_info_icon info_icon03"></span><span class="event_info_f">人数</span>限<span v-html="info.a_number"></span>人，已报名2人<div class="clear"></div></div>
+                        <div class="event_info_l"><span class="event_info_icon info_icon04"></span><span class="event_info_f">费用</span><span class="event_price">￥<span v-html="info.price"></span></span><div class="clear"></div></div>
                     </div>
                     <div class="am-share-title">填写报名信息</div>
                     <div class="form_group">
                         <ul>
-                            <li><em class="sign_up_name db">姓名</em><input name="user_name" type="text" placeholder="请输入姓名" class="login_text"/></li>
-                            <li><em class="sign_up_Gender db">性别</em><span class="db" style="width:140px; height:40px; margin-left: 60px;"><input class="a_radio" type="radio" name="a_radio" checked style=""><div class="radio_name fl">男</div><input class="a_radio" type="radio" name="a_radio"><div class="radio_name fl">女</div></span></li>
-                            <li><em class="sign_up_mob db">手机号</em><input name="user_name" type="text" placeholder="请输入手机号" class="login_text"/></li>
-                            <li><em class="sign_up_id db">身份证</em><input name="user_name" type="text" placeholder="请输入身份证号" class="login_text"/></li>
+
+                            <!--<li v-if="ulist.length > 0">-->
+                                <!--<em class="sign_up_name db">历史</em>-->
+                                <!--<div class="name_label">-->
+                                    <!--<ul>-->
+                                        <!--<li v-for="(item,index) in ulist">-->
+                                            <!--<a href="#" @click="chooseUser(index)" v-html="item.name">徐鹏飞</a>-->
+                                        <!--</li>-->
+                                    <!--</ul>-->
+                                <!--</div>-->
+                                <!--<div class="clear"></div>-->
+                            <!--</li>-->
+
+                            <li><em class="sign_up_name db">姓名</em><input v-model="name" name="user_name" type="text" placeholder="请输入姓名" class="login_text"/></li>
+
+                            <li><em class="sign_up_Gender db">性别</em>
+                                <span class="db" style="width:140px; height:40px; margin-left: 60px;">
+                                    <input class="a_radio" type="radio" name="a_radio" value="0" v-model="sex">
+                                    <div class="radio_name fl">男</div>
+                                    <input class="a_radio" type="radio" name="a_radio" value="1" v-model="sex">
+                                    <div class="radio_name fl">女</div>
+                                </span>
+                            </li>
+
+                            <li><em class="sign_up_mob db">手机号</em><input v-model="mobile" name="user_name" type="text" placeholder="请输入手机号" class="login_text"/></li>
+                            <li><em class="sign_up_id db">身份证</em><input v-model="idcard" name="user_name" type="text" placeholder="请输入身份证号" class="login_text"/></li>
                         </ul>
                         <div class="form_group_btn"><button @click="doJoin" class="form_group_btn_c" id="form_btn">提交报名</button></div>
                     </div>
@@ -125,7 +167,7 @@
                 <div id="info_bottom" class="page_bottom_btn" style="height: 50px;line-height: 50px;">
 
                     <a href="#" class="page_Collection fl db" @click="doCollect">
-                        <span class="Collection_icon2 db" style="margin-top: 4px;"></span>
+                        <span :class="'Collection_icon'+orcollect+' db'" style="margin-top: 4px;"></span>
                         <span class="Collection_f db tc">收藏</span>
                     </a>
 
@@ -134,8 +176,7 @@
                         <span class="share_f db tc">分享</span>
                     </a>
 
-                    <a href="#" data-popup=".picker_b" class="page_btn2 fr tc white db open-popup" style="height: 100%;line-height: 50px;">
-                        报名
+                    <a v-if="type==2" v-html="btitle" href="#" @click="joinclick" :class="'page_btn'+orjoin+' fr tc white db'" style="height: 100%;line-height: 50px;">
                     </a>
 
 </div>

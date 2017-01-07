@@ -9,8 +9,8 @@
 <title>会员资料编辑-河洛泡泡</title>
 <link rel="stylesheet" type="text/css" href="css/base.css"/>
 <link type="text/css" rel="stylesheet" href="css/index.css">
-<link rel="stylesheet" href="css/framework7.ios.min.css">
-<link rel="stylesheet" href="css/framework7.ios.colors.min.css">
+<link rel="stylesheet" href="css/framework7.ios.css">
+<link rel="stylesheet" href="css/framework7.ios.colors.css">
 <link rel="stylesheet" href="css/my-app.css">
 	<script data-main="js/index" src="lib/require-min.js" ></script>
 </head>
@@ -18,7 +18,7 @@
 <body>
 <div class="views">
 	<div class="view view-main">
-		<div class="pages navbar-through toolbar-through">
+		<div class="pages">
 			<div data-page="user_edit_info" class="page">
 				<div class="page-content" id="user_edit_info">
 
@@ -31,7 +31,7 @@
 <div class="edit_info_list">
 
 	<form id="uploadHead">
-	<input id="file" type="file" name="file" @change="fileChange($event)" accept="image/*" hidden="true" />
+	<input id="file" type="file" name="file" @change="fileChange($event)" hidden="true" />
 	</form>
 
 <ul>
@@ -61,7 +61,7 @@
 	<li>
 	出生年月
 	<span>
-	<input v-model="birthday" value="" class="edit_input" readonly id="calendar-default" type="text" placeholder="2016-01-01" >
+	<input value="" class="edit_input" readonly id="calendar-default" type="text" placeholder="2016-01-01" >
 	</span>
 	</li>
 
@@ -69,7 +69,7 @@
 <li class="page-current" id="page-city-picker">
 	地区
 	<span>
-	<input v-model="address" type="text" readonly id="picker-dependent" placeholder="城市选择" class="edit_input">
+	<input type="text" readonly id="picker-dependent" placeholder="城市选择" class="edit_input">
 	</span>
 </li>
 
@@ -77,7 +77,7 @@
 </div>
 
 
-	<a href="#" @touchend="doSubmit()" class="button button-big button-fill" style="background: #3fcc84;margin: 20px 12px 12px 12px;">提交修改</a>
+	<a href="#" @click="doSubmit()" class="button button-big button-fill" style="background: #3fcc84;margin: 20px 12px 12px 12px;">提交修改</a>
 
 
 

@@ -192,6 +192,7 @@ var User = {
     msg:'登录',
 };
 
+
 function checkLogin()
 {
 
@@ -621,9 +622,41 @@ requirejs(['main'], function (main) {
 
             var bottom = new Vue({
                 el: '#info_bottom',
-                data: {},
+                data: {
+                    orcollect:'',
+                    type:'1',
+                    orjoin:'',
+                    btitle:'报名',
+                },
 
                 methods:{
+
+                    joinclick:function()
+                    {
+                        if(!checkLogin())
+                        {
+                            return;
+                        }
+
+                        if(bottom.orjoin == "")
+                        {
+                            myApp.popup(".picker_b");
+                        }
+                        else
+                        {
+                            Service.usersDelJoin(vm.info.id,User,function(b){
+
+                                if(b)
+                                {
+                                    bottom.orjoin = '';
+                                    bottom.btitle = '报名';
+                                    initUserList2JS(vm.info.id);
+                                }
+
+                            });
+                        }
+
+                    },
 
                     doCollect:function()
                     {
@@ -632,11 +665,32 @@ requirejs(['main'], function (main) {
                             return;
                         }
 
-                        Service.articleAddCollect(vm.info.id,User,"收藏成功","收藏失败",function(b){
+
+                        if(bottom.orcollect == "")
+                        {
+                            Service.articleAddCollect(vm.info.id,User,function(b){
+
+                                if(b)
+                                {
+                                    bottom.orcollect ="2";
+                                }
+
+                            });
+                        }
+                        else
+                        {
+                            Service.usersDelCollect(vm.info.id,User,function(b){
+
+                                if(b)
+                                {
+                                    bottom.orcollect = '';
+                                    initUserList2JS(vm.info.id);
+                                }
+
+                            });
+                        }
 
 
-
-                        });
 
                     },
                 },
@@ -645,9 +699,33 @@ requirejs(['main'], function (main) {
 
             var join = new Vue({
                 el: '#join',
-                data: {},
+                data: {
+                    ulist:[],
+                    info:{},
+                    uiid : '0',
+                    name : '',
+                    sex : '0',
+                    mobile : '',
+                    idcard : '',
+
+                },
 
                 methods:{
+
+                    chooseUser: function(index)
+                    {
+
+                        console.log(index);
+
+                        var obj = join.ulist[index];
+
+                        console.log(obj);
+
+                        join.uiid = obj.id;
+                        join.name = obj.name;
+
+
+                    },
 
                     doJoin:function()
                     {
@@ -656,19 +734,88 @@ requirejs(['main'], function (main) {
                             return;
                         }
 
-                        Service.articleAddJoin(vm.info.id,User,"报名成功","报名失败",function(b){
+                        if(join.name.length * join.mobile.length * join.idcard.length == 0)
+                        {
+                            var toast = myApp.toast("请完善报名信息", '', {});
+                            toast.show();
+                            return;
+                        }
 
+                        var form = new FormData();
+                        form.append('id',vm.info.id);
+                        form.append('uid',User.id);
+                        form.append('username',User.username);
+
+                        form.append('uiid',join.uiid);
+                        form.append('name',join.name);
+                        form.append('sex',join.sex);
+                        form.append('mobile',join.mobile);
+                        form.append('idcard',join.idcard);
+
+
+                        Service.articleAddJoin(form,function(b){
+
+                            if(b)
+                            {
+                                bottom.orjoin = '2';
+                                bottom.btitle = '取消报名';
+                                myApp.closeModal(".picker_b");
+                                getulist();
+                                join.uiid = "0";
+                                join.name = "";
+                                join.sex = "0";
+                                join.mobile = "";
+                                join.idcard = "";
+
+                            }
 
 
                         });
+
+
 
                     },
                 },
 
             });
 
+            function getulist()
+            {
+                if(User.id != null && User.id != undefined && User.id != "")
+                {
 
-            Service.articleGetArticle(id,function(data)
+                    Service.usersGetUinfoList(User,function(data)
+                    {
+                        var info = data.data.info;
+                        if(info)
+                        {
+                            join.ulist = info;
+                        }
+                    });
+
+                }
+            };
+
+            function getinfo()
+            {
+                Service.articleGetEvent(id,function(data)
+                {
+                    var info = data.data.info;
+                    if(info)
+                    {
+                        var obj = info[0];
+                        obj.s_str = DateTimeUtil.UnixToDate(obj.s_time);
+                        obj.e_str = DateTimeUtil.UnixToDate(obj.e_time);
+
+                        join.info = obj;
+                    }
+                });
+            }
+
+            getinfo();
+            getulist();
+
+            Service.articleGetArticle(id,User.id,function(data)
             {
                 var info = data.data.info;
                 if(info)
@@ -687,7 +834,44 @@ requirejs(['main'], function (main) {
 
                     }
 
+                    if(obj.orcollect == null || obj.orcollect == undefined)
+                    {
+                        bottom.orcollect = "";
+                    }
+                    else
+                    {
+                        if(obj.orcollect == 0)
+                        {
+                            bottom.orcollect = "";
+                        }
+                        else
+                        {
+                            bottom.orcollect = "2";
+                        }
 
+                    }
+
+                    if(obj.orjoin == null || obj.orjoin == undefined)
+                    {
+                        bottom.orjoin = "";
+                        bottom.btitle = '报名';
+                    }
+                    else
+                    {
+                        if(obj.orjoin == 0)
+                        {
+                            bottom.orjoin = "";
+                            bottom.btitle = '报名';
+                        }
+                        else
+                        {
+                            bottom.orjoin = "2";
+                            bottom.btitle = '取消报名';
+                        }
+
+                    }
+
+                    bottom.type = obj.type;
                     vm.info = obj;
                 }
             });
@@ -802,7 +986,7 @@ requirejs(['main'], function (main) {
 
                                     initUser(obj);
 
-                                    mainView.router.back();
+                                    mainView.router.back({url:'index.html'});
 
                                     return;
                                 }
@@ -835,6 +1019,11 @@ requirejs(['main'], function (main) {
         function initUserEditJS()
         {
 
+            if(!checkLogin())
+            {
+                return;
+            }
+
             var vm = new Vue({
                 el: '#user_edit_info',
                 data: {
@@ -850,8 +1039,16 @@ requirejs(['main'], function (main) {
                 methods:{
                     choosehead:function()
                     {
-                        var URL = window.URL || window.webkitURL;
-                        URL.revokeObjectURL(vm.headimg);
+                        try
+                        {
+                            var URL = window.URL || window.webkitURL;
+                            URL.revokeObjectURL(vm.headimg);
+                        }
+                        catch (e)
+                        {
+
+                        }
+
                         $$("#file").click();
                     },
 
@@ -882,8 +1079,9 @@ requirejs(['main'], function (main) {
 
                     doSubmit:function()
                     {
-                        console.log("!!!!!!!!!!!!!!!!!!!!");
+                        console.log(vm);
 
+                        vm.address = $$("#picker-dependent").val();
                         Service.userUserEdit(vm,function(data)
                         {
                             var code = data.data.code;
@@ -893,6 +1091,8 @@ requirejs(['main'], function (main) {
                             {
                                 msg = "修改成功";
                             }
+
+                            initUser(User);
 
                             var toast = myApp.toast(msg, '', {});
                             toast.show();
@@ -931,14 +1131,29 @@ requirejs(['main'], function (main) {
             vm.headimg = User.headimage;
             vm.username = User.username;
             vm.nickname = User.nickname;
+            vm.address = User.address;
+            vm.birthday = User.birthday;
             vm.sex = User.sex;
+
+            if(vm.birthday != "")
+            {
+                $$("#calendar-default").val(DateTimeUtil.UnixToDate(vm.birthday));
+            }
+
+            $$("#picker-dependent").val(vm.address);
+
+
 
             var calendarDefault = myApp.calendar({
                 input: '#calendar-default',
+
+                formatValue: function (picker, values) {
+                    vm.birthday = values/1000;
+                    return DateTimeUtil.UnixToDate(values/1000);
+                },
             });
 
             require(['city_picker'],function(){
-
                 CityPicker.init('#picker-dependent',myApp);
 
             });
@@ -948,6 +1163,36 @@ requirejs(['main'], function (main) {
 
         function initPublishJS()
         {
+            var input = new Vue({
+                el: '#txtinput',
+                data: {},
+                methods: {
+
+                    txteditend: function () {
+
+                        var str = $$(".p_content").val();
+
+                        if (vm.isnew) {
+                            var obj = {};
+                            obj.txt = str;
+                            obj.img = "http://static2.ivwen.com/user/7224114/c75747eb2c500001204e135077f080c0.jpg";
+                            vm.list.splice(vm.lastIndex, 0, obj);
+                        }
+                        else {
+                            if (vm.lastIndex >= 0 && vm.lastIndex < vm.list.length) {
+                                vm.list[vm.lastIndex].txt = str;
+                            }
+                        }
+
+                        myApp.closeModal('.popup_a');
+                        $$(".p_content").val("");
+
+                        vm.isnew = false;
+                    },
+                },
+
+            });
+
             var vm = new Vue({
                 el: '#publish',
                 data: {
@@ -956,7 +1201,7 @@ requirejs(['main'], function (main) {
                     cover:'http://static2.ivwen.com/user/7224114/c75747eb2c500001204e135077f080c0.jpg',
                     coverid:'',
                     isnew:false,
-                    isactity:false,
+                    isactity:true,
                     title:'',
                     nowindex:-1,
                     clist:[],
@@ -973,32 +1218,6 @@ requirejs(['main'], function (main) {
 
                 methods:{
 
-                    txteditend:function()
-                    {
-
-                        var str = $$(".p_content").val();
-
-                        if(vm.isnew)
-                        {
-                            var obj = {};
-                            obj.txt = str;
-                            obj.img = "http://static2.ivwen.com/user/7224114/c75747eb2c500001204e135077f080c0.jpg";
-                            vm.list.splice(vm.lastIndex, 0, obj);
-                        }
-                        else
-                        {
-                            if(vm.lastIndex >= 0 && vm.lastIndex < vm.list.length)
-                            {
-                                vm.list[vm.lastIndex].txt = str;
-                            }
-                        }
-
-                        myApp.closeModal('.popup_a');
-                        $$(".p_content").val("");
-
-                        vm.isnew = false;
-                    },
-
                     showTxtEdit:function(index,isnew)
                     {
                         console.log(isnew);
@@ -1011,13 +1230,25 @@ requirejs(['main'], function (main) {
 
                     chooseCover:function()
                     {
-                        var URL = window.URL || window.webkitURL;
-                        URL.revokeObjectURL(vm.cover);
-                        $$("#cover").click();
+
+                        //try {
+                        //    var URL = window.URL || window.webkitURL;
+                        //    URL.revokeObjectURL(vm.cover);
+                        //}
+                        //catch (e)
+                        //{
+                        //
+                        //}
+
+                        $$("#cover")[0].click();
+                        //$$("#cover").trigger('click');
                     },
 
                     chooseimg:function(index,isnew)
                     {
+
+                        //alert("4564658784545: "+isnew);
+
                         vm.isnew = isnew;
                         vm.nowindex = index;
                         if(isnew)
@@ -1033,32 +1264,25 @@ requirejs(['main'], function (main) {
 
                     coverChange:function(event)
                     {
-                        var files = event.target.files, file;
-                        if (files && files.length > 0) {
 
-                            file = files[0];
+                        myApp.showPreloader("上传中...");
 
+                        var p = {
 
-                            if(file.size > 1024 * 1024 * 2) {
-                                alert('图片大小不能超过 2MB!');
-                                return false;
-                            }
+                            url:"http://182.92.70.85/hlppapi/Public/Found/?service=Article.addPic",
+                            upBody:{
+                                uid: User.id,
+                                username: User.username,
+                            },
 
-                            var URL = window.URL || window.webkitURL;
+                        };
 
-                            var imgURL = URL.createObjectURL(file);
+                        p.upBlock = function(data,err){
 
-                            console.log("imgURL: "+imgURL);
+                            myApp.hidePreloader();
 
-
-                            vm.cover = imgURL;
-
-                            var form = new FormData($$( "#coverform" )[0]);
-                            form.append('uid',User.id);
-                            form.append('username',User.username);
-
-                            Service.articleAddPic(form,function(data){
-
+                            if(err == null)
+                            {
                                 var code = data.data.code;
                                 var id = data.data.info[0].id;
                                 var url = data.data.info[0].url;
@@ -1067,52 +1291,39 @@ requirejs(['main'], function (main) {
                                     vm.coverid = id;
                                     vm.cover = url;
                                 }
-
-                            });
-
+                            }
 
 
-                        }
+                        };
+
+                        var upload = new XImageUpload(p);
+
+                        upload.upLoad(event);
+
                     },
 
                     imgChange:function(event)
                     {
                         var index = vm.nowindex;
-                        //var p = {
-                        //
-                        //    url:"http://182.92.70.85/hlppapi/Public/Found/?service=Article.addPic",
-                        //    upBody:{
-                        //        uid: User.id,
-                        //        username: User.username,
-                        //    },
-                        //
-                        //};
-                        //
-                        //var upload = new XImageUpload(p);
-                        //
-                        //upload.upLoad(event);
 
-                        var files = event.target.files;
-                        var form = {};
-                        if (files && files.length > 0) {
+                        myApp.showPreloader("上传中...");
 
-                            myApp.showPreloader("上传中...");
+                        var p = {
 
-                            if(vm.isnew)
+                            url:"http://182.92.70.85/hlppapi/Public/Found/?service=Article.addPic",
+                            upBody:{
+                                uid: User.id,
+                                username: User.username,
+                            },
+
+                        };
+
+                        p.upBlock = function(data,err){
+
+                            myApp.hidePreloader();
+
+                            if(err == null)
                             {
-                                form = new FormData($$( "#mform")[0]);
-                            }
-                            else
-                            {
-                                form = new FormData($$( "#form")[0]);
-                            }
-
-                            form.append('uid',User.id);
-                            form.append('username',User.username);
-
-                            Service.articleAddPic(form,function(data){
-
-                                myApp.hidePreloader();
                                 var code = data.data.code;
                                 var info = data.data.info;
 
@@ -1146,12 +1357,15 @@ requirejs(['main'], function (main) {
                                     }
 
                                 }
+                            }
 
-                            });
 
 
                         }
 
+                        var upload = new XImageUpload(p);
+
+                        upload.upLoad(event);
 
                     },
 
@@ -1435,19 +1649,49 @@ requirejs(['main'], function (main) {
 
         }
 
-
-        function initUserList2JS()
+        var userList2vm;
+        function initUserList2JS(id)
         {
+
+            if(id != null)
+            {
+                if(userList2vm == null || userList2vm == undefined)
+                {
+                    return;
+                }
+
+                var did = -1;
+                $$.each(userList2vm.list,function(index,item){
+
+                    if(item.id == id)
+                    {
+                        did = index;
+                    }
+
+                });
+
+                if(did >= 0)
+                {
+                    var arr = userList2vm.list;
+                    arr.splice(did,1);
+
+                    userList2vm.list = arr;
+
+                }
+
+                return;
+            }
 
             var flag = getUrlParam("flag");
 
-            var vm = new Vue({
+            userList2vm = new Vue({
                 el: '#user_info_list2',
                 data: {
                     msg : '信息加载中...',
                     end : false,
                     list:[],
                     pagetitle:'',
+
                 },
 
                 methods:{
@@ -1466,12 +1710,12 @@ requirejs(['main'], function (main) {
                     item.timestr = DateTimeUtil.UnixToDate(item.create_time);
                 });
 
-                vm.list = vm.list.concat(arr);
+                userList2vm.list = userList2vm.list.concat(arr);
 
                 if(end)
                 {
-                    vm.msg = "已全部加载完毕";
-                    vm.end = true;
+                    userList2vm.msg = "已全部加载完毕";
+                    userList2vm.end = true;
                 }
 
             }
@@ -1479,7 +1723,7 @@ requirejs(['main'], function (main) {
             switch(flag)
             {
                 case "1":
-                    vm.pagetitle = "我发布的";
+                    userList2vm.pagetitle = "我发布的";
                     listObj.getUserPostlist(getList);
 
                     $$('#user_info_list2').on('infinite', function () {
@@ -1490,7 +1734,7 @@ requirejs(['main'], function (main) {
                     break;
 
                 case "2":
-                    vm.pagetitle = "我收藏的";
+                    userList2vm.pagetitle = "我收藏的";
                     listObj.getUserCollectlist(getList);
 
                     $$('#user_info_list2').on('infinite', function () {
@@ -1501,7 +1745,7 @@ requirejs(['main'], function (main) {
                     break;
 
                 case "3":
-                    vm.pagetitle = "我参与的";
+                    userList2vm.pagetitle = "我参与的";
                     listObj.getUserJoinlist(getList);
 
                     $$('#user_info_list2').on('infinite', function () {

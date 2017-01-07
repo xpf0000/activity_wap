@@ -23,9 +23,11 @@
             chooseBlock:function(){},
             upBlock:function(){},
             src:[],
+            datas:[],
             upBody:{},
             url:'',
             maxsize : 100 * 1024,
+            count:0,
 
         };
 
@@ -36,8 +38,6 @@
         app.upLoad  = function(event)
         {
 
-            console.log(app);
-
             var files = event.target.files;
 
             if (!files.length) return;
@@ -45,9 +45,15 @@
             var files = Array.prototype.slice.call(files);
 
             if (files.length > 9) {
-                alert("最多同时只可上传9张图片");
+                app.params.upBlock(null,"最多同时只可上传9张图片");
+
+                var toast = myApp.toast("最多同时只可上传9张图片", '', {});
+                toast.show();
+
                 return;
             }
+
+            app.params.count = files.length;
 
             files.forEach(function(file, i) {
                 if (!/\/(?:jpeg|png|gif)/i.test(file.type)) return;
@@ -64,7 +70,7 @@
                     if (result.length <= app.params.maxsize) {
                         img = null;
 
-                        upload(result, file.type);
+                        handleBlob(result, file.type);
 
                         return;
                     }
@@ -79,9 +85,7 @@
                     function callback() {
                         var data = compress(img);
 
-                        console.log(data);
-
-                        upload(data, file.type);
+                        handleBlob(data, file.type);
 
                         img = null;
                     }
@@ -90,6 +94,8 @@
 
                 reader.readAsDataURL(file);
             })
+
+
         };
 
 
@@ -155,7 +161,8 @@
 
 
         //    图片上传，将base64的图片转成二进制对象，塞进formdata上传
-        function upload(basestr, type) {
+        function handleBlob(basestr, type) {
+
             var text = window.atob(basestr.split(",")[1]);
             var buffer = new Uint8Array(text.length);
 
@@ -165,34 +172,46 @@
 
             var blob = getBlob([buffer], type);
 
+            app.params.datas.push(blob);
 
+            if(app.params.datas.length == app.params.count)
+            {
+                doUpload();
+            }
+
+
+        }
+
+        function doUpload()
+        {
             var xhr = new XMLHttpRequest();
 
             var formdata = getFormData();
 
-            formdata.append('file[]', blob);
+            for(var i=0;i<app.params.datas.length;i++)
+            {
+                formdata.append('file[]', app.params.datas[i],'upload'+i+'.jpg');
+            }
 
             for (var param in app.params.upBody) {
-
-                console.log(param);
-                console.log(app.params.upBody[param]);
-
                 formdata.append(param, app.params.upBody[param]);
             };
 
 
             xhr.open('post', app.params.url);
 
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState == 4 && xhr.status == 200) {
+            xhr.onload = function () {
+                //如果请求成功
+                if((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304){
+
                     var jsonData = JSON.parse(xhr.responseText);
-
-
-                    console.log(jsonData);
-
-
+                    app.params.upBlock(jsonData,null);
                 }
-            };
+                else
+                {
+                    app.params.upBlock(null,xhr.responseText);
+                }
+            }
 
             //数据发送进度
             xhr.upload.addEventListener('progress', function(e) {

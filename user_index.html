@@ -9,8 +9,8 @@
 <title>会员首页-河洛泡泡</title>
 <link rel="stylesheet" type="text/css" href="css/base.css"/>
 <link type="text/css" rel="stylesheet" href="css/index.css">
-<link rel="stylesheet" href="css/framework7.ios.min.css">
-<link rel="stylesheet" href="css/framework7.ios.colors.min.css">
+<link rel="stylesheet" href="css/framework7.ios.css">
+<link rel="stylesheet" href="css/framework7.ios.colors.css">
 <link rel="stylesheet" href="css/my-app.css">
 	<script data-main="js/index" src="lib/require-min.js" ></script>
 </head>
@@ -18,7 +18,7 @@
 <body>
 <div class="views">
 	<div class="view view-main">
-		<div class="pages navbar-through toolbar-through">
+		<div class="pages">
 			<div data-page="user_index" class="page">
 				<div class="page-content" id="user_index">
 <header class="user_header">
@@ -33,13 +33,13 @@
 </header>
 <div class="page_w">
 <div class="page_info_list mt10">
-<a class="info01" href="#" @touchend="toUserList(1)" ><span>我发布的</span><em></em></a>
-<a class="info02" href="#" @touchend="toUserList(2)"><span>我收藏的</span><em></em></a>
-<a class="info03" href="#" @touchend="toUserList(3)"><span>我参与的</span><em></em></a>
-<a class="info04" href="#" @touchend="toUserEdit()"><span>个人资料</span><em></em></a>
+<a class="info01" href="#" @click="toUserList(1)" ><span>我发布的</span><em></em></a>
+<a class="info02" href="#" @click="toUserList(2)"><span>我收藏的</span><em></em></a>
+<a class="info03" href="#" @click="toUserList(3)"><span>我参与的</span><em></em></a>
+<a class="info04" href="#" @click="toUserEdit()"><span>个人资料</span><em></em></a>
 </div>
 <div class="logout mt10">
-<a href="#" @touchend="logout()" class="db tc" v-html="uinfo.msg"></a>
+<a href="#" @click="logout()" class="db tc" v-html="uinfo.msg"></a>
 </div>
 </div>
 </div>
