@@ -13,7 +13,24 @@
 <link rel="stylesheet" href="css/framework7.ios.colors.css">
 <link rel="stylesheet" href="css/my-app.css">
 	<link rel="stylesheet" href="css/toast.css" />
-	<script data-main="js/index" src="lib/require-min.js" ></script>
+	<script data-main="js/index.js?v=1.0.1" src="lib/require-min.js?v=1.0.0" ></script>
+
+	<script type="text/javascript"
+			src="http://qzonestyle.gtimg.cn/qzone/openapi/qc_loader.js"
+			data-callback="true"
+			data-appid="1105918410"
+			data-redirecturi="http://192.168.1.105/activity_wap/login.html"
+			charset="utf-8">
+
+	</script>
+
+
+	<script type="text/javascript">
+		QC.Login({
+			btnId:"qq"    //插入按钮的节点id
+		});
+	</script>
+
 </head>
 
 <body>
@@ -68,7 +85,7 @@
 
 	<div class="login_icon" style="margin-top: -80px;">
 <ul>
-<li><a href="#" @click="doLogin(1)"><span class="wx_login_icon db"></span><span class="login_font db">QQ登录</span></a></li>
+<li><a href="#" @click="doLogin(1)" id="qq"><span class="wx_login_icon db"></span><span class="login_font db">QQ登录</span></a></li>
 <li><a href="#" @click="doLogin(2)"><span class="qq_login_icon db"></span><span class="login_font db">微信登录</span></a></li>
 </ul>
 <div class="clear"></div>
@@ -85,6 +102,40 @@
 		</div>
 	</div>
 </div>
+
+<script language="JavaScript">
+
+	QC.api("get_user_info", {}) //get_user_info是API参数
+			//指定接口访问成功的接收函数，s为成功返回Response对象
+			.success(function (s) {
+				//成功回调，通过s.data获取OpenAPI的返回数据
+				nick = s.data.nickname; //获得昵称
+				headurl = s.data.figureurl_qq_1; //获得头像
+				if (QC.Login.check()) {//判断是否登录
+					QC.Login.getMe(function (openId, accessToken) {
+
+						alert(openId);
+						alert(accessToken);
+						//这里可以得到openId和accessToken
+						//下面可以调用自己的保存方法
+
+					});
+				}
+			})
+			//指定接口访问失败的接收函数，f为失败返回Response对象
+			.error(function (f) {
+
+
+				//失败回调
+				alert(f);
+			});
+	////指定接口完成请求后的接收函数，c为完成请求返回Response对象
+	//.complete(function (c) {
+	//    //完成请求回调
+	//    alert("获取用户信息完成！");
+	//});
+
+</script>
 
 </body>
 </html>

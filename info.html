@@ -13,7 +13,7 @@
 <link rel="stylesheet" href="css/framework7.ios.colors.css">
 <link rel="stylesheet" href="css/my-app.css">
 
-  <script data-main="js/index" src="lib/require-min.js" ></script>
+    <script data-main="js/index.js?v=1.0.1" src="lib/require-min.js?v=1.0.0" ></script>
 </head>
 
 <body>
@@ -31,7 +31,7 @@
 
     <!--头像 时间-->
 <div class="author_info">
-<a href="user_info_list.html">
+<a :href="'user_info_list.html?uid='+info.uid+'&nick='+info.nickname+'&pic='+info.headimage">
     <img :src="info.headimage">
     <span class="author_name" v-html="info.nickname"></span>
 </a>
@@ -164,22 +164,24 @@
 
                 </div>
 
-                <div id="info_bottom" class="page_bottom_btn" style="height: 50px;line-height: 50px;">
+                <div class="page_w">
+                    <div id="info_bottom" class="page_bottom_btn" style="height: 50px;line-height: 50px;">
 
-                    <a href="#" class="page_Collection fl db" @click="doCollect">
-                        <span :class="'Collection_icon'+orcollect+' db'" style="margin-top: 4px;"></span>
-                        <span class="Collection_f db tc">收藏</span>
-                    </a>
+                        <a href="#" class="page_Collection fl db" @click="doCollect">
+                            <span :class="'Collection_icon'+orcollect+' db'" style="margin-top: 4px;"></span>
+                            <span class="Collection_f db tc">收藏</span>
+                        </a>
 
-                    <a href="#" class="page_share fl db open-picker db" data-picker=".picker_a">
-                        <span class="share_icon db" style="margin-top: 4px;"></span>
-                        <span class="share_f db tc">分享</span>
-                    </a>
+                        <a href="#" class="page_share fl db open-picker db" data-picker=".picker_a">
+                            <span class="share_icon db" style="margin-top: 4px;"></span>
+                            <span class="share_f db tc">分享</span>
+                        </a>
 
-                    <a v-if="type==2" v-html="btitle" href="#" @click="joinclick" :class="'page_btn'+orjoin+' fr tc white db'" style="height: 100%;line-height: 50px;">
-                    </a>
+                        <a v-if="type==2" v-html="btitle" href="#" @click="joinclick" :class="'page_btn'+orjoin+' fr tc white db'" style="height: 100%;line-height: 50px;">
+                        </a>
 
-</div>
+                    </div>
+                </div>
 
 
 </div>

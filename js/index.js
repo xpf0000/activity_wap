@@ -179,9 +179,7 @@ var handleInfiniteScroll = function()
 
 var Vue;
 var $$;
-var UrlArr = [];
 var myApp = null;
-var WapBaseUrl = "http://192.168.1.105/activity_wap/";
 var Service;
 var User = {
     id:'',
@@ -198,7 +196,7 @@ function checkLogin()
 
     if(User.username == null || User.username == undefined || User.username == "")
     {
-        mainView.router.loadPage({url:'login.html',pushState:true});
+        mainView.router.loadPage({url:'login.html'});
         return false;
     }
 
@@ -216,57 +214,20 @@ requirejs(['main'], function (main) {
 
         initUser();
 
-        var isback = false;
-
         $$(document).on('pageInit', function (e) {
-            // Get page data from event data
-
             var page = e.detail.page;
-
-            console.log("page name: "+page.name);
-            console.log("page url: "+page.url);
-
-            var herf = window.location.toString();
-
-            var trueurl = "";
-            if(page.url == null || page.url == undefined)
-            {
-                console.log("~~~ url: "+WapBaseUrl+page.name+".html");
-                trueurl=WapBaseUrl+page.name+".html";
-            }
-            else
-            {
-                console.log("@@@ url: "+WapBaseUrl+page.url);
-                trueurl=WapBaseUrl+page.url;
-            }
-
-            if(herf.indexOf(trueurl)>=0)
-            {
-                if(herf.length > trueurl.length)
-                {
-                    trueurl = herf;
-                }
-            }
-
-            if(!isback)
-            {
-                window.history.pushState({},0,trueurl);
-                UrlArr.push(trueurl);
-            }
-
-            isback = false;
 
             if (page.name == 'index') {
                 initIndexJS();
             }
             else if(page.name == 'list')
             {
-                initListJS();
+                initListJS(page.query);
             }
             else if(page.name == 'info')
             {
                 console.log("info page !!!!!!!!!");
-                initInfoJS();
+                initInfoJS(page.query.id);
             }
             else if(page.name == 'user_index')
             {
@@ -293,7 +254,7 @@ requirejs(['main'], function (main) {
                 console.log("publish page !!!!!!!!!");
                 setTimeout(function(){
 
-                    initPublishJS();
+                    initPublishJS(page.query);
 
                 },1);
 
@@ -303,7 +264,29 @@ requirejs(['main'], function (main) {
                 console.log("user_info_list2 page !!!!!!!!!");
                 setTimeout(function(){
 
-                    initUserList2JS();
+                    initUserList2JS(null,page.query);
+
+                },1);
+
+                return;
+
+            }
+            else if(page.name == 'user_info_list')
+            {
+                console.log("user_info_list page !!!!!!!!!");
+                setTimeout(function(){
+
+                    initUserListJS(page.query);
+
+                },1);
+
+            }
+            else if(page.name == 'info_m')
+            {
+                console.log("info_m page !!!!!!!!!");
+                setTimeout(function(){
+
+                    initInfoMJS(null,page.query);
 
                 },1);
 
@@ -323,28 +306,21 @@ requirejs(['main'], function (main) {
 
         $$(document).on('pageAfterBack', function (e) {
 
-            UrlArr.pop();
-            var l = UrlArr.length;
-            var u = UrlArr[l-1];
-            window.history.pushState({},0,u);
-
-            if(l == 1)
-            {
-                isback = false;
-            }
-            else
-            {
-                isback = true;
-            }
-
+            var page = e.detail.page;
+            console.log("pageAfterBack: "+page.name);
 
         });
 
-        myApp = new Framework7();
+
+        myApp = new Framework7({
+            modalButtonOk: '确定',
+            modalButtonCancel: '取消',
+            pushStateSeparator : '',
+            pushState : true,
+        });
 
         mainView = myApp.addView('.view-main', {
-            // Because we want to use dynamic navbar, we need to enable it for this view:
-            dynamicNavbar: true
+            //domCache: true,
         });
 
 
@@ -505,11 +481,11 @@ requirejs(['main'], function (main) {
         }
 
 
-        function initListJS()
+        function initListJS(query)
         {
 
-            var id = getUrlParam("id");
-            var title = getUrlParam("title");
+            var id = query.id;
+            var title = query.title;
 
             var fvm = new Vue({
                 el: '#filter',
@@ -530,8 +506,8 @@ requirejs(['main'], function (main) {
                         listObj.reset();
                         listObj.getlist(getList);
 
-                        var u=WapBaseUrl+"list.html?id="+id+"&title="+title;
-                        window.history.pushState({},0,u);
+                        //var u=WapBaseUrl+"list.html?id="+id+"&title="+title;
+                        //window.history.pushState({},0,u);
 
                     }
 
@@ -607,10 +583,8 @@ requirejs(['main'], function (main) {
         }
 
 
-        function initInfoJS()
+        function initInfoJS(id)
         {
-            var id = getUrlParam("id");
-
             var vm = new Vue({
                 el: '#info',
                 data: {
@@ -1161,8 +1135,11 @@ requirejs(['main'], function (main) {
 
         }
 
-        function initPublishJS()
+        function initPublishJS(query)
         {
+
+            var id = query.id;
+
             var input = new Vue({
                 el: '#txtinput',
                 data: {},
@@ -1201,16 +1178,16 @@ requirejs(['main'], function (main) {
                     cover:'http://static2.ivwen.com/user/7224114/c75747eb2c500001204e135077f080c0.jpg',
                     coverid:'',
                     isnew:false,
-                    isactity:true,
+                    isactity:false,
                     title:'',
                     nowindex:-1,
                     clist:[],
-
+                    astyle:"none",
                     s_time:'',
                     e_time:'',
                     price:'',
                     a_number:'',
-
+                    address:'',
                     cname : '',
                     cid : '',
 
@@ -1230,24 +1207,20 @@ requirejs(['main'], function (main) {
 
                     chooseCover:function()
                     {
-
-                        //try {
-                        //    var URL = window.URL || window.webkitURL;
-                        //    URL.revokeObjectURL(vm.cover);
-                        //}
-                        //catch (e)
-                        //{
-                        //
-                        //}
+                        if(!checkLogin())
+                        {
+                            return;
+                        }
 
                         $$("#cover")[0].click();
-                        //$$("#cover").trigger('click');
                     },
 
                     chooseimg:function(index,isnew)
                     {
-
-                        //alert("4564658784545: "+isnew);
+                        if(!checkLogin())
+                        {
+                            return;
+                        }
 
                         vm.isnew = isnew;
                         vm.nowindex = index;
@@ -1329,26 +1302,19 @@ requirejs(['main'], function (main) {
 
                                 if(code == 0)
                                 {
-                                    if(info.length > 1)
+                                    if(vm.isnew)
                                     {
                                         $$.each(info, function (i, item) {
 
-                                            if(i == 0)
-                                            {
-                                                vm.list[index].imgid = item.id;
-                                                vm.list[index].img = item.url;
-                                            }
-                                            else
-                                            {
-                                                var obj = {};
-                                                obj.txt = "点击这里输入照片说明";
-                                                obj.img = item.url;
-                                                obj.imgid = item.id;
-                                                vm.list.splice(index, 0, obj);
-                                                vm.isnew = false;
-                                            }
+                                            var obj = {};
+                                            obj.txt = "点击这里输入照片说明";
+                                            obj.img = item.url;
+                                            obj.imgid = item.id;
+                                            vm.list.splice(index, 0, obj);
 
                                         });
+
+                                        vm.isnew = false;
                                     }
                                     else
                                     {
@@ -1421,7 +1387,7 @@ requirejs(['main'], function (main) {
                     {
                         if(User.id == null || User.id == undefined || User.id == "")
                         {
-                            mainView.router.loadPage({url:'login.html',pushState:true});
+                            mainView.router.loadPage({url:'login.html'});
                             return;
                         }
 
@@ -1494,28 +1460,146 @@ requirejs(['main'], function (main) {
                             form.append('e_time',vm.e_time);
                             form.append('price',vm.price);
                             form.append('a_number',vm.a_number);
+                            form.append('address',vm.address);
 
-                            Service.articleAddEvent(form,function(data){
 
-                                handleresult(data);
 
-                            });
+                            if(id != null && id != undefined)
+                            {
+                                form.append('aid',id);
+
+                                console.log(form.toString());
+
+                                Service.articleEditEvent(form,function(data){
+
+                                    handleresult(data);
+
+                                });
+                            }
+                            else
+                            {
+                                Service.articleAddEvent(form,function(data){
+
+                                    handleresult(data);
+
+                                });
+                            }
+
+
                         }
                         else
                         {
-                            Service.articleAddArticle(form,function(data){
+                            if(id != null && id != undefined)
+                            {
+                                form.append('aid',id);
 
-                                handleresult(data);
+                                Service.articleEditArticle(form,function(data){
 
-                            });
+                                    handleresult(data);
+
+                                });
+                            }
+                            else
+                            {
+                                Service.articleAddArticle(form,function(data){
+
+                                    handleresult(data);
+
+                                });
+                            }
+
                         };
 
                     },
 
 
+                    showActivity:function()
+                    {
+
+                        if(id != null && id != undefined)
+                        {
+                            return;
+                        }
+
+                        if(vm.isactity)
+                        {
+                            vm.astyle = 'block';
+                        }
+                        else
+                        {
+                            vm.astyle = 'none';
+                        }
+
+                    }
+
+
                 },
 
             });
+
+
+            if(id != null && id != undefined)
+            {
+
+                $$('#ckbox').attr("disabled",true);
+
+                Service.articleGetArticle(id,User.id,function(data)
+                {
+                    var info = data.data.info;
+                    if(info)
+                    {
+                        var obj = info[0];
+                        vm.coverid = obj.cover_id;
+                        vm.cover = obj.url;
+                        vm.title = obj.title;
+                        vm.isactity = obj.type == '2';
+                        vm.cid = obj.category_id;
+
+                        $$.each(vm.clist, function (i, item) {
+                            if(item.id+"" == vm.cid+"")
+                            {
+                                vm.cname = item.title;
+                            }
+                        });
+
+                        if(vm.isactity)
+                        {
+                            vm.astyle = 'block';
+                        }
+                        else
+                        {
+                            vm.astyle = 'none';
+                        }
+                        var arr = JSON.parse(obj.content);
+                        vm.list = arr;
+
+                    }
+                });
+
+                Service.articleGetEvent(id,function(data){
+
+                    var info = data.data.info;
+                    if(info)
+                    {
+                        var obj = info[0];
+
+                        vm.s_time = obj.s_time;
+                        vm.e_time = obj.e_time;
+
+                        $$('#calendar-stime').val(DateTimeUtil.UnixToDate(vm.s_time));
+                        $$('#calendar-etime').val(DateTimeUtil.UnixToDate(vm.e_time));
+
+                        vm.price = obj.price;
+                        vm.a_number = obj.a_number;
+                        vm.address = obj.address;
+
+                    }
+
+                });
+
+            }
+
+
 
 
             function handleresult(data)
@@ -1528,6 +1612,8 @@ requirejs(['main'], function (main) {
                 if(code == 0)
                 {
                     msg = "发布成功";
+                    initInfoMJS(id);
+
                 }
 
                 var toast = myApp.toast(msg, '', {});
@@ -1565,16 +1651,21 @@ requirejs(['main'], function (main) {
                 $$.each(info, function (i, item) {
 
                     sarr.push(item.title);
+                    if(item.id+"" == vm.cid+"")
+                    {
+                        vm.cname = item.title;
+                    }
 
                 });
-
-
 
                 var cpicker = myApp.picker({
                     input: '#picker-device',
 
                     formatValue: function (picker, values) {
-                        vm.cname = values;
+
+                        console.log(values);
+
+                        vm.cname = values[0];
                         return values;
                     },
 
@@ -1585,56 +1676,6 @@ requirejs(['main'], function (main) {
                         }
                     ]
                 });
-
-            });
-
-
-
-
-
-            require(['zepto'],function(){
-
-                $("#p_sign_up").click(function(){
-                    $("#p_form_li").toggle();
-                    vm.isactity = !vm.isactity;
-                });
-                $("#em01").click(function(){
-                    $("#em01").toggleClass("c_em");
-                });
-                $("#em02").click(function(){
-                    $("#em02").toggleClass("c_em");
-                });
-                $("#em03").click(function(){
-                    $("#em03").toggleClass("c_em");
-                });
-                $("#em04").click(function(){
-                    $("#em04").toggleClass("c_em");
-                });
-                $("#em05").click(function(){
-                    $("#em05").toggleClass("c_em");
-                });
-                $("#em06").click(function(){
-                    $("#em06").toggleClass("c_em");
-                });
-                $("#em07").click(function(){
-                    $("#em07").toggleClass("c_em");
-                });
-                $("#em08").click(function(){
-                    $("#em08").toggleClass("c_em");
-                });
-                $("#em09").click(function(){
-                    $("#em09").toggleClass("c_em");
-                });
-                $("#em10").click(function(){
-                    $("#em10").toggleClass("c_em");
-                });
-                $("#em11").click(function(){
-                    $("#em11").toggleClass("c_em");
-                });
-                $("#em12").click(function(){
-                    $("#em12").toggleClass("c_em");
-                });
-
 
             });
 
@@ -1650,7 +1691,7 @@ requirejs(['main'], function (main) {
         }
 
         var userList2vm;
-        function initUserList2JS(id)
+        function initUserList2JS(id,query)
         {
 
             if(id != null)
@@ -1682,7 +1723,7 @@ requirejs(['main'], function (main) {
                 return;
             }
 
-            var flag = getUrlParam("flag");
+            var flag = query.flag;
 
             userList2vm = new Vue({
                 el: '#user_info_list2',
@@ -1691,10 +1732,22 @@ requirejs(['main'], function (main) {
                     end : false,
                     list:[],
                     pagetitle:'',
-
                 },
 
                 methods:{
+
+                    toInfo:function(id)
+                    {
+                        if(flag == 1)
+                        {
+                            mainView.router.loadPage({url:'info_m.html?id='+id});
+                        }
+                        else
+                        {
+                            mainView.router.loadPage({url:'info.html?id='+id});
+                        }
+
+                    }
 
                 },
 
@@ -1739,7 +1792,7 @@ requirejs(['main'], function (main) {
 
                     $$('#user_info_list2').on('infinite', function () {
 
-                        listObj.getUserPostlist(getList);
+                        listObj.getUserCollectlist(getList);
 
                     });
                     break;
@@ -1750,7 +1803,7 @@ requirejs(['main'], function (main) {
 
                     $$('#user_info_list2').on('infinite', function () {
 
-                        listObj.getUserPostlist(getList);
+                        listObj.getUserJoinlist(getList);
 
                     });
                     break;
@@ -1762,7 +1815,149 @@ requirejs(['main'], function (main) {
             $$('#user_info_list2').on('scroll', handleInfiniteScroll);
         }
 
+        function initUserListJS(query)
+        {
 
+            var uid = query.uid;
+            var nick = query.nick;
+            var pic = query.pic;
+
+            var vm = new Vue({
+                el: '#user_info_list',
+                data: {
+
+                    list:[],
+                    msg : '信息加载中...',
+                    end : false,
+
+                    info:{
+                        nickname:nick,
+                        headimage:pic,
+                    },
+
+                },
+
+                methods:{
+
+                },
+
+            });
+
+            var listObj = Object.create(ActivityListPageModel);
+            listObj.user = {id:uid};
+            function getList(arr,end)
+            {
+                $$.each(arr, function (index, item) {
+                    item.timestr = DateTimeUtil.UnixToDate(item.create_time);
+                });
+
+                vm.list = vm.list.concat(arr);
+                if(end)
+                {
+                    vm.msg = "已全部加载完毕";
+                    vm.end = true;
+                }
+
+            }
+
+            listObj.getUserPostlist(getList);
+
+            $$('#user_info_list').on('infinite', function () {
+
+                listObj.getUserPostlist(getList);
+
+            });
+
+            $$('#user_info_list').on('scroll', handleInfiniteScroll);
+
+
+        }
+
+
+        var infomVM = null;
+        function initInfoMJS(aid,query)
+        {
+
+            if(aid != null && aid != undefined)
+            {
+                if(infomVM == null || infomVM == undefined)
+                {
+                    return;
+                }
+
+                getinfo();
+
+                return;
+            }
+
+            var id = query.id;
+
+            infomVM = new Vue({
+                el: '#info_m',
+                data: {
+                    info:{},
+                    einfo:{},
+                    id:id,
+                },
+
+                methods:{
+
+                },
+
+            });
+
+            getinfo();
+
+            function getinfo()
+            {
+                infomVM.info = {};
+                infomVM.einfo = {};
+
+                Service.articleGetArticle(infomVM.id,User.id,function(data)
+                {
+                    var info = data.data.info;
+                    if(info)
+                    {
+                        var obj = info[0];
+                        obj.s_str = DateTimeUtil.UnixToDate(obj.s_time);
+                        obj.e_str = DateTimeUtil.UnixToDate(obj.e_time);
+
+                        infomVM.info = obj;
+                    }
+                });
+
+                Service.articleGetEvent(infomVM.id,function(data){
+
+                    var info = data.data.info;
+                    if(info)
+                    {
+                        var obj = info[0];
+                        obj.s_str = DateTimeUtil.UnixToDate(obj.s_time);
+                        obj.e_str = DateTimeUtil.UnixToDate(obj.e_time);
+
+                        infomVM.einfo = obj;
+                    }
+
+                });
+            }
+
+            $$('.confirm-ok').on('click', function () {
+                myApp.confirm('确定删除?',"提醒", function () {
+
+                    Service.usersDelArticle(id,User,function(b){
+
+                        if(b)
+                        {
+                            initUserList2JS(id);
+                            mainView.router.back({url:'index.html'});
+                        }
+
+                    });
+
+                });
+            })
+
+        }
 
         function initTestJS()
         {

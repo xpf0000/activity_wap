@@ -12,7 +12,8 @@
 <link rel="stylesheet" href="css/framework7.ios.css">
 <link rel="stylesheet" href="css/framework7.ios.colors.css">
 <link rel="stylesheet" href="css/my-app.css">
-<script type="text/javascript" src="js/zepto.js"></script>
+
+	<script data-main="js/index.js?v=1.0.1" src="lib/require-min.js?v=1.0.0" ></script>
 </head>
 
 <body>
@@ -20,78 +21,56 @@
 	<div class="view view-main">
 		<div class="pages">
 			<div data-page="user_info_list" class="page">
-				<div class="page-content">
+				<div class="page-content" id="user_info_list">
 <header class="user_header">
 <div class="h45">
 <a href="index.html" class="nav_back fl h45 db back"></a>
 </div>
 <div class="user_info">
-<span class="user_face db tc"><img src="images/face02.jpg"></span>
-<span class="page_user_name db tc">洛阳同城会</span>
-<span class="page_user_about db tc">普通会员</span>
+<span class="user_face db tc"><img :src="info.headimage"></span>
+<span class="page_user_name db tc" v-html="info.nickname"></span>
+
 </div>
 </header>
+
+
+
 <div class="page_w">
-<div class="aui-tab">
-    <ul class="aui-tab-nav">
-        <li class="active">进行中的</li>
-        <li><a href="">全部活动</a></li>
-    </ul>
-</div>
-<div class="index_info_list">
-<ul>
-<li>
-<a href="event_info.html"><img src="images/temp/a01.jpg" border="0"></a>
-<h3><a href="event_info.html">相约小浪底体验中原地区首个森林氧吧山地车主题</a></h3>
-<div class="index_list_author f14">发布人：洛阳同城会</div>
-<div><span class="list_views">12306</span><span class="list_like">1101</span><span class="list_comment">123</span><div class="cl"></div></div>
-</li>
-<li>
-<a href="event_info.html"><img src="images/temp/a02.jpg" border="0"></a>
-<h3><a href="event_info.html">爱在洛阳—“万人相亲会”5月21日等你来！</a></h3>
-<div class="index_list_author f14">发布人：洛阳同城会</div>
-<div><span class="list_views">12306</span><span class="list_like">1101</span><span class="list_comment">123</span><div class="cl"></div></div>
-</li>
-<li>
-<a href="event_info.html"><img src="images/temp/a03.jpg" border="0"></a>
-<h3><a href="event_info.html">月22日周日《大河报骑行俱乐部》邀你参观</a></h3>
-<div class="index_list_author f14">发布人：洛阳同城会</div>
-<div><span class="list_views">12306</span><span class="list_like">1101</span><span class="list_comment">123</span><div class="cl"></div></div>
-</li>
-<li>
-<a href="event_info.html"><img src="images/temp/a02.jpg" border="0"></a>
-<h3><a href="event_info.html">《极限户外洛阳唐朝车队》周六发队段家沟水库</a></h3>
-<div class="index_list_author f14">发布人：洛阳同城会</div>
-<div><span class="list_views">12306</span><span class="list_like">1101</span><span class="list_comment">123</span><div class="cl"></div></div>
-</li>
-<li>
-<a href="event_info.html"><img src="images/temp/a04.jpg" border="0"></a>
-<h3><a href="event_info.html">5月29日周日自驾小沟背一日游活动特价仅需29元</a></h3>
-<div class="index_list_author f14">发布人：洛阳同城会</div>
-<div><span class="list_views">12306</span><span class="list_like">1101</span><span class="list_comment">123</span><div class="cl"></div></div>
-</li>
-<li>
-<a href="event_info.html"><img src="images/temp/a01.jpg" border="0"></a>
-<h3><a href="event_info.html">相约小浪底体验中原地区首个森林氧吧山地车主题</a></h3>
-<div class="index_list_author f14">发布人：洛阳同城会</div>
-<div><span class="list_views">12306</span><span class="list_like">1101</span><span class="list_comment">123</span><div class="cl"></div></div>
-</li>
-</ul>
-</div>
-<div class="page_load"><span class="fl" style="margin-top:6px;"><img src="images/loadding.gif" width="25" height="25"></span><span class="fl">信息加载中...</span><div class="clear"></div></div>
-<div class="bb_bg"></div>
-<footer class="b_menu">
-<a href=""><span class="b_icon01_current db"></span><em class="current_menu">活动</em></a>
-<a href=""><span class="b_icon02 db"></span><em>发布</em></a>
-<a href=""><span class="b_icon03 db"></span><em>我的</em></a>
-</footer>
+
+	<div class="index_info_list">
+
+		<ul>
+			<li v-for="item in list">
+				<a :href="'info.html?id='+item.id"><img :src="item.url" border="0"></a>
+				<h3><a :href="'info.html?id='+item.id" v-html="item.title"></a></h3>
+				<span class="index_list_author f14">发布人：<span v-html="item.nickname"></span></span>
+				<div><span class="list_views" v-html="item.view"></span></div>
+			</li>
+		</ul>
+
+	</div>
+
+
+	<div class="xgrid">
+		<div class="col-100" style="padding: 12px;">
+			<img src="images/loadding.gif" width="25" height="25" v-if="!end">
+			<span class="fl" v-html="msg"></span>
+		</div>
+		<div class="clear"></div>
+	</div>
+
+
+<!--<footer class="b_menu">-->
+<!--<a href=""><span class="b_icon01_current db"></span><em class="current_menu">活动</em></a>-->
+<!--<a href=""><span class="b_icon02 db"></span><em>发布</em></a>-->
+<!--<a href=""><span class="b_icon03 db"></span><em>我的</em></a>-->
+<!--</footer>-->
 </div>
 </div>
 				</div>
 			</div>
 		</div>
 	</div>
-<script type="text/javascript" src="js/framework7.min.js"></script>
-<script type="text/javascript" src="js/my-app.js"></script>
+
 </body>
 </html>

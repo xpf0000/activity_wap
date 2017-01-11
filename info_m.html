@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Cache-Control" content="no-cache" />
+<meta content="telephone=no" name="format-detection" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<title>活动管理-河洛泡泡</title>
+<link rel="stylesheet" type="text/css" href="css/base.css"/>
+<link type="text/css" rel="stylesheet" href="css/index.css">
+<link rel="stylesheet" href="css/framework7.ios.css">
+<link rel="stylesheet" href="css/framework7.ios.colors.css">
+<link rel="stylesheet" href="css/my-app.css">
+
+    <script data-main="js/index.js?v=1.0.1" src="lib/require-min.js?v=1.0.0" ></script>
+
+</head>
+
+<body>
+<div class="views">
+	<div class="view view-main">
+		<div class="pages">
+			<div data-page="info_m" class="page">
+				<div class="page-content" id="info_m">
+<header class="page_header">
+<a href="index.html" class="nav_back back"></a>
+    <h1 class="page_name">管理</h1>
+</header>
+<div class="page_w" style="background:#fff; height:100%;">
+<div class="info_tit" v-html="info.title"></div>
+
+<div class="info_no">
+    <a href="#" class="fl db tc">收藏：<span v-html="info.collect"></span></a>
+    <a href="#" class="fl db tc">阅读：<span v-html="info.view"></span></a>
+</div>
+
+<div v-if="info.type=='2'" class="info_time">活动时间<span class="db abs">
+
+    <span v-html="einfo.s_str"></span>至<span v-html="einfo.e_str"></span>
+
+</span></div>
+<div v-if="info.type=='2'" class="info_address">活动地点<span class="db abs">
+    <span v-html="einfo.address"></span>
+</span></div>
+
+<div class="info_oper">
+<a :href="'publish.html?id='+info.id"><span class="info_oper_icon01 db"></span><span class="info_oper_font db tc">编辑</span></a>
+<a href="#" data-picker=".picker_a" class="open-picker"><span class="info_oper_icon02 db"></span><span class="info_oper_font db tc">分享</span></a>
+<a :href="'info.html?id='+info.id"><span class="info_oper_icon03 db"></span><span class="info_oper_font db tc">查看</span></a>
+<a href="#" class="confirm-ok"><span class="info_oper_icon04 db"></span><span class="info_oper_font db tc">删除</span></a>
+</div>
+<div class="am-share picker-modal picker_a">
+  <h3 class="am-share-title">分享到</h3>
+  <ul class="am-share-sns">
+    <li><a href="#"> <i class="share-icon-qq"></i> <span>QQ好友</span> </a> </li>
+    <li><a href="#"> <i class="share-icon-wx"></i> <span>微信好友</span> </a> </li>
+    <li><a href="#"> <i class="share-icon-weibo"></i> <span>新浪微博</span> </a> </li>
+    <li><a href="#"> <i class="share-icon-wx2"></i> <span>微信朋友圈</span> </a> </li>
+  </ul>
+  <div class="am-share-footer"><a href="#" data-picker=".picker_a" class="close-picker share_btn">取消</a></div>
+</div>
+<div class="del_info picker-modal picker_b">
+	<a herf="#" class="tc db">确定删除</a>
+	<a herf="#" data-picker=".picker_b" class="close-picker tc db">取消</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</body>
+</html>

@@ -13,7 +13,7 @@
 <link rel="stylesheet" href="css/framework7.ios.colors.css">
 <link rel="stylesheet" href="css/my-app.css">
 
-    <script data-main="js/index" src="lib/require-min.js" ></script>
+	<script data-main="js/index.js?v=1.0.1" src="lib/require-min.js?v=1.0.0" ></script>
 
 </head>
 
@@ -34,22 +34,14 @@
 
 <div class="page_w">
 
+	<form id="coverform">
+		<input id="cover" type="file" name="file" @change="coverChange($event)" hidden="true"/>
+	</form>
 
 <div class="p_page_banner" :style="'background-image: url('+cover+');'">
 <textarea id="mtitle" name="title" class="p_title" placeholder="点击设置标题" v-model="title"></textarea>
-<!--<button class="p_up_img" @touchend="chooseCover"></button>-->
-
-	<form id="coverform">
-	<a href="javascript:;" class="file p_up_img">
-		<input type="file" id="cover" type="file" name="file[]" @change="coverChange($event)">
+	<a href="javascript:;" class="file p_up_img" @click="chooseCover" @touchend="chooseCover">
 	</a>
-	</form>
-
-
-	<!--<form id="coverform">-->
-		<!--<input class="p_up_img" id="cover" type="file" name="file" @change="coverChange($event)" />-->
-	<!--</form>-->
-
 </div>
 
 
@@ -80,7 +72,7 @@
 	<a href="#" class="p_up_words db" @click="showTxtEdit(index,true)">
 		文字信息
 	</a>
-	<a href="#" class="p_up_photo db" @touchend="chooseimg(index,true)">
+	<a href="#" class="p_up_photo db" @click="chooseimg(index,true)" @touchend="chooseimg(index,true)">
 		图片信息
 	</a>
 	<div class="cl"></div>
@@ -91,7 +83,7 @@
 
 	<textarea :name="'txt'+index" v-html="item.txt" hidden="true"></textarea>
 
-	<div class="p_img fl" :style="'background-image: url('+item.img+');'" @touchend="chooseimg(index,false)">
+	<div class="p_img fl" :style="'background-image: url('+item.img+');'" @click="chooseimg(index,false)" @touchend="chooseimg(index,false)">
 	</div>
 
 	<div class="p_memo fl mt15" @click="showTxtEdit(index,false)" v-html="item.txt">
@@ -114,24 +106,23 @@
 
 
 	<div class="p_c_class">
-		<input type="text" placeholder="请选择分类" readonly id="picker-device" />
+		<input v-model="cname" type="text" placeholder="请选择分类" readonly id="picker-device" />
 	</div>
 
-	<!--<div class="p_sign_up tc list-block" style="position: relative; margin: 6px 8px;height: 40px;line-height: 39px;">-->
-		<!--添加报名-->
-		<!--<li  style="position: absolute; top:-3px;width: 100%;line-height: 40px;">-->
-		<!--<label class="label-checkbox item-content" id="p_sign_up">-->
-			<!--<input type="checkbox" name="my-checkbox" value="yes">-->
-			<!--<div class="item-media">-->
-				<!--<i class="icon icon-form-checkbox" ></i>-->
-			<!--</div>-->
-		<!--</label>-->
-	<!--</li>-->
-	<!--</div>-->
+	<div class="p_sign_up tc list-block" style="position: relative; margin: 6px 8px;height: 40px;line-height: 39px;">
+		添加报名
+		<li  style="position: absolute; top:-3px;width: 100%;line-height: 40px;">
+		<label class="label-checkbox item-content" id="p_sign_up">
+			<input @change="showActivity"  type="checkbox" id="ckbox" name="my-checkbox" value="yes" v-model="isactity">
+			<div class="item-media">
+				<i class="icon icon-form-checkbox" ></i>
+			</div>
+		</label>
+	</li>
+	</div>
 
 
-
-<div class="p_form_li bg-ff mt10" id="p_form_li" style="display:block">
+<div class="p_form_li bg-ff mt10" id="p_form_li" :style="'display:'+astyle">
 <ul>
 <li>开始时间
 	<input class="sign_input" readonly id="calendar-stime" type="text"  name="s_time"  placeholder="请设置开始时间" />
@@ -140,7 +131,12 @@
 	<input class="sign_input" readonly id="calendar-etime" type="text"  name="e_time"  placeholder="请设置开始时间" />
 </li>
 
-<li>活动费用
+<li>活动地点
+	<input v-model="address" type="text" id="address" name="address" class="sign_input" placeholder="请输入活动地点" >
+</li>
+
+
+	<li>活动费用
 	<input class="sign_input" type="number"  id="price" v-model="price" name="price"  placeholder="请设置活动费用" />
 </li>
 

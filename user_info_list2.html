@@ -13,7 +13,7 @@
 <link rel="stylesheet" href="css/framework7.ios.colors.css">
 <link rel="stylesheet" href="css/my-app.css">
 
-	<script data-main="js/index" src="lib/require-min.js" ></script>
+	<script data-main="js/index.js?v=1.0.1" src="lib/require-min.js?v=1.0.0" ></script>
 
 </head>
 
@@ -33,10 +33,9 @@
 <div class="index_info_list">
 <ul>
 <li v-for="item in list">
-<a :href="'info.html?id='+item.id"><img :src="item.url" border="0"></a>
-<h3><a :href="'info.html?id='+item.id"><span v-html="item.title"></span></a></h3>
+<a href="#" @click="toInfo(item.id)"><img :src="item.url" border="0"></a>
+<h3><a href="#" @click="toInfo(item.id)"><span v-html="item.title"></span></a></h3>
 <div class="event_list_time">时间：<span v-html="item.timestr"></span></div>
-
 </li>
 
 

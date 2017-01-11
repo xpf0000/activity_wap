@@ -63,24 +63,54 @@ html,body{background-color:#f4f5f6; height:100%;margin:0px; padding:0px;}
 .lh12{ line-height:12px;}
 
 /*底部菜单*/
-.b_menu {z-index:999; position:fixed; bottom:0; width:100%; _position:absolute;
- _top: expression_r(documentElement.scrollTop + documentElement.clientHeight-this.offsetHeight); overflow: hidden; height:70px;background:url(../images/bottom.png)  no-repeat center; background-size:640px 70px;max-width:640px; margin:0 auto;}
+.b_menu {
+
+    z-index:999;
+    position:fixed;
+    bottom:0;
+    width:100%;
+    _position:fixed;
+    overflow: hidden;
+    height:60px;
+    background:url(../images/bottom.png)  no-repeat center;
+    background-size:640px 60px;
+    max-width:640px;
+    margin:0 auto;
+    left:0;
+    right: 16px;
+
+}
  .bb_bg { height:70px; width:100%;}
  .b_menu a { display:block; height:70px; float:left;width:33.333%; padding-top:15px;}
- .b_icon01 ,.b_icon02 ,.b_icon03 ,.b_icon01_current ,.b_icon03_current { width:30px; margin:0 auto; text-align:center; height:30px;background:url(../images/bottom_icon.png) no-repeat; background-size:30px 150px;}
-  .b_menu a em { display:block; height:20px; font-size:15px; margin:0 auto; width:50px; text-align:center;}
-  .b_icon01 { background-position:0 -60px;}
-  .b_icon01_current { background-position:0 -90px;}
+
+ .b_icon01 ,.b_icon02 ,.b_icon03 ,.b_icon01_current ,.b_icon03_current {
+     width:20px;
+     margin:0 auto;
+     text-align:center;
+     height:20px;
+     background:url(../images/bottom_icon.png) no-repeat;
+     background-size:20px 100px;
+ }
+
+ .b_menu a em { display:block; height:26px;line-height: 26px; font-size:13px; margin:0 auto; width:30px; text-align:center;}
+ .b_icon01 { background-position:0 -40px;}
+  .b_icon01_current { background-position:0 -60px;}
   .b_icon02 { background-position:0 -1150px;}
   .b_icon03 { background-position:0 0;}
-  .b_icon03_current  { background-position:0 -30px;}
+  .b_icon03_current  { background-position:0 -20px;}
   .current_menu { color:#3fcc84;}
   
  /*信息加载*/ 
 .page_load { text-align:center;margin:0 auto;width:200px;}
 .page_load span { display:block; height:50px; line-height:50px; vertical-align:middle;}
 
-.page_w {width:100%; height:auto; margin:0 auto;max-width:640px; position:relative;}
+.page_w {
+    width:100%;
+    height:auto;
+    margin:0 auto;
+    max-width:640px;
+    position:relative;
+}
  /*内页顶部导航*/ 
  header ,.page_header{ height:45px; line-height:45px;  text-align:center;position:relative;width:100%; margin:0 auto;max-width:640px;}
 .page_header { background:#f9f9f9; border-bottom:#d7d7d7 solid 1px;}

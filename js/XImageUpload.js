@@ -203,7 +203,6 @@
             xhr.onload = function () {
                 //如果请求成功
                 if((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304){
-
                     var jsonData = JSON.parse(xhr.responseText);
                     app.params.upBlock(jsonData,null);
                 }

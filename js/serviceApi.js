@@ -97,6 +97,14 @@ define(["Service"], function(Service) {
 
             },
 
+            //编辑文章信息
+            articleEditArticle: function(data,callBack)
+            {
+                var url = this.BaseUrl+"Article.editArticle";
+                XHttpUpload(url,data,callBack);
+
+            },
+
             //获取用户发布列表
             usersGetArticleList: function(user,page,perNumber,callBack)
             {
@@ -110,6 +118,14 @@ define(["Service"], function(Service) {
             articleAddEvent: function(data,callBack)
             {
                 var url = this.BaseUrl+"Article.addEvent";
+                XHttpUpload(url,data,callBack);
+
+            },
+
+            //编辑活动信息
+            articleEditEvent: function(data,callBack)
+            {
+                var url = this.BaseUrl+"Article.editEvent";
                 XHttpUpload(url,data,callBack);
 
             },
@@ -173,6 +189,16 @@ define(["Service"], function(Service) {
                 XHttpDo(url,"取消报名成功","取消报名失败",callBack);
 
             },
+
+            //删除发布
+            usersDelArticle: function(id,user,callBack)
+            {
+                var url = this.BaseUrl+"Users.delArticle&id="+id+"&uid="+user.id+"&username="+user.username;
+                XHttpDo(url,"删除成功","删除失败",callBack);
+
+            },
+
+
 
             //获取活动信息
             articleGetEvent: function(id,callBack)
