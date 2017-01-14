@@ -206,7 +206,7 @@ function checkLogin()
 
 requirejs(['main'], function (main) {
 
-    require(['vue','store','Service','xupload','toast','auislide'], function(v,store,s) {
+    require(['vue','store','Service','share','xupload','toast','auislide'], function(v,store,s,share) {
 
         Vue = v;
         $$ = Dom7;
@@ -227,7 +227,13 @@ requirejs(['main'], function (main) {
             else if(page.name == 'info')
             {
                 console.log("info page !!!!!!!!!");
-                initInfoJS(page.query.id);
+                var id = page.query.id;
+                if(id == null || id == undefined)
+                {
+	                id = getUrlParam('id');
+                }
+                
+                initInfoJS(id);
             }
             else if(page.name == 'user_index')
             {
@@ -291,6 +297,38 @@ requirejs(['main'], function (main) {
                 },1);
 
             }
+            else if(page.name == 'reg')
+            {
+                console.log("reg page !!!!!!!!!");
+                setTimeout(function(){
+
+                    initRegJS(page.query);
+
+                },1);
+
+            }
+            else if(page.name == 'findpass')
+            {
+                console.log("findpass page !!!!!!!!!");
+                setTimeout(function(){
+
+                    initFindPassJS(page.query);
+
+                },1);
+
+            }
+            else if(page.name == 'updatePass')
+            {
+                console.log("updatePass page !!!!!!!!!");
+                setTimeout(function(){
+
+                    initUpdatePassJS();
+
+                },1);
+
+            }
+
+
             else if(page.name == 'test')
             {
                 console.log("test page !!!!!!!!!");
@@ -444,7 +482,18 @@ requirejs(['main'], function (main) {
             getGuanggao();
             getCategory(function(arr)
             {
-                category.info = arr;
+	            if(arr.length > 4)
+	            {
+		            var t = arr.splice(0, 4);
+		            category.info = t;
+	            }
+	            else
+	            {
+		            category.info = arr;
+	            }
+	            
+	            
+                
             });
 
             function getGuanggao()
@@ -465,9 +514,12 @@ requirejs(['main'], function (main) {
             var indexlist = Object.create(ActivityListPageModel);
 
             function getList(arr,end)
-            {
-
-                listVM.info = listVM.info.concat(arr);
+            {	                 
+	            var t = listVM.info;
+	            t = t.concat(arr);
+	            
+	            listVM.info = t;
+	            
 
                 if(end)
                 {
@@ -478,6 +530,20 @@ requirejs(['main'], function (main) {
             }
 
             indexlist.getlist(getList);
+            
+            OnNotice("addActivitySuccess",function(obj){
+	            
+	            console.log("观察者模式 !!!!!!! 000");
+	            
+	            listVM.info = [];
+	            indexlist.reset();
+	            indexlist.getlist(getList);
+	            
+	            console.log("观察者模式 !!!!!!! 111");
+	            
+            })
+            
+            
         }
 
 
@@ -752,6 +818,66 @@ requirejs(['main'], function (main) {
                 },
 
             });
+            
+             var join = new Vue({
+                el: '#share',
+                data: {
+                   
+                },
+
+                methods:{
+	                
+	                doShare:function(flag)
+	                {
+		                
+		                console.log("do share !!!!! "+flag);
+		                
+		                var option = {
+			                url: window.location.href,
+							title: vm.info.title,
+							content: vm.info.title,
+							pic: vm.info.url,
+		                };
+		                
+		                switch(flag)
+		                {
+			                case 0 :
+			                
+			                console.log(share);
+			                
+			                share.Share("Weixin",option);
+			                
+			                break;
+			                
+			                case 1 :
+			                share.Share("Weixin",option);
+			                break;
+			                
+			                case 2 :
+			                
+			                option = {
+			                url: Base64.encode(window.location.href),
+							title: Base64.encode(vm.info.title),
+							content: '',
+							pic: '',
+							appname: Base64.encode('河洛泡泡'),
+		                	};
+
+			                share.Share("QQ",option);
+			                break;
+			                
+			                case 3 :
+			                share.Share("Sina",option);
+			                break;
+			                
+			                
+		                }
+		                
+	                }
+	                
+				}
+				
+				});
 
             function getulist()
             {
@@ -774,7 +900,8 @@ requirejs(['main'], function (main) {
             {
                 Service.articleGetEvent(id,function(data)
                 {
-                    var info = data.data.info;
+	                if(data.data.code != 0){return;}
+	                var info = data.data.info;
                     if(info)
                     {
                         var obj = info[0];
@@ -783,6 +910,8 @@ requirejs(['main'], function (main) {
 
                         join.info = obj;
                     }
+
+                                   
                 });
             }
 
@@ -873,8 +1002,16 @@ requirejs(['main'], function (main) {
                         {
                             return;
                         }
+                        if(flag == "4")
+                        {
+	                        mainView.router.loadPage({url:'edit_password.html'});
+                        }
+                        else
+                        {
+	                        mainView.router.loadPage({url:'user_info_list2.html?flag='+flag});
+                        }
 
-                        mainView.router.loadPage({url:'user_info_list2.html?flag='+flag});
+                        
                     },
 
                     toUserEdit:function()
@@ -1083,6 +1220,7 @@ requirejs(['main'], function (main) {
 
                                 console.log("用户头像更新结果：");
                                 console.log(data);
+                                initUser(User);
 
                             });
 
@@ -1122,6 +1260,9 @@ requirejs(['main'], function (main) {
                 input: '#calendar-default',
 
                 formatValue: function (picker, values) {
+	                
+	                console.log(values);
+	                
                     vm.birthday = values/1000;
                     return DateTimeUtil.UnixToDate(values/1000);
                 },
@@ -1139,15 +1280,21 @@ requirejs(['main'], function (main) {
         {
 
             var id = query.id;
+            if(id == null || id == undefined)
+            {
+	           id = getUrlParam('id');
+            }
 
             var input = new Vue({
                 el: '#txtinput',
-                data: {},
+                data: {
+	                edittxt:'',
+                },
                 methods: {
 
                     txteditend: function () {
 
-                        var str = $$(".p_content").val();
+                        var str = input.edittxt;
 
                         if (vm.isnew) {
                             var obj = {};
@@ -1162,7 +1309,7 @@ requirejs(['main'], function (main) {
                         }
 
                         myApp.closeModal('.popup_a');
-                        $$(".p_content").val("");
+                        input.edittxt = "";
 
                         vm.isnew = false;
                     },
@@ -1195,11 +1342,25 @@ requirejs(['main'], function (main) {
 
                 methods:{
 
-                    showTxtEdit:function(index,isnew)
+                    showTxtEdit:function(index,isnew,oldtxt)
                     {
                         console.log(isnew);
 
                         vm.isnew = isnew;
+                        
+                        if(isnew)
+                        {
+	                        input.edittxt = "";
+                        }
+                        else
+                        {
+	                        if(oldtxt != null && oldtxt != undefined)
+							{
+	                        	input.edittxt = oldtxt;
+                        	}
+                        }
+                        
+                        
 
                         myApp.popup('.popup_a');
                         vm.lastIndex = index;
@@ -1242,7 +1403,7 @@ requirejs(['main'], function (main) {
 
                         var p = {
 
-                            url:"http://182.92.70.85/hlppapi/Public/Found/?service=Article.addPic",
+                            url:Service.BaseUrl+"Article.addPic",
                             upBody:{
                                 uid: User.id,
                                 username: User.username,
@@ -1283,7 +1444,7 @@ requirejs(['main'], function (main) {
 
                         var p = {
 
-                            url:"http://182.92.70.85/hlppapi/Public/Found/?service=Article.addPic",
+                            url:Service.BaseUrl+"Article.addPic",
                             upBody:{
                                 uid: User.id,
                                 username: User.username,
@@ -1307,7 +1468,7 @@ requirejs(['main'], function (main) {
                                         $$.each(info, function (i, item) {
 
                                             var obj = {};
-                                            obj.txt = "点击这里输入照片说明";
+                                            obj.txt = "";
                                             obj.img = item.url;
                                             obj.imgid = item.id;
                                             vm.list.splice(index, 0, obj);
@@ -1608,11 +1769,21 @@ requirejs(['main'], function (main) {
 
                 var code = data.data.code;
                 var msg = data.data.msg;
+                
+                console.log(code);
+                console.log(msg);
 
                 if(code == 0)
                 {
                     msg = "发布成功";
-                    initInfoMJS(id);
+                    
+                    console.log("id: "+id);
+                    if(id != null && id != undefined)
+                    {
+	                    initInfoMJS(id,null);
+                    }
+                    
+					postNotice("addActivitySuccess");
 
                 }
 
@@ -1683,7 +1854,7 @@ requirejs(['main'], function (main) {
             for(i=0;i<1;i++)
             {
                 var obj = {};
-                obj.txt = "点击这里输入照片说明";
+                obj.txt = "";
                 obj.img = "http://static2.ivwen.com/user/7224114/c75747eb2c500001204e135077f080c0.jpg";
                 vm.list.push(obj);
             }
@@ -1724,6 +1895,11 @@ requirejs(['main'], function (main) {
             }
 
             var flag = query.flag;
+            
+            if(flag == null || flag == undefined)
+            {
+	            flag = getUrlParam("flag");
+            }
 
             userList2vm = new Vue({
                 el: '#user_info_list2',
@@ -1813,6 +1989,37 @@ requirejs(['main'], function (main) {
 
 
             $$('#user_info_list2').on('scroll', handleInfiniteScroll);
+            
+            
+            
+            OnNotice("DelActivitySuccess",function(o){
+	            
+	            userList2vm.list = [];
+	            listObj.reset();
+	            switch(flag)
+				{
+                case "1":
+                    
+                    listObj.getUserPostlist(getList);
+                    break;
+
+                case "2":
+                    
+                    listObj.getUserCollectlist(getList);
+                    break;
+
+                case "3":                  
+                    listObj.getUserJoinlist(getList);
+                    break;
+
+            }
+
+	            
+	            
+	            
+            });
+            
+            
         }
 
         function initUserListJS(query)
@@ -1821,6 +2028,13 @@ requirejs(['main'], function (main) {
             var uid = query.uid;
             var nick = query.nick;
             var pic = query.pic;
+            
+            if(uid == null || uid == undefined)
+            {
+	            uid = getUrlParam('uid');
+	            nick = getUrlParam('nick');
+	            pic = getUrlParam('pic');
+            }
 
             var vm = new Vue({
                 el: '#user_info_list',
@@ -1891,6 +2105,10 @@ requirejs(['main'], function (main) {
             }
 
             var id = query.id;
+            if(id == null || id == undefined)
+            {
+	           id = getUrlParam('id');
+            }
 
             infomVM = new Vue({
                 el: '#info_m',
@@ -1915,6 +2133,11 @@ requirejs(['main'], function (main) {
 
                 Service.articleGetArticle(infomVM.id,User.id,function(data)
                 {
+	                if(data.data.code != 0)
+					{
+						return;
+					}
+					
                     var info = data.data.info;
                     if(info)
                     {
@@ -1927,6 +2150,11 @@ requirejs(['main'], function (main) {
                 });
 
                 Service.articleGetEvent(infomVM.id,function(data){
+
+					if(data.data.code != 0)
+					{
+						return;
+					}
 
                     var info = data.data.info;
                     if(info)
@@ -1948,7 +2176,8 @@ requirejs(['main'], function (main) {
 
                         if(b)
                         {
-                            initUserList2JS(id);
+                            //initUserList2JS(id);
+                            postNotice("DelActivitySuccess");
                             mainView.router.back({url:'index.html'});
                         }
 
@@ -1957,6 +2186,357 @@ requirejs(['main'], function (main) {
                 });
             })
 
+        }
+        
+        function initRegJS(query)
+        {
+
+
+            var vm = new Vue({
+                el: '#reg',
+                data: {
+                    mobil:'',
+                    code:'',
+                    pass1:'',
+                    pass2:'',
+                    nickname:'',
+                    codebtn:'获取验证码',
+                    running: false,
+                },
+
+                methods:{
+	                
+	                sendMsg:function()
+	                {
+		                
+		                if(vm.codebtn != '获取验证码')
+		                {
+			             	return;   
+		                }
+		                
+		                if(!validatemobile(vm.mobil))
+		                {
+			                return;
+		                }
+		              		                
+		            
+		                
+		                Service.userSmsSend(vm.mobil,"1",function(b){			                
+			           
+			           store.set("SMSSendTime",new Date().getTime());
+  
+			                if(b)
+			                {		             
+				                settime();
+			                }
+			                
+		                });
+		                
+	                },
+	                
+                    doReg:function()
+                    {
+	                    
+	                    if(!validatemobile(vm.mobil))
+		                {
+			                return;
+		                }
+
+						if(vm.code == "")
+						{
+							var toast = myApp.toast('请输入验证码', '', {});
+							toast.show();
+							return;
+						}
+						
+						if(vm.nickname == "")
+						{
+							var toast = myApp.toast('请输入昵称', '', {});
+							toast.show();
+							return;
+						}
+						
+						if(vm.pass1 == "" || vm.pass2 == "")
+						{
+							var toast = myApp.toast('请输入密码和确认密码', '', {});
+							toast.show();
+							return;
+						}
+						
+						if(vm.pass1 != vm.pass2)
+						{
+							var toast = myApp.toast('密码和确认密码不一致', '', {});
+							toast.show();
+							return;
+						}
+
+						
+						myApp.showPreloader("注册中...");
+
+                        if (vm.running){return;};
+                        vm.running = true;
+
+                        Service.userRegister(vm.mobil,vm.pass1,vm.code,vm.nickname,function(data)
+                            {
+	                            myApp.hidePreloader();
+	                            
+                                var code = data.data.code;
+                                var msg = data.data.msg;
+                                var info = data.data.info;
+
+                                if(info.length > 0)
+                                {
+                                    var obj = info[0];
+
+                                    try
+                                    {
+                                        store.set("user",obj);
+                                    }
+                                    catch (err)
+                                    {
+
+                                    }
+
+                                    initUser(obj);
+
+                                    mainView.router.back({url:'index.html'});
+
+                                    return;
+                                }
+
+                                var toast = myApp.toast(msg, '', {});
+                                toast.show();
+
+                                toast.onDissMissListener(function(){
+
+                                    vm.running = false;
+
+                                })
+
+                            });
+                            
+                            
+                    },
+
+                },
+
+            });
+            
+            
+            
+            function settime()
+            {
+	            var old = store.get("SMSSendTime");
+	            if(old == null || old == undefined){return;}
+	            
+	            var t = (new Date().getTime() - old)/1000;
+	            t = parseInt(t);
+	            if(t < 60)
+	            {
+		            vm.codebtn = (60-t)+"秒";
+		            
+		            setTimeout(function() {
+						settime()
+					},1000);
+					
+	            }
+	            else
+	            {
+		            vm.codebtn = "获取验证码";
+	            }
+ 
+	            
+            }
+            
+            settime();
+
+
+        }
+        
+        function initFindPassJS(query)
+        {
+
+            var vm = new Vue({
+                el: '#findpass',
+                data: {
+                    mobil:'',
+                    code:'',
+                    pass1:'',
+                    pass2:'',
+                    codebtn:'获取验证码',
+                    running: false,
+                },
+
+                methods:{
+	                
+	                sendMsg:function()
+	                {
+		                
+		                if(vm.codebtn != '获取验证码')
+		                {
+			             	return;   
+		                }
+		                
+		                if(!validatemobile(vm.mobil))
+		                {
+			                return;
+		                }
+		              		                
+		            
+		                
+		                Service.userSmsSend(vm.mobil,"2",function(b){			                
+			           
+			           store.set("SMSSendTime",new Date().getTime());
+           
+			                if(b)
+			                {
+				                settime();
+			                }
+			                
+		                });
+		                
+	                },
+	                
+                    doSubmit:function()
+                    {
+	                    if(!validatemobile(vm.mobil))
+		                {
+			                return;
+		                }
+
+						if(vm.code == "")
+						{
+							var toast = myApp.toast('请输入验证码', '', {});
+							toast.show();
+							return;
+						}
+						
+						if(vm.pass1 == "" || vm.pass2 == "")
+						{
+							var toast = myApp.toast('请输入密码和确认密码', '', {});
+							toast.show();
+							return;
+						}
+						
+						if(vm.pass1 != vm.pass2)
+						{
+							var toast = myApp.toast('密码和确认密码不一致', '', {});
+							toast.show();
+							return;
+						}
+
+						myApp.showPreloader("");
+
+                        if (vm.running){return;};
+                        vm.running = true;
+
+                        Service.userUpdatePass(vm.mobil,vm.pass1,vm.code,function(b)
+                            {
+	                            myApp.hidePreloader();
+	                            
+	                            if(b)
+	                            {
+		                            mainView.router.back({url:'index.html'});
+	                            }
+    
+                            });
+                            
+                            
+                    },
+
+                },
+
+            });
+            
+            
+            
+            function settime()
+            {
+	            var old = store.get("SMSSendTime");
+	            if(old == null || old == undefined){return;}
+	            
+	            var t = (new Date().getTime() - old)/1000;
+	            t = parseInt(t);
+	            if(t < 60)
+	            {
+		            vm.codebtn = (60-t)+"秒";
+		            
+		            setTimeout(function() {
+						settime()
+					},1000);
+					
+	            }
+	            else
+	            {
+		            vm.codebtn = "获取验证码";
+	            }
+ 
+	            
+            }
+            
+            settime();
+
+
+        }
+        
+        
+        function initUpdatePassJS()
+        {
+
+            var vm = new Vue({
+                el: '#updatePass',
+                data: {
+                    oldpass:'',
+                    pass1:'',
+                    pass2:'',
+                    running: false,
+                },
+
+                methods:{
+        
+                    doSubmit:function()
+                    {
+	                    						
+						if(vm.oldpass == "" || vm.pass1 == "" || vm.pass2 == "")
+						{
+							var toast = myApp.toast('请输入原密码,新密码和确认密码', '', {});
+							toast.show();
+							return;
+						}
+						
+						if(vm.pass1 != vm.pass2)
+						{
+							var toast = myApp.toast('密码和确认密码不一致', '', {});
+							toast.show();
+							return;
+						}
+
+						myApp.showPreloader("");
+
+                        if (vm.running){return;};
+                        vm.running = true;
+
+                        Service.userUpdatePass2(User.mobile,vm.oldpass,vm.pass1,function(b)
+                            {
+	                            myApp.hidePreloader();
+	                            
+	                            if(b)
+	                            {
+		                            mainView.router.back({url:'index.html'});
+	                            }
+    
+                            });
+                            
+                            
+                    },
+
+                },
+
+            });
+            
+            
+            
+           
         }
 
         function initTestJS()

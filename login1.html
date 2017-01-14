@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Cache-Control" content="no-cache" />
+<meta content="telephone=no" name="format-detection" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<title>会员登录-河洛泡泡</title>
+<link rel="stylesheet" type="text/css" href="css/base.css?v=1.0.0"/>
+<link type="text/css" rel="stylesheet" href="css/index.css?v=1.0.0">
+<link rel="stylesheet" href="css/framework7.ios.css?v=1.0.0">
+<link rel="stylesheet" href="css/framework7.ios.colors.css?v=1.0.0"">
+<link rel="stylesheet" href="css/my-app.css?v=1.0.0">
+	<link rel="stylesheet" href="css/toast.css" />
+	<script data-main="js/index.js?v=1.0.0" src="lib/require-min.js?v=1.0.0" ></script>
+
+	<script type="text/javascript"
+			src="http://qzonestyle.gtimg.cn/qzone/openapi/qc_loader.js"
+			data-callback="true"
+			data-appid="1105918410"
+			data-redirecturi="http://192.168.1.105/activity_wap/login.html"
+			charset="utf-8">
+
+	</script>
+
+
+	<script type="text/javascript">
+		QC.Login({
+			btnId:"qq"    //插入按钮的节点id
+		});
+	</script>
+	<style>
+.reg_yzm ,.reg_yzm2 { color:#fff; width:90px; height:30px; line-height:30px; top:10px; right:10px; cursor:pointer;border-radius:3px;}
+.reg_yzm { background:#d7d7d7;}
+.reg_yzm2 { background:#3fcc84;}
+.form_tips { background:#fef7d5; color:#aeaeae; padding:10px;}
+.form_tips a ,.form_tips a:visited{ color:#3fcc84;}
+
+
+.login_line { font-size:15px;  text-align:center;background:url(../images/line.png) repeat-x 0 center; overflow:hidden; margin-bottom:20px;width:90%; margin:0 auto;}
+.login_line span { width:180px;height:32px; line-height:32px; margin:0 auto; color:#898989; background:#f4f5f6;}
+.login_icon {width:100%; margin:0 auto;}
+.login_icon ul li {width:50%; float:left; text-align:center; margin-top:10px;}
+.login_icon ul li a {width:60px; height:60px; display:block; text-align:center;width:100%;}
+
+.reg_link { height:40px; line-height:40px; padding:10px;}
+.reg_link a ,.reg_link a:visited { color:#3fcc84;}
+		.form_group_btn { padding-top:10px;}
+	</style>
+
+</head>
+
+<body>
+<div class="views" style="background: #fff;">
+	<div class="view view-main">
+		<div class="pages">
+			<div data-page="login" class="page">
+				<div class="page-content" id="login" style="background: #fff;">
+<header class="page_header">
+<a href="index.html" class="nav_back back"></a>
+    <h1 class="page_name">会员登录</h1>  
+</header>
+
+
+
+
+
+
+<div class="page_w bg-ff " style="height: 100%; background: #fff;">
+
+
+
+
+<div class="form_group mt10">
+<ul>
+<li><em class="sign_up_mob db"></em><input name="user_name" type="text" placeholder="请输入手机号" class="login_text"/></li>
+<li><em class="sign_up_pwd db"></em><input name="user_name" type="text" placeholder="请输入密码" class="login_text"/></li>
+</ul>
+</div>
+<div class="form_group_btn"><button>登录</button></div>
+<div class="reg_link mb35"><a href="">忘记密码?</a><a href="" class="fr">手机快速注册</a><div class="clear"></div></div>
+
+
+	
+</div>
+
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script language="JavaScript">
+
+	QC.api("get_user_info", {}) //get_user_info是API参数
+			//指定接口访问成功的接收函数，s为成功返回Response对象
+			.success(function (s) {
+				//成功回调，通过s.data获取OpenAPI的返回数据
+				nick = s.data.nickname; //获得昵称
+				headurl = s.data.figureurl_qq_1; //获得头像
+				if (QC.Login.check()) {//判断是否登录
+					QC.Login.getMe(function (openId, accessToken) {
+
+						alert(openId);
+						alert(accessToken);
+						//这里可以得到openId和accessToken
+						//下面可以调用自己的保存方法
+
+					});
+				}
+			})
+			//指定接口访问失败的接收函数，f为失败返回Response对象
+			.error(function (f) {
+
+
+				//失败回调
+				alert(f);
+			});
+	////指定接口完成请求后的接收函数，c为完成请求返回Response对象
+	//.complete(function (c) {
+	//    //完成请求回调
+	//    alert("获取用户信息完成！");
+	//});
+
+</script>
+
+</body>
+</html>

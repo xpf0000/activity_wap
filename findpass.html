@@ -6,7 +6,7 @@
 <meta content="telephone=no" name="format-detection" />
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
 <meta name="apple-mobile-web-app-capable" content="yes" />
-<title>会员登录-河洛泡泡</title>
+<title>会员注册-河洛泡泡</title>
 <link rel="stylesheet" type="text/css" href="css/base.css?v=1.0.0"/>
 <link type="text/css" rel="stylesheet" href="css/index.css?v=1.0.0">
 <link rel="stylesheet" href="css/framework7.ios.css?v=1.0.0">
@@ -20,31 +20,30 @@
 <div class="views" style="background: #fff;">
 	<div class="view view-main">
 		<div class="pages">
-			<div data-page="login" class="page">
-				<div class="page-content" id="login" style="background: #fff;">
+			<div data-page="findpass" class="page">
+				<div class="page-content" id="findpass" style="background: #fff;">
 <header class="page_header">
 <a href="index.html" class="nav_back back"></a>
-    <h1 class="page_name">会员登录</h1>  
+    <h1 class="page_name">找回密码</h1>  
 </header>
 
 
 
 
-<div class="page_w bg-ff " style="height: auto; background: #fff;overflow: hidden">
 
 
+<div class="page_w bg-ff " style="height: 100%; background: #fff;">
 
 
 <div class="form_group mt10">
 <ul>
-<li><em class="sign_up_mob db"></em><input name="user_name" v-model="account" type="text" placeholder="请输入手机号" class="login_text"/></li>
-<li><em class="sign_up_pwd db"></em><input name="user_name" v-model="pass" type="text" placeholder="请输入密码" class="login_text"/></li>
+<li><em class="sign_up_mob db"></em><input name="user_name" v-model="mobil" type="tel" maxlength="11" placeholder="请输入手机号" class="login_text"/><span class="reg_yzm abs tc db f14" @click="sendMsg" v-html="codebtn"></span></li>
+<li class="rel"><em class="sign_up_code db"></em><input v-model="code" name="user_name" type="text" placeholder="请输入验证码" class="login_text"/></li>
+<li><em class="sign_up_pwd db"></em><input v-model="pass1" name="user_name" type="password" placeholder="请设置密码" class="login_text"/></li>
+<li><em class="sign_up_pwd db"></em><input v-model="pass2" name="user_name" type="password" placeholder="请再次输入密码" class="login_text"/></li>
 </ul>
 </div>
-<div class="form_group_btn"><button @click="doLogin(0)">登录</button></div>
-<div class="reg_link mb35"><a href="findpass.html">忘记密码?</a><a href="reg.html" class="fr">手机快速注册</a><div class="clear"></div></div>
-
-
+<div class="form_group_btn"><button @click="doSubmit">确定</button></div>
 	
 </div>
 
@@ -54,6 +53,8 @@
 		</div>
 	</div>
 </div>
+
+
 
 </body>
 </html>

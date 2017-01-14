@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Cache-Control" content="no-cache" />
+<meta content="telephone=no" name="format-detection" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<title>会员注册-河洛泡泡</title>
+<link rel="stylesheet" type="text/css" href="css/base.css?v=1.0.0"/>
+<link type="text/css" rel="stylesheet" href="css/index.css?v=1.0.0">
+<link rel="stylesheet" href="css/framework7.ios.css?v=1.0.0">
+<link rel="stylesheet" href="css/framework7.ios.colors.css?v=1.0.0"">
+<link rel="stylesheet" href="css/my-app.css?v=1.0.0">
+	<script data-main="js/index.js?v=1.0.0" src="lib/require-min.js?v=1.0.0" ></script>
+
+</head>
+
+<body>
+<div class="views" style="background: #fff;">
+	<div class="view view-main">
+		<div class="pages">
+			<div data-page="reg" class="page">
+				<div class="page-content" id="reg" style="background: #fff;">
+<header class="page_header">
+<a href="index.html" class="nav_back back"></a>
+    <h1 class="page_name">会员注册</h1>  
+</header>
+
+
+
+
+
+
+<div class="page_w bg-ff " style="height: 100%; background: #fff;">
+
+
+<div class="form_group mt10">
+<ul>
+	
+<li><em class="sign_up_mob db"></em><input name="user_name" v-model="mobil" type="tel" maxlength="11" placeholder="请输入手机号" class="login_text"/><span class="reg_yzm abs tc db f14" @click="sendMsg" v-html="codebtn"></span></li>
+<li class="rel"><em class="sign_up_code db"></em><input v-model="code" name="user_name" type="text" placeholder="请输入验证码" class="login_text"/></li>
+<li><em class="sign_up_pwd db"></em><input v-model="nickname" name="user_name" type="text" placeholder="请输入昵称" class="login_text"/></li>
+<li><em class="sign_up_pwd db"></em><input v-model="pass1" name="user_name" type="password" placeholder="请设置密码" class="login_text"/></li>
+<li><em class="sign_up_pwd db"></em><input v-model="pass2" name="user_name" type="password" placeholder="请再次输入密码" class="login_text"/></li>
+</ul>
+</div>
+<div class="form_group_btn"><button @click="doReg">注册</button></div>
+
+<div class="reg_link mb35"><a href="login.html" class="fr back">已有账号，请直接登录</a><div class="clear"></div></div>
+	
+</div>
+
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+</body>
+</html>

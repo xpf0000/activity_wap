@@ -2,11 +2,13 @@
  * Created by Administrator on 2016/12/21 0021.
  */
 //var BaseUrl = "http://182.92.70.85/hlppapi/Public/Found/?service=";
+//https://api.ihlpp.com/Public/Found/?service=Common.getGuanggao&typeid=7
 
 define(["Service"], function(Service) {
         return {
 
-            BaseUrl : "http://182.92.70.85/hlppapi/Public/Found/?service=",
+            BaseUrl : "https://api.ihlpp.com/Public/Found/?service=",
+            //BaseUrl : "http://182.92.70.85/hlppapi/Public/Found/?service=",
 
             //广告
             commonGetGuanggao: function(typeid,callBack)
@@ -206,6 +208,38 @@ define(["Service"], function(Service) {
                 var url = this.BaseUrl+"Article.getEvent&id="+id;
 
                 XHttpGet( url, callBack);
+
+            },
+            
+            //短信验证码发送 类型；1，注册验证2，变更验证
+            userSmsSend: function(mobile,type,callBack)
+            {
+                var url = this.BaseUrl+"User.smsSend&mobile="+mobile+"&type="+type;
+                XHttpDo(url,"短信发送成功","短信发送失败",callBack);
+
+            },
+            
+            //新用户注册
+            userRegister: function(mobile,password,code,nickname,callBack)
+            {
+                var url = this.BaseUrl+"User.register&mobile="+mobile+"&password="+password+"&code="+code+"&nickname="+nickname;
+                XHttpUpload(url,null,callBack);
+
+            },
+            
+            //用户密码重置
+            userUpdatePass: function(mobile,password,code,callBack)
+            {
+                var url = this.BaseUrl+"User.updatePass&mobile="+mobile+"&password="+password+"&code="+code;
+                XHttpDo(url,"密码重置成功","密码重置失败",callBack);
+
+            },
+            
+            //用户密码修改
+            userUpdatePass2: function(mobile,oldpass,newpass,callBack)
+            {
+                var url = this.BaseUrl+"User.updatePass2&mobile="+mobile+"&oldpass="+oldpass+"&newpass="+newpass;
+                XHttpDo(url,"修改密码成功","修改密码失败",callBack);
 
             },
 

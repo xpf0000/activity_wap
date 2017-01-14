@@ -7,12 +7,12 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <title>会员首页-河洛泡泡</title>
-<link rel="stylesheet" type="text/css" href="css/base.css"/>
-<link type="text/css" rel="stylesheet" href="css/index.css">
-<link rel="stylesheet" href="css/framework7.ios.css">
-<link rel="stylesheet" href="css/framework7.ios.colors.css">
-<link rel="stylesheet" href="css/my-app.css">
-	<script data-main="js/index.js?v=1.0.1" src="lib/require-min.js?v=1.0.0" ></script>
+<link rel="stylesheet" type="text/css" href="css/base.css?v=1.0.0"/>
+<link type="text/css" rel="stylesheet" href="css/index.css?v=1.0.0">
+<link rel="stylesheet" href="css/framework7.ios.css?v=1.0.0">
+<link rel="stylesheet" href="css/framework7.ios.colors.css?v=1.0.0"">
+<link rel="stylesheet" href="css/my-app.css?v=1.0.0">
+	<script data-main="js/index.js?v=1.0.0" src="lib/require-min.js?v=1.0.0" ></script>
 </head>
 
 <body>
@@ -28,7 +28,6 @@
 <div class="user_info">
 <span class="user_face db tc"><img :src="uinfo.headimage"></span>
 <span class="page_user_name db tc" v-html="uinfo.nickname"></span>
-<span class="page_user_about db tc">普通会员</span>
 </div>
 </header>
 <div class="page_w">
@@ -37,6 +36,7 @@
 <a class="info02" href="#" @click="toUserList(2)"><span>我收藏的</span><em></em></a>
 <a class="info03" href="#" @click="toUserList(3)"><span>我参与的</span><em></em></a>
 <a class="info04" href="#" @click="toUserEdit()"><span>个人资料</span><em></em></a>
+<a class="info05" href="#" @click="toUserList(4)"><span>修改密码</span><em></em></a>
 </div>
 <div class="logout mt10">
 <a href="#" @click="logout()" class="db tc" v-html="uinfo.msg"></a>

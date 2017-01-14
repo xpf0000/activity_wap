@@ -192,8 +192,15 @@
             {
                 formdata.append('file[]', app.params.datas[i],'upload'+i+'.jpg');
             }
+            
+            console.log(app.params.url);
+            console.log(app.params.upBody)
 
             for (var param in app.params.upBody) {
+	            
+	            console.log(param);
+	            console.log(app.params.upBody[param]);
+	            
                 formdata.append(param, app.params.upBody[param]);
             };
 
@@ -203,7 +210,11 @@
             xhr.onload = function () {
                 //如果请求成功
                 if((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304){
-                    var jsonData = JSON.parse(xhr.responseText);
+             
+                    var jsonData = JSON.parse(xhr.responseText.trim().replace("\xEF\xBB\xBF", ""));
+                    
+                    console.log(jsonData)
+                    
                     app.params.upBlock(jsonData,null);
                 }
                 else

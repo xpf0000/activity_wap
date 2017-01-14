@@ -15,7 +15,7 @@ header span {height:45px; width:60px; position:absolute; right:0; top:0;}
 
 
 /*分类图标*/
-.class_icon { background:#fff; height:210px;}
+.class_icon { background:#fff; height:110px;}
 .class_list_icon { padding:10px 0 20px 0;background:#fff; height:100%;position:absolute; }
 .index_icon {background:url(../images/class_icon.png) no-repeat; background-size:48px 900px; width:48px; height:48px; margin:0 auto;}
 .class_icon ul li ,.class_list_icon ul li{ display:block; text-align:center; width:20%; float:left;}
@@ -252,8 +252,14 @@ header span {height:45px; width:60px; position:absolute; right:0; top:0;}
     box-sizing: border-box; height: 130px; overflow: hidden; position: relative;width: 100%;}
 .p_title {background:transparent; width:90%; color:#fff; margin:0 auto; border:0; position:absolute; top:10px; left:10px; font-size:18px;text-shadow:2px 2px 2px #333333; height:40px; line-height:20px;}
 .p_box { margin:6px 8px; height:120px; background:#fff;border-radius:5px; border:1px solid #eae9e9;position: relative;}
+/*
 .p_img {width:90px; height:90px;background-position: center center;background-repeat: no-repeat;background-size: cover;box-sizing: border-box; margin:15px;border-radius:5px;}
 .p_memo { font-size:15px;}
+*/
+
+.p_img {width:90px; height:90px;background-position: center center;background-repeat: no-repeat;background-size: cover;box-sizing: border-box; border-radius:5px;position:absolute;top:15px; left: 15px;}
+.p_memo { font-size:15px; height: 85px; overflow: hidden;display: inline-block;width: 100%; padding-left: 120px; padding-right: 18px;}
+
 .p_add {
     width:30px;
     height:30px;
@@ -440,6 +446,26 @@ header , .user_header{ height:45px; line-height:45px;  text-align:center;positio
 
 
 
+.reg_yzm ,.reg_yzm2 { color:#fff; width:90px; height:30px; line-height:30px; top:10px; right:10px; cursor:pointer;border-radius:3px;}
+.reg_yzm { background:#d7d7d7;}
+.reg_yzm2 { background:#3fcc84;}
+.form_tips { background:#fef7d5; color:#aeaeae; padding:10px;}
+.form_tips a ,.form_tips a:visited{ color:#3fcc84;}
+
+
+.login_line { font-size:15px;  text-align:center;background:url(../images/line.png) repeat-x 0 center; overflow:hidden; margin-bottom:20px;width:90%; margin:0 auto;}
+.login_line span { width:180px;height:32px; line-height:32px; margin:0 auto; color:#898989; background:#f4f5f6;}
+.login_icon {width:100%; margin:0 auto;}
+.login_icon ul li {width:50%; float:left; text-align:center; margin-top:10px;}
+.login_icon ul li a {width:60px; height:60px; display:block; text-align:center;width:100%;}
+
+.reg_link { height:40px; line-height:40px; padding:10px;}
+.reg_link a ,.reg_link a:visited { color:#3fcc84;}
+		.form_group_btn { margin-top:10px;}
+		
+	
+
+
 .toast-main{
     width: 100%;
     height: 100%;
@@ -572,3 +598,7 @@ header , .user_header{ height:45px; line-height:45px;  text-align:center;positio
 .file:hover {
     text-decoration: none;
 }
+
+
+
+
