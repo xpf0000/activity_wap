@@ -15,6 +15,7 @@ require.config({
         toast:'toast',
         city_picker:'city_picker',
         xupload:'../js/XImageUpload',
+        wx:'jweixin-1.0.0',
     },
     shim:{
         vue: { deps: ['domReady!'],exports: "vue" },

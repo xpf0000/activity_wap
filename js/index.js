@@ -206,7 +206,7 @@ function checkLogin()
 
 requirejs(['main'], function (main) {
 
-    require(['vue','store','Service','share','xupload','toast','auislide'], function(v,store,s,share) {
+    require(['vue','store','Service','share','wx','xupload','toast','auislide'], function(v,store,s,share,wx) {
 
         Vue = v;
         $$ = Dom7;
@@ -361,6 +361,66 @@ requirejs(['main'], function (main) {
             //domCache: true,
         });
 
+        function initWeixin()
+        {
+            Service.weixinConfig(function (res) {
+
+                wx.config({
+                    debug: true,
+                    appId: res["appId"],
+                    timestamp: res["timestamp"],
+                    nonceStr: res["nonceStr"],
+                    signature: res["signature"],
+                    jsApiList: ['chooseImage', 'uploadImage', 'downloadImage', 'previewImage']
+                });
+
+                wx.ready(function() {
+
+                    document.getElementById('morePic').onclick = function() {
+                        var images = {localIds:[],serverId:[]};
+
+                        wx.chooseImage({
+                            count: 9,
+                            sizeType: ['original', 'compressed'],
+                            sourceType: ['album'],
+                            success: function(res) {
+                                images.localIds = res.localIds;
+
+
+                                alert(res);
+                                alert(res.localIds);
+                                console.log(res);
+                                console.log(res.localIds);
+
+                                var i = 0; var length = images.localIds.length;
+
+                                var upload = function() {
+                                    wx.uploadImage({
+                                        localId:images.localIds[i],
+                                        success: function(res) {
+
+                                            images.serverId.push(res.serverId);
+
+                                            //如果还有照片，继续上传
+                                            i++;
+                                            if (i < length) {
+                                                upload();
+                                            }
+                                        }
+                                    });
+                                };
+
+                                upload();
+                            }
+                        });
+                    }
+                });
+
+
+
+
+            })
+        }
 
         function initUser(u)
         {
@@ -1388,11 +1448,15 @@ requirejs(['main'], function (main) {
                         if(isnew)
                         {
                             $$("#mfile").click();
+                            sendMsgToAPP({"type":"0","msg":"选择多张图片"});
                         }
                         else
                         {
                             $$("#file").click();
+                            sendMsgToAPP({"type":"0","msg":"选择单张图片"});
                         }
+
+
 
                     },
 

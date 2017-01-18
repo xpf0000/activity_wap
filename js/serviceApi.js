@@ -243,6 +243,14 @@ define(["Service"], function(Service) {
 
             },
 
+            //获取微信Config
+            weixinConfig: function(callBack)
+            {
+                var url = "code.php";
+                XHttpGet( url, callBack);
+
+            },
+
 
 
         }
