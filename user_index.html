@@ -1,52 +1,62 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta http-equiv="Cache-Control" content="no-cache" />
-<meta content="telephone=no" name="format-detection" />
-<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
-<meta name="apple-mobile-web-app-capable" content="yes" />
-<title>会员首页-河洛泡泡</title>
-<link rel="stylesheet" type="text/css" href="css/base.css?v=1.0.0"/>
-<link type="text/css" rel="stylesheet" href="css/index.css?v=1.0.0">
-<link rel="stylesheet" href="css/framework7.ios.css?v=1.0.0">
-<link rel="stylesheet" href="css/framework7.ios.colors.css?v=1.0.0"">
-<link rel="stylesheet" href="css/my-app.css?v=1.0.0">
-	<script data-main="js/index.js?v=1.0.0" src="lib/require-min.js?v=1.0.0" ></script>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Cache-Control" content="no-cache"/>
+    <meta content="telephone=no" name="format-detection"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <title>会员首页-河洛泡泡</title>
+    <link rel="stylesheet" type="text/css" href="css/base.css?v=1.0.0"/>
+    <link type="text/css" rel="stylesheet" href="css/index.css?v=1.0.0">
+    <link rel="stylesheet" href="css/framework7.ios.css?v=1.0.0">
+    <link rel="stylesheet" href="css/framework7.ios.colors.css?v=1.0.0">
+    <link rel="stylesheet" href="css/my-app.css?v=1.0.0">
+    <script>        var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?f42b478b69016d43ff85ea9ebf4370f9";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();    </script>
+    <script data-main="js/index.js?v=1.0.1" src="lib/require-min.js?v=1.0.1"></script>
 </head>
 
 <body>
 <div class="views">
-	<div class="view view-main">
-		<div class="pages">
-			<div data-page="user_index" class="page">
-				<div class="page-content" id="user_index">
-<header class="user_header">
-<div class="h45">
-<a href="index.html" class="user_nav_back fl h45 db back"></a>
+    <div class="view view-main">
+        <div class="pages">
+            <div data-page="user_index" class="page">
+                <div class="page-content" id="user_index">
+                    <header class="user_header">
+                        <div class="h45">
+                            <a href="index.html" class="user_nav_back fl h45 db back"></a>
+                        </div>
+                        <div class="user_info">
+                            <span class="user_face db tc">
+                                <img :src="uinfo.headimage+'?imageView2/1/w/90/h/90'" v-if="uinfo.headimage != null">
+                                <img src="images/user_face02.jpg" v-else>
+                            </span>
+                            <span class="page_user_name db tc" v-html="uinfo.nickname"></span>
+                        </div>
+                    </header>
+                    <div class="page_w">
+                        <div class="page_info_list mt10">
+                            <a class="info01" href="#" @click="toUserList(1)"><span>我发布的</span><em></em></a>
+                            <a class="info02" href="#" @click="toUserList(2)"><span>我收藏的</span><em></em></a>
+                            <a class="info03" href="#" @click="toUserList(3)"><span>我参与的</span><em></em></a>
+                            <a class="info04" href="#" @click="toUserEdit()"><span>个人资料</span><em></em></a>
+                            <a class="info05" href="#" @click="toUserList(4)"><span>修改密码</span><em></em></a>
+                        </div>
+                        <div class="logout mt10">
+                            <a href="#" @click="logout()" class="db tc" v-html="uinfo.msg"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<div class="user_info">
-<span class="user_face db tc"><img :src="uinfo.headimage"></span>
-<span class="page_user_name db tc" v-html="uinfo.nickname"></span>
-</div>
-</header>
-<div class="page_w">
-<div class="page_info_list mt10">
-<a class="info01" href="#" @click="toUserList(1)" ><span>我发布的</span><em></em></a>
-<a class="info02" href="#" @click="toUserList(2)"><span>我收藏的</span><em></em></a>
-<a class="info03" href="#" @click="toUserList(3)"><span>我参与的</span><em></em></a>
-<a class="info04" href="#" @click="toUserEdit()"><span>个人资料</span><em></em></a>
-<a class="info05" href="#" @click="toUserList(4)"><span>修改密码</span><em></em></a>
-</div>
-<div class="logout mt10">
-<a href="#" @click="logout()" class="db tc" v-html="uinfo.msg"></a>
-</div>
-</div>
-</div>
-				</div>
-			</div>
-		</div>
-	</div>
 
 </body>
 </html>

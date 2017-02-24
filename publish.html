@@ -13,7 +13,7 @@
 <link rel="stylesheet" href="css/framework7.ios.colors.css?v=1.0.0">
 <link rel="stylesheet" href="css/my-app.css?v=1.0.0">
 
-	<script data-main="js/index.js?v=1.0.0" src="lib/require-min.js?v=1.0.0" ></script>
+	<script data-main="js/index.js?v=1.0.1" src="lib/require-min.js?v=1.0.1" ></script>
 
 </head>
 
@@ -39,7 +39,7 @@
 	</form>
 
 <div class="p_page_banner" :style="'background-image: url('+cover+');'">
-<textarea id="mtitle" name="title" class="p_title" placeholder="点击设置标题" v-model="title"></textarea>
+<textarea id="mtitle" name="title" class="p_title" placeholder="输入信息标题" v-model="title"></textarea>
 	<a href="javascript:;" class="file p_up_img" @click="chooseCover" @touchend="chooseCover">
 	</a>
 </div>
@@ -72,7 +72,7 @@
 	<a href="#" class="p_up_words db" @click="showTxtEdit(index,true)">
 		文字信息
 	</a>
-	<a href="#" class="p_up_photo db" @click="chooseimg(index,true)" @touchend="chooseimg(index,true)">
+	<a href="#" id="morePic" class="p_up_photo db" @click="chooseimg(index,true)" @touchend="chooseimg(index,true)">
 		图片信息
 	</a>
 	<div class="cl"></div>
@@ -84,13 +84,14 @@
 	<div class="p_img fl" :style="'background-image: url('+item.img+');'" @click="chooseimg(index,false)" @touchend="chooseimg(index,false)">
 	</div>
 
-	<textarea style="background:transparent;border-style:none;" readonly="readonly" class="p_memo fl mt15" @click="showTxtEdit(index,false,item.txt)" v-html="item.txt" placeholder="点击这里输入照片说明">
+	<textarea style="background:transparent;border-style:none;" readonly class="p_memo fl mt15" @click="showTxtEdit(index,false,item.txt)" v-html="item.txt" placeholder="点击这里输入照片说明">
 		
 	</textarea>
 
 	<div class="cl"></div>
     <div class="p_reduce" @click="clip(index)"></div>
-    <div class="p_down" @click="movedown(index)"></div>
+    <div class="p_down" @click="movedown(index)" v-if="index < list.length-1"></div>
+    <div class="p_up" @click="moveup(index)" v-if="index > 0"></div>
 </div>
 </div>
 
@@ -108,7 +109,7 @@
 	</div>
 
 	<div class="p_sign_up tc list-block" style="position: relative; margin: 6px 8px;height: 40px;line-height: 39px;">
-		添加报名
+		添加活动报名
 		<li  style="position: absolute; top:-3px;width: 100%;line-height: 40px;">
 		<label class="label-checkbox item-content" id="p_sign_up">
 			<input @change="showActivity"  type="checkbox" id="ckbox" name="my-checkbox" value="yes" v-model="isactity">

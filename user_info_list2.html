@@ -1,65 +1,72 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta http-equiv="Cache-Control" content="no-cache" />
-<meta content="telephone=no" name="format-detection" />
-<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
-<meta name="apple-mobile-web-app-capable" content="yes" />
-<title>会员活动列表-河洛泡泡</title>
-<link rel="stylesheet" type="text/css" href="css/base.css?v=1.0.0"/>
-<link type="text/css" rel="stylesheet" href="css/index.css?v=1.0.0">
-<link rel="stylesheet" href="css/framework7.ios.css?v=1.0.0">
-<link rel="stylesheet" href="css/framework7.ios.colors.css?v=1.0.0"">
-<link rel="stylesheet" href="css/my-app.css?v=1.0.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Cache-Control" content="no-cache"/>
+    <meta content="telephone=no" name="format-detection"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <title>会员活动列表-河洛泡泡</title>
+    <link rel="stylesheet" type="text/css" href="css/base.css?v=1.0.0"/>
+    <link type="text/css" rel="stylesheet" href="css/index.css?v=1.0.0">
+    <link rel="stylesheet" href="css/framework7.ios.css?v=1.0.0">
+    <link rel="stylesheet" href="css/framework7.ios.colors.css?v=1.0.0">
+    <link rel="stylesheet" href="css/my-app.css?v=1.0.0">
 
-	<script data-main="js/index.js?v=1.0.0" src="lib/require-min.js?v=1.0.0" ></script>
+    <script>        var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?f42b478b69016d43ff85ea9ebf4370f9";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();    </script>
+    <script data-main="js/index.js?v=1.0.1" src="lib/require-min.js?v=1.0.1"></script>
 
 </head>
 
 <body>
 <div class="views">
-	<div class="view view-main">
-		<div class="pages">
-			<div data-page="user_info_list2" class="page">
-				<div class="page-content" id="user_info_list2">
+    <div class="view view-main">
+        <div class="pages">
+            <div data-page="user_info_list2" class="page">
+                <div class="page-content" id="user_info_list2">
 
-<header class="page_header">
-<a href="index.html" class="nav_back back"></a>
-    <h1 class="page_name" v-html="pagetitle"></h1>
-</header>
-<div class="page_w">
+                    <header class="page_header">
+                        <a href="index.html" class="nav_back back"></a>
+                        <h1 class="page_name" v-html="pagetitle"></h1>
+                    </header>
+                    <div class="page_w">
 
-<div class="index_info_list">
-<ul>
-<li v-for="item in list">
-<a href="#" @click="toInfo(item.id)"><img :src="item.url" border="0"></a>
-<h3><a href="#" @click="toInfo(item.id)"><span v-html="item.title"></span></a></h3>
-<div class="event_list_time">时间：<span v-html="item.timestr"></span></div>
-</li>
+                        <div class="index_info_list">
+                            <ul>
+                                <li v-for="item in list">
+                                    <a href="#" @click="toInfo(item.id)"><img :src="item.url+'?imageView2/1/w/360/h/240'" border="0"></a>
+                                    <h3><a href="#" @click="toInfo(item.id)"><span v-html="item.title"></span></a></h3>
+                                    <div class="event_list_time">时间：<span v-html="item.timestr"></span></div>
+                                </li>
 
 
-</ul>
+                            </ul>
+                        </div>
+
+
+                        <div class="xgrid">
+                            <div class="col-100" style="padding: 12px;">
+                                <img src="images/loadding.gif" width="25" height="25" v-if="!end">
+                                <span class="fl" v-html="msg"></span>
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+
+
+                        <div class="bb_bg"></div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-
-
-	<div class="xgrid">
-		<div class="col-100" style="padding: 12px;">
-			<img src="images/loadding.gif" width="25" height="25" v-if="!end">
-			<span class="fl" v-html="msg"></span>
-		</div>
-		<div class="clear"></div>
-	</div>
-
-
-<div class="bb_bg"></div>
-
-</div>
-</div>
-				</div>
-			</div>
-		</div>
-	</div>
 
 </body>
 </html>

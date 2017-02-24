@@ -1,98 +1,131 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta http-equiv="Cache-Control" content="no-cache" />
-<meta content="telephone=no" name="format-detection" />
-<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
-<meta name="apple-mobile-web-app-capable" content="yes" />
-<title>河洛泡泡-网站首页</title>
-<link rel="stylesheet" type="text/css" href="css/base.css?v=1.0.0"/>
-<link rel="stylesheet" type="text/css" href="css/index.css?v=1.0.0"/>
-<link rel="stylesheet" href="css/framework7.ios.css?v=1.0.0" />
-<link rel="stylesheet" href="css/framework7.ios.colors.css?v=1.0.0"" />
-<link rel="stylesheet" href="css/my-app.css?v=1.0.0" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Cache-Control" content="no-cache"/>
+    <meta content="telephone=no" name="format-detection"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="full-screen" content="yes"/>
+    <meta name="x5-fullscreen" content="true"/>
+    <title>河洛泡泡-网站首页</title>
+    <link rel="stylesheet" type="text/css" href="css/base.css?v=1.0.0"/>
+    <link rel="stylesheet" type="text/css" href="css/index.css?v=1.0.0"/>
+    <link rel="stylesheet" href="css/framework7.ios.css?v=1.0.0"/>
+    <link rel="stylesheet" href="css/framework7.ios.colors.css?v=1.0.0"/>
 
-	<script data-main="js/index.js?v=1.0.0" src="lib/require-min.js?v=1.0.0" ></script>
+    <script>
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?f42b478b69016d43ff85ea9ebf4370f9";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+    <script>        var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?f42b478b69016d43ff85ea9ebf4370f9";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();    </script>
+    <script data-main="js/index.js?v=1.0.1" src="lib/require-min.js?v=1.0.1"></script>
 
 </head>
 
 <body>
 <div class="views">
-	<div class="view view-main">
-		<div class="pages">
-			<div data-page="index" class="page">
+    <div class="view view-main">
+        <div class="pages">
+            <div data-page="index" class="page">
 
-				<div class="page-content infinite-scroll">
+                <div class="page-content infinite-scroll">
 
-<header>
-    <h1 class="index_page_name">河洛泡泡</h1>  
-</header>
-<div class="page_w">
-<div id="aui-slide">
-		<div class="aui-slide-wrap" >
+                    <header>
+                        <h1 class="index_page_name">河洛泡泡</h1>
+                    </header>
+                    <div class="page_w">
+                        <div id="aui-slide">
+                            <div class="aui-slide-wrap">
 
-			<div class="aui-slide-node" v-for="item in info">
-				<img :src="item.picurl" />
-			</div>
+                                <div class="aui-slide-node" v-for="item in info">
+                                    <img :src="item.picurl"/>
+                                </div>
 
-		</div>
-		<div class="aui-slide-page-wrap"><!--分页容器--></div>
-	</div>
+                            </div>
+                            <div class="aui-slide-page-wrap"><!--分页容器--></div>
+                        </div>
 
-<nav class="class_icon mt10 mb10" id="nav">
-<ul>
-<li v-for="item in info">
-	<a :href="'list.html?id='+item.id+'&title='+item.title">
-		<span class="db" :style="'background: url('+item.url+') no-repeat;background-size:100% 100%; margin:0 auto;width: 48px;height: 48px;'"></span>
-		<span class="class_name db" v-html="item.title"></span>
-	</a>
-</li>
-</ul>
-</nav>
-<div class="search_box">
-<form><input type="text" id="index_search" name="index_search" class="index_search mt15" value="" placeholder="搜索活动"/></form>
+                        <nav class="class_icon mt10 mb10" id="nav">
+                            <ul>
+                                <li v-for="item in info">
+                                    <a :href="'list.html?id='+item.id+'&title='+item.title">
+                                        <span class="db"
+                                              :style="'background: url('+item.url+') no-repeat;background-size:100% 100%; margin:0 auto;width: 48px;height: 48px;'"></span>
+                                        <span class="class_name db" v-html="item.title"></span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                        <!--<div class="search_box">-->
+                        <!--<form><input type="text" id="index_search" name="index_search" class="index_search mt15" value="" placeholder="搜索活动"/></form>-->
+                        <!--</div>-->
+
+                        <div class="index_info_list" id="index_list">
+                            <ul>
+                                <li v-for="(item,index) in info">
+
+                                    <a @click="toInfo(index)">
+                                        <img :src="item.url+'?imageView2/1/w/360/h/240'" border="0">
+                                    </a>
+                                    <h3>
+                                        <a @click="toInfo(index)" v-html="item.title">
+
+                                        </a>
+                                    </h3>
+
+                                    <div class="index_list_info">
+                                        <div class="index_list_author f13" v-html="item.nickname"></div>
+                                        <span class="list_views f13" v-html="item.view"></span>
+                                        <div class="cl"></div>
+                                    </div>
+                                    <div class="index_list_date f13" v-html="item.timestr"></div>
+
+
+                                </li>
+
+
+                            </ul>
+                        </div>
+
+                        <div class="xgrid" id="page_load">
+                            <div class="col-100" style="padding: 12px;">
+                                <img src="images/loadding.gif" width="25" height="25" v-if="!end">
+                                <span class="fl" v-html="msg"></span>
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+
+                        <div class="bb_bg"></div>
+
+
+                    </div>
+                </div>
+
+                <footer class="b_menu">
+                    <a href=""><span class="b_icon01_current db"></span><em class="current_menu">首页</em></a>
+                    <a href="publish.html"><span class="b_icon02 db"></span><em>发布</em></a>
+                    <a href="user_index.html"><span class="b_icon03 db"></span><em>我的</em></a>
+                    <div class="b_a_no"><a href="http://www.miitbeian.gov.cn/" target="_blank">豫ICP备17001365号</a>河洛泡泡◎版权所有
+                    </div>
+                </footer>
+
+
+            </div>
+        </div>
+    </div>
 </div>
-
-<div class="index_info_list" id="index_list">
-<ul>
-<li v-for="item in info">
-
-<a :href="'info.html?id='+item.id"><img :src="item.url" border="0"></a>
-<h3><a :href="'info.html?id='+item.id" v-html="item.title"></a></h3>
-<span class="index_list_author f14">发布人：<span v-html="item.nickname"></span></span>
-<div><span class="list_views" v-html="item.view"></span></div>
-</li>
-
-
-</ul>
-</div>
-
-	<div class="xgrid" id="page_load">
-		<div class="col-100" style="padding: 12px;">
-			<img src="images/loadding.gif" width="25" height="25" v-if="!end">
-			<span class="fl" v-html="msg"></span>
-		</div>
-		<div class="clear"></div>
-	</div>
-
-<div class="bb_bg"></div>
-
-
-</div>
-</div>
-
-						<footer class="b_menu">
-							<a href=""><span class="b_icon01_current db"></span><em class="current_menu">首页</em></a>
-							<a href="publish.html"><span class="b_icon02 db"></span><em>发布</em></a>
-							<a href="user_index.html"><span class="b_icon03 db"></span><em>我的</em></a>
-						</footer>
-
-
-				</div>
-			</div>
-		</div>
-	</div>
 
 </body>
 </html>

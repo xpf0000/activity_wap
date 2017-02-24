@@ -10,9 +10,9 @@
 <link rel="stylesheet" type="text/css" href="css/base.css?v=1.0.0"/>
 <link type="text/css" rel="stylesheet" href="css/index.css?v=1.0.0">
 <link rel="stylesheet" href="css/framework7.ios.css?v=1.0.0">
-<link rel="stylesheet" href="css/framework7.ios.colors.css?v=1.0.0"">
+<link rel="stylesheet" href="css/framework7.ios.colors.css?v=1.0.0">
 <link rel="stylesheet" href="css/my-app.css?v=1.0.0">
-	<script data-main="js/index.js?v=1.0.0" src="lib/require-min.js?v=1.0.0" ></script>
+	<script> 		var _hmt = _hmt || []; 		(function() { 			var hm = document.createElement("script"); 			hm.src = "https://hm.baidu.com/hm.js?f42b478b69016d43ff85ea9ebf4370f9"; 			var s = document.getElementsByTagName("script")[0]; 			s.parentNode.insertBefore(hm, s); 		})(); 	</script>  	<script data-main="js/index.js?v=1.0.1" src="lib/require-min.js?v=1.0.1" ></script>
 
 </head>
 
@@ -23,7 +23,7 @@
 			<div data-page="login" class="page">
 				<div class="page-content" id="login" style="background: #fff;">
 <header class="page_header">
-<a href="index.html" class="nav_back back"></a>
+<a href="index.html" class="nav_back back" data-modal="true"></a>
     <h1 class="page_name">会员登录</h1>  
 </header>
 
@@ -32,13 +32,10 @@
 
 <div class="page_w bg-ff " style="height: auto; background: #fff;overflow: hidden">
 
-
-
-
 <div class="form_group mt10">
 <ul>
 <li><em class="sign_up_mob db"></em><input name="user_name" v-model="account" type="text" placeholder="请输入手机号" class="login_text"/></li>
-<li><em class="sign_up_pwd db"></em><input name="user_name" v-model="pass" type="text" placeholder="请输入密码" class="login_text"/></li>
+<li><em class="sign_up_pwd db"></em><input name="user_name" v-model="pass" type="password" placeholder="请输入密码" class="login_text"/></li>
 </ul>
 </div>
 <div class="form_group_btn"><button @click="doLogin(0)">登录</button></div>

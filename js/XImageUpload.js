@@ -26,7 +26,7 @@
             datas:[],
             upBody:{},
             url:'',
-            maxsize : 100 * 1024,
+            maxsize : 500 * 1024,
             count:0,
 
         };
@@ -66,7 +66,7 @@
                     img.src = result;
                     app.params.src.push(result);
 
-                    //如果图片大小小于100kb，则直接上传
+                    //如果图片大小小于500kb，则直接上传
                     if (result.length <= app.params.maxsize) {
                         img = null;
 
@@ -147,7 +147,7 @@
             }
 
             //进行最小压缩
-            var ndata = canvas.toDataURL('image/jpeg', 0.1);
+            var ndata = canvas.toDataURL('image/jpeg', 0.5);
 
             console.log('压缩前：' + initSize);
             console.log('压缩后：' + ndata.length);
@@ -214,7 +214,10 @@
                     var jsonData = JSON.parse(xhr.responseText.trim().replace("\xEF\xBB\xBF", ""));
                     
                     console.log(jsonData)
-                    
+
+                    var info = jsonData.data.info;
+                    jsonData.data.info = info.reverse();
+
                     app.params.upBlock(jsonData,null);
                 }
                 else

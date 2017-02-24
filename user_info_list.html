@@ -10,10 +10,10 @@
 <link rel="stylesheet" type="text/css" href="css/base.css?v=1.0.0"/>
 <link type="text/css" rel="stylesheet" href="css/index.css?v=1.0.0">
 <link rel="stylesheet" href="css/framework7.ios.css?v=1.0.0">
-<link rel="stylesheet" href="css/framework7.ios.colors.css?v=1.0.0"">
+<link rel="stylesheet" href="css/framework7.ios.colors.css?v=1.0.0">
 <link rel="stylesheet" href="css/my-app.css?v=1.0.0">
 
-	<script data-main="js/index.js?v=1.0.0" src="lib/require-min.js?v=1.0.0" ></script>
+	<script> 		var _hmt = _hmt || []; 		(function() { 			var hm = document.createElement("script"); 			hm.src = "https://hm.baidu.com/hm.js?f42b478b69016d43ff85ea9ebf4370f9"; 			var s = document.getElementsByTagName("script")[0]; 			s.parentNode.insertBefore(hm, s); 		})(); 	</script>  	<script data-main="js/index.js?v=1.0.1" src="lib/require-min.js?v=1.0.1" ></script>
 </head>
 
 <body>
@@ -40,11 +40,12 @@
 	<div class="index_info_list">
 
 		<ul>
-			<li v-for="item in list">
-				<a :href="'info.html?id='+item.id"><img :src="item.url" border="0"></a>
-				<h3><a :href="'info.html?id='+item.id" v-html="item.title"></a></h3>
-				<span class="index_list_author f14">发布人：<span v-html="item.nickname"></span></span>
-				<div><span class="list_views" v-html="item.view"></span></div>
+			<li v-for="(item,index) in list">
+				<a @click="toInfo(index)"><img :src="item.url+'?imageView2/1/w/360/h/240'" border="0"></a>
+				<h3><a @click="toInfo(index)" v-html="item.title"></a></h3>
+				<div class="index_list_info"><div class="index_list_author f13" v-html="item.nickname"></div>
+					<span class="list_views f13" v-html="item.view"></span><div class="cl"></div></div>
+				<div class="index_list_date f13" v-html="item.timestr"></div>
 			</li>
 		</ul>
 

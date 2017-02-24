@@ -1,69 +1,79 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta http-equiv="Cache-Control" content="no-cache" />
-<meta content="telephone=no" name="format-detection" />
-<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
-<meta name="apple-mobile-web-app-capable" content="yes" />
-<title>活动列表-河洛泡泡</title>
-<link rel="stylesheet" type="text/css" href="css/base.css?v=1.0.0"/>
-<link type="text/css" rel="stylesheet" href="css/index.css?v=1.0.0">
-<link rel="stylesheet" href="css/framework7.ios.css?v=1.0.0">
-<link rel="stylesheet" href="css/framework7.ios.colors.css?v=1.0.0"">
-<link rel="stylesheet" href="css/my-app.css?v=1.0.0">
-    <script data-main="js/index.js?v=1.0.0" src="lib/require-min.js?v=1.0.0" ></script>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Cache-Control" content="no-cache"/>
+    <meta content="telephone=no" name="format-detection"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <title>活动列表-河洛泡泡</title>
+    <link rel="stylesheet" type="text/css" href="css/base.css?v=1.0.0"/>
+    <link type="text/css" rel="stylesheet" href="css/index.css?v=1.0.0">
+    <link rel="stylesheet" href="css/framework7.ios.css?v=1.0.0">
+    <link rel="stylesheet" href="css/framework7.ios.colors.css?v=1.0.0">
+    <link rel="stylesheet" href="css/my-app.css?v=1.0.0">
+    <script>        var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?f42b478b69016d43ff85ea9ebf4370f9";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();    </script>
+    <script data-main="js/index.js?v=1.0.1" src="lib/require-min.js?v=1.0.1"></script>
 </head>
 
-<body >
+<body>
 <div class="views">
-	<div class="view view-main">
-		<div class="pages ">
-			<div data-page="list" class="page">
-				<div class="page-content infinite-scroll" id="list">
+    <div class="view view-main">
+        <div class="pages ">
+            <div data-page="list" class="page">
+                <div class="page-content infinite-scroll" id="list">
 
-<header class="page_header">
-<a href="index.html" class="nav_back back"></a>
-<h1 class="page_name">活动列表</h1>
-<a href="#" data-popup=".popup_a" class="open-popup class_menu">分类</a>
-</header>
-<div class="page_w">
-<div class="index_info_list">
+                    <header class="page_header">
+                        <a href="index.html" class="nav_back back"></a>
+                        <h1 class="page_name">活动列表</h1>
+                        <a href="#" data-popup=".popup_a" class="open-popup class_menu">分类</a>
+                    </header>
+                    <div class="page_w">
+                        <div class="index_info_list">
 
-    <ul>
-        <li v-for="item in list">
+                            <ul>
+                                <li v-for="(item,index) in list">
 
-            <a :href="'info.html?id='+item.id"><img :src="item.url" border="0"></a>
-            <h3><a :href="'info.html?id='+item.id" v-html="item.title"></a></h3>
-            <span class="index_list_author f14">发布人：<span v-html="item.nickname"></span></span>
-            <div><span class="list_views" v-html="item.view"></span></div>
-        </li>
-
-
-    </ul>
-
-</div>
-
-<div class="xgrid">
-    <div class="col-100" style="padding: 12px;">
-        <img src="images/loadding.gif" width="25" height="25" v-if="!end">
-        <span class="fl" v-html="msg"></span>
-    </div>
-    <div class="clear"></div>
-</div>
-
-<div class="bb_bg"></div>
-
-</div>
-</div>
+                                    <a @click="toInfo(index)"><img :src="item.url+'?imageView2/1/w/360/h/240'"
+                                                                   border="0"></a>
+                                    <h3><a @click="toInfo(index)" v-html="item.title"></a></h3>
+                                    <div class="index_list_info">
+                                        <div class="index_list_author f13" v-html="item.nickname"></div>
+                                        <span class="list_views f13" v-html="item.view"></span>
+                                        <div class="cl"></div>
+                                    </div>
+                                    <div class="index_list_date f13" v-html="item.timestr"></div>
+                                </li>
 
 
+                            </ul>
+
+                        </div>
+
+                        <div class="xgrid">
+                            <div class="col-100" style="padding: 12px;">
+                                <img src="images/loadding.gif" width="25" height="25" v-if="!end">
+                                <span class="fl" v-html="msg"></span>
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+
+                        <div class="bb_bg"></div>
+
+                    </div>
+                </div>
 
 
                 <!--<footer class="b_menu">-->
-                    <!--<a href=""><span class="b_icon01_current db"></span><em class="current_menu">活动</em></a>-->
-                    <!--<a href=""><span class="b_icon02 db"></span><em>发布</em></a>-->
-                    <!--<a href=""><span class="b_icon03 db"></span><em>我的</em></a>-->
+                <!--<a href=""><span class="b_icon01_current db"></span><em class="current_menu">活动</em></a>-->
+                <!--<a href=""><span class="b_icon02 db"></span><em>发布</em></a>-->
+                <!--<a href=""><span class="b_icon03 db"></span><em>我的</em></a>-->
                 <!--</footer>-->
                 <div class="popup popup_a" id="filter">
 
@@ -74,7 +84,8 @@
 
                         <div class="xgrid">
                             <div class="col-20" style="padding: 10px;" v-for="item in category">
-                                <a class="close-popup" href="#" @click="chooseid(item.id,item.title)" @touchend="chooseid(item.id,item.title)">
+                                <a class="close-popup" href="#" @click="chooseid(item.id,item.title)"
+                                   @touchend="chooseid(item.id,item.title)">
                                     <img :src="item.url" style="width: 48px;height: 48px;">
                                     <div class="class_name db" style="text-align: center;" v-html="item.title"></div>
                                 </a>
@@ -86,12 +97,10 @@
                 </div>
 
 
-				</div>
-			</div>
-		</div>
-	</div>
-
-
+            </div>
+        </div>
+    </div>
+</div>
 
 
 </body>

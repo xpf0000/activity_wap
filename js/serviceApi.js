@@ -243,6 +243,14 @@ define(["Service"], function(Service) {
 
             },
 
+            //获取活动报名列表
+            articleGetJoinList: function(id,page,perNumber,callBack)
+            {
+                var url = this.BaseUrl+"Article.getJoinList&id="+id+"&page="+page+"&perNumber="+perNumber;
+                XHttpGet( url, callBack);
+
+            },
+
             //获取微信Config
             weixinConfig: function(callBack)
             {
